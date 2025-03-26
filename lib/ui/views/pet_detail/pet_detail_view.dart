@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/widgets/pet_image_slider.dart';
+import 'package:petvillage_app/ui/widgets/pet_info_card.dart';
 import 'package:stacked/stacked.dart';
 import 'pet_detail_viewmodel.dart';
 
@@ -19,19 +20,22 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Pet Village",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            PetImageSlider(), // 🔹 ใช้ Widget แสดงรูป
-            SizedBox(height: 16),
-          ],
+      body: const SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Pet Village",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              PetImageSlider(), // ใส่รูป
+              SizedBox(height: 16),
+              PetInfoCard()
+            ],
+          ),
         ),
       ),
     );
