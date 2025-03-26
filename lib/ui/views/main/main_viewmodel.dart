@@ -15,7 +15,13 @@ class MainViewModel extends BaseViewModel {
     const ProfileView()
   ];
 
-  List<String> pagesLabel = ['home', 'blog', 'post', 'message', 'profile'];
+  List<String> pagesLabel = [
+    'หน้าหลัก',
+    'บล็อก',
+    'โพสต์',
+    'ข้อความ',
+    'โปรไฟล์'
+  ];
 
   int _currentPage = 0;
 

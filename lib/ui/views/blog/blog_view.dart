@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/widgets/blog_card.dart';
 import 'package:stacked/stacked.dart';
-
 import 'blog_viewmodel.dart';
 
 class BlogView extends StackedView<BlogViewModel> {
@@ -51,26 +51,14 @@ class BlogView extends StackedView<BlogViewModel> {
                 ),
                 itemCount: 8,
                 itemBuilder: (context, index) {
-                  return _buildCard();
+                  return BlogCard(
+                    onPressed: viewModel.navigateToPetDetail,
+                  );
                 },
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildCard() {
-    return const Card(
-      elevation: 4,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.image, size: 40),
-          SizedBox(height: 8),
-          Text('...ข้อมูลเพิ่มเติม...', textAlign: TextAlign.center),
-        ],
       ),
     );
   }

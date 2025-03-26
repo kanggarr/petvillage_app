@@ -7,5 +7,5 @@ class Assets {
 
   static String assetsIconsPostIcon = 'assets/icons/post_icon.svg';
 
-  static String assetsIconsprofileIcon = 'assets/icons/profile_icon.svg';
+  static String assetsIconsProfileIcon = 'assets/icons/profile_icon.svg';
 }
