@@ -13,6 +13,7 @@ class BlogView extends StackedView<BlogViewModel> {
     Widget? child,
   ) {
     return Scaffold(
+      backgroundColor: Color(0xFFF5F5F5),
       appBar: AppBar(
         title: const Text('สวัสดี, ผู้ใช้งาน'),
         actions: [

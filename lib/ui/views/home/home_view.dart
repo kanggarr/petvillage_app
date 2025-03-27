@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/widgets/catagory_icon.dart';
+import 'package:petvillage_app/ui/widgets/pet_card.dart';
 import 'package:stacked/stacked.dart';
-
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
@@ -13,7 +14,9 @@ class HomeView extends StackedView<HomeViewModel> {
     Widget? child,
   ) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFF5F5F5),
         title: const Text('สวัสดี, ผู้ใช้งาน'),
         actions: [
           IconButton(
@@ -50,11 +53,15 @@ class HomeView extends StackedView<HomeViewModel> {
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _categoryIcon(Icons.pets, 'สัตว์', Colors.grey),
-                _categoryIcon(Icons.pets, 'สุนัข', Colors.orange),
-                _categoryIcon(Icons.pets, 'แมว', Colors.yellow),
-                _categoryIcon(Icons.pets, 'กระต่าย', Colors.pink),
+              children: const [
+                CategoryIcon(
+                    icon: Icons.pets, label: 'สัตว์', color: Colors.grey),
+                CategoryIcon(
+                    icon: Icons.pets, label: 'สุนัข', color: Colors.orange),
+                CategoryIcon(
+                    icon: Icons.pets, label: 'แมว', color: Colors.yellow),
+                CategoryIcon(
+                    icon: Icons.pets, label: 'กระต่าย', color: Colors.pink),
               ],
             ),
             const SizedBox(height: 16),
@@ -67,40 +74,12 @@ class HomeView extends StackedView<HomeViewModel> {
                 ),
                 itemCount: 8,
                 itemBuilder: (context, index) {
-                  return _buildCard();
+                  return const PetCard();
                 },
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _categoryIcon(IconData icon, String label, Color color) {
-    return Column(
-      children: [
-        CircleAvatar(
-          backgroundColor: color,
-          radius: 24,
-          child: Icon(icon, color: Colors.white),
-        ),
-        const SizedBox(height: 8),
-        Text(label),
-      ],
-    );
-  }
-
-  Widget _buildCard() {
-    return const Card(
-      elevation: 4,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.image, size: 40),
-          SizedBox(height: 8),
-          Text('...ข้อมูลเพิ่มเติม...', textAlign: TextAlign.center),
-        ],
       ),
     );
   }

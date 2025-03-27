@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/common/assets.dart';
 import 'package:petvillage_app/ui/views/blog/blog_view.dart';
 import 'package:petvillage_app/ui/views/home/home_view.dart';
 import 'package:petvillage_app/ui/views/message/message_view.dart';
@@ -23,9 +24,22 @@ class MainViewModel extends BaseViewModel {
     'โปรไฟล์'
   ];
 
+  List<String> pagesIcon = [
+    Assets.assetsIconsHomeIcon,
+    Assets.assetsIconsBlogIcon,
+    Assets.assetsIconsPostIcon,
+    Assets.assetsIconsMessageIcon,
+    Assets.assetsIconsProfileIcon,
+    // 'assets/icons/home_icon.svg',
+    // 'assets/icons/blog_icon.svg',
+    // 'assets/icons/post_icon.svg',
+    // 'assets/icons/message_icon.svg',
+    // 'assets/icons/profile_icon.svg',
+  ];
+
   int _currentPage = 0;
 
-  get currentPage => _currentPage;
+  int get currentPage => _currentPage;
 
   set currentIndex(int index) {
     _currentPage = index;
