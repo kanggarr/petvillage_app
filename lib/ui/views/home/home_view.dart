@@ -51,9 +51,9 @@ class HomeView extends StackedView<HomeViewModel> {
               ],
             ),
             const SizedBox(height: 16),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 CategoryIcon(
                     icon: Icons.pets, label: 'สัตว์', color: Colors.grey),
                 CategoryIcon(
@@ -74,7 +74,11 @@ class HomeView extends StackedView<HomeViewModel> {
                 ),
                 itemCount: 8,
                 itemBuilder: (context, index) {
-                  return const PetCard();
+                  return PetCard(
+                    onPressed: () {
+                      viewModel.navigateToPetDetail();
+                    },
+                  );
                 },
               ),
             ),

@@ -22,6 +22,7 @@ class BlogView extends StackedView<BlogViewModel> {
             onPressed: () {},
           ),
         ],
+        backgroundColor: Color(0xFFF5F5F5),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -53,7 +54,7 @@ class BlogView extends StackedView<BlogViewModel> {
                 itemCount: 8,
                 itemBuilder: (context, index) {
                   return BlogCard(
-                    onPressed: viewModel.navigateToPetDetail,
+                    onPressed: () {},
                   );
                 },
               ),

@@ -18,7 +18,7 @@ class PetInfoCard extends StatelessWidget {
             // TODO: เชื่อม database
             const Text(
               "ข้อมูลโดยรวม :",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
             const SizedBox(height: 8),
 
@@ -42,7 +42,6 @@ class PetInfoCard extends StatelessWidget {
     );
   }
 
-  // ฟังก์ชันช่วยสร้างข้อมูลแสดงผลเป็นแถว
   Widget _buildInfoRow(String title, String value) {
     return Padding(
       padding: const EdgeInsets.only(top: 4),

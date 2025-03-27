@@ -616,6 +616,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  titled_navigation_bar:
+    dependency: "direct main"
+    description:
+      name: titled_navigation_bar
+      sha256: "3e3d42c77bc84132865190d0b53e6fd8890ee9603036c036138c5699e02822dc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0-nullsafety.0"
   typed_data:
     dependency: transitive
     description:
