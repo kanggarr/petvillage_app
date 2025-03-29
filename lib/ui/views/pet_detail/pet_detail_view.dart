@@ -16,13 +16,13 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Color(0xFFF5F5F5),
+        backgroundColor: const Color(0xFFF5F5F5),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
