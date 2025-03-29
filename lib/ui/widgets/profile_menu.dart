@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProfileMenuItem extends StatelessWidget {
-  final IconData icon;
+  final String icon;
   final String title;
   final VoidCallback onPressed;
 
@@ -21,7 +22,7 @@ class ProfileMenuItem extends StatelessWidget {
         side: const BorderSide(color: Color(0xFF000000)),
       ),
       child: ListTile(
-        leading: Icon(icon, color: Colors.black),
+        leading: SvgPicture.asset(icon, width: 24, height: 24),
         title: Text(
           title,
           style: const TextStyle(fontSize: 18),

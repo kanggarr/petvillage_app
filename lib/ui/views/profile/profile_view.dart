@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/common/assets.dart';
 import 'package:petvillage_app/ui/widgets/profile_header.dart';
 import 'package:petvillage_app/ui/widgets/profile_menu.dart';
 import 'package:stacked/stacked.dart';
@@ -14,7 +15,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -24,37 +25,37 @@ class ProfileView extends StackedView<ProfileViewModel> {
               const ProfileHeader(),
               const SizedBox(height: 20),
               ProfileMenuItem(
-                icon: Icons.person_outline,
+                icon: Assets.assetsIconsEditProfileIcon,
                 title: "แก้ไขโปรไฟล์",
                 onPressed: viewModel.navigateToEditProfile,
               ),
               const SizedBox(height: 20),
               ProfileMenuItem(
-                icon: Icons.favorite_border,
+                icon: Assets.assetsIconsFavoriteIcon,
                 title: "สัตว์เลี้ยงที่ชอบ",
                 onPressed: () {},
               ),
               const SizedBox(height: 20),
               ProfileMenuItem(
-                icon: Icons.notifications_outlined,
+                icon: Assets.assetsIconsNotificationIcon,
                 title: "การแจ้งเตือน",
                 onPressed: () {},
               ),
               const SizedBox(height: 20),
               ProfileMenuItem(
-                icon: Icons.menu_book_outlined,
+                icon: Assets.assetsIconsUserManualIcon,
                 title: "คู่มือการใช้งาน",
                 onPressed: () {},
               ),
               const SizedBox(height: 20),
               ProfileMenuItem(
-                icon: Icons.info_outline,
+                icon: Assets.assetsIconsAboutUsIcon,
                 title: "เกี่ยวกับเรา",
                 onPressed: () {},
               ),
               const SizedBox(height: 20),
               ProfileMenuItem(
-                icon: Icons.phone_outlined,
+                icon: Assets.assetsIconsPhoneIcon,
                 title: "ติดต่อเรา",
                 onPressed: () {},
               ),

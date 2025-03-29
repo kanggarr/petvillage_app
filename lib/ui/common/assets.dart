@@ -16,6 +16,19 @@ class Assets {
 
   static String assetsIconsPawIcon = 'assets/icons/paw_icon.svg';
 
+  static String assetsIconsShopIcon = 'assets/icons/shop_icon.svg';
+
+  static String assetsIconsEditProfileIcon =
+      'assets/icons/edit_profile_icon.svg';
+
+  static String assetsIconsFavoriteIcon = 'assets/icons/favorite_icon.svg';
+
+  static String assetsIconsUserManualIcon = 'assets/icons/user_manual_icon.svg';
+
+  static String assetsIconsAboutUsIcon = 'assets/icons/info_icon.svg';
+
+  static String assetsIconsPhoneIcon = 'assets/icons/phone_icon.svg';
+
   static String assetsIconsDogIcon = 'assets/icons/dog_icon.svg';
 
   static String assetsIconsCatIcon = 'assets/icons/cat_icon.svg';

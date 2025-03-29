@@ -18,9 +18,53 @@ class HomeView extends StackedView<HomeViewModel> {
   ) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('สวัสดี, ผู้ใช้งาน'),
-        actions: [SvgPicture.asset(Assets.assetsIconsNotificationIcon)],
+        backgroundColor: const Color(0xFFF5F5F5),
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Row(
+              children: [
+                CircleAvatar(
+                  radius: 24,
+                  backgroundImage: AssetImage(
+                      'assets/images/avatar.png'), // TODO: รอเอารูปจาก database
+                ),
+                SizedBox(width: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Hi, Smith', // TODO: รอชื่อจาก database
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      'General user',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: SvgPicture.asset(
+                Assets.assetsIconsNotificationIcon,
+                width: 24,
+                height: 24,
+              ),
+            ),
+          ],
+        ),
       ),
+      backgroundColor: const Color(0xFFF5F5F5),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -97,40 +141,14 @@ class HomeView extends StackedView<HomeViewModel> {
                 ),
                 itemCount: 8,
                 itemBuilder: (context, index) {
-                  return _buildCard();
+                  return PetCard(
+                    onPressed: viewModel.navigateToPetDetail,
+                  );
                 },
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _categoryIcon(IconData icon, String label, Color color) {
-    return Column(
-      children: [
-        CircleAvatar(
-          backgroundColor: color,
-          radius: 24,
-          child: Icon(icon, color: Colors.white),
-        ),
-        const SizedBox(height: 8),
-        Text(label),
-      ],
-    );
-  }
-
-  Widget _buildCard() {
-    return const Card(
-      elevation: 4,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.image, size: 40),
-          SizedBox(height: 8),
-          Text('...ข้อมูลเพิ่มเติม...', textAlign: TextAlign.center),
-        ],
       ),
     );
   }

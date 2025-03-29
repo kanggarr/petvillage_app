@@ -46,13 +46,13 @@ class MainView extends StackedView<MainViewModel> {
                       ),
                     )
                   else
-                    const SizedBox(height: 8), // เว้นช่องว่างให้เท่ากัน
-                  // SvgPicture.asset(
-                  //   viewModel.pagesIcon[index],
-                  //   // color: isSelected ? Color(0xFF5F9451) : Colors.black,s
-                  //   height: 24,
-                  //   width: 24,
-                  // ),
+                    const SizedBox(height: 8),
+                  SvgPicture.asset(
+                    viewModel.pagesIcon[index],
+                    color: isSelected ? const Color(0xFF5F9451) : Colors.black,
+                    height: 24,
+                    width: 24,
+                  ),
                 ],
               ),
               label: viewModel.pagesLabel[index],
