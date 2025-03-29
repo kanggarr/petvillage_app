@@ -22,4 +22,9 @@ dev_dependencies:
   stacked_generator: ^1.3.3
 
 flutter:
+  fonts:
+    - family: Poppins
+      fonts:
+      - asset: assets/fonts/Poppins-Regular.ttf
+
   uses-material-design: true
