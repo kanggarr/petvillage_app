@@ -5,7 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i13;
+import 'package:flutter/material.dart' as _i14;
 import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/views/blog/blog_view.dart' as _i4;
 import 'package:petvillage_app/ui/views/home/home_view.dart' as _i8;
@@ -20,9 +20,11 @@ import 'package:petvillage_app/ui/views/profile/profile_view.dart' as _i7;
 import 'package:petvillage_app/ui/views/profile_edit/profile_edit_view.dart'
     as _i11;
 import 'package:petvillage_app/ui/views/register/register_view.dart' as _i9;
+import 'package:petvillage_app/ui/views/splash_page1/splash_page1_view.dart'
+    as _i13;
 import 'package:petvillage_app/ui/views/startup/startup_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i14;
+import 'package:stacked_services/stacked_services.dart' as _i15;
 
 class Routes {
   static const startupView = '/startup-view';
@@ -47,6 +49,8 @@ class Routes {
 
   static const petDetailView = '/pet-detail-view';
 
+  static const splashPage1View = '/splash-page1-view';
+
   static const all = <String>{
     startupView,
     mainView,
@@ -59,6 +63,7 @@ class Routes {
     homeFilterView,
     profileEditView,
     petDetailView,
+    splashPage1View,
   };
 }
 
@@ -108,72 +113,82 @@ class StackedRouter extends _i1.RouterBase {
       Routes.petDetailView,
       page: _i12.PetDetailView,
     ),
+    _i1.RouteDef(
+      Routes.splashPage1View,
+      page: _i13.SplashPage1View,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.StartupView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.StartupView(),
         settings: data,
       );
     },
     _i3.MainView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.MainView(),
         settings: data,
       );
     },
     _i4.BlogView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.BlogView(),
         settings: data,
       );
     },
     _i5.PostView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.PostView(),
         settings: data,
       );
     },
     _i6.MessageView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.MessageView(),
         settings: data,
       );
     },
     _i7.ProfileView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ProfileView(),
         settings: data,
       );
     },
     _i8.HomeView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.HomeView(),
         settings: data,
       );
     },
     _i9.RegisterView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.RegisterView(),
         settings: data,
       );
     },
     _i10.HomeFilterView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.HomeFilterView(),
         settings: data,
       );
     },
     _i11.ProfileEditView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.ProfileEditView(),
         settings: data,
       );
     },
     _i12.PetDetailView: (data) {
-      return _i13.MaterialPageRoute<dynamic>(
+      return _i14.MaterialPageRoute<dynamic>(
         builder: (context) => const _i12.PetDetailView(),
+        settings: data,
+      );
+    },
+    _i13.SplashPage1View: (data) {
+      return _i14.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i13.SplashPage1View(),
         settings: data,
       );
     },
@@ -186,7 +201,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i14.NavigationService {
+extension NavigatorStateExtension on _i15.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -341,6 +356,20 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToSplashPage1View([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.splashPage1View,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -489,6 +518,20 @@ extension NavigatorStateExtension on _i14.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.petDetailView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithSplashPage1View([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.splashPage1View,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
