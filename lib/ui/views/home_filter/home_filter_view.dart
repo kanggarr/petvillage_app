@@ -1,6 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 
 import 'home_filter_viewmodel.dart';
@@ -17,7 +16,7 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFF5F5F5),
         title: const Text('ตัวกรอง'),
         actions: [
           IconButton(
@@ -30,6 +29,7 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
           ),
         ],
       ),
+      backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -116,7 +116,8 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: const Color(0xFFF1F1F1),
-                              border: Border.all(color: Color(0xFF000000)),
+                              border:
+                                  Border.all(color: const Color(0xFF000000)),
                             ),
                             child: const Text('ทั้งคู่',
                                 style: TextStyle(
@@ -131,7 +132,8 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: const Color(0xFFF1F1F1),
-                              border: Border.all(color: Color(0xFF000000)),
+                              border:
+                                  Border.all(color: const Color(0xFF000000)),
                             ),
                             child: const Text('เพศผู้',
                                 style: TextStyle(
@@ -146,7 +148,8 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: const Color(0xFFF1F1F1),
-                              border: Border.all(color: Color(0xFF000000)),
+                              border:
+                                  Border.all(color: const Color(0xFF000000)),
                             ),
                             child: const Text(
                               'เพศเมีย',

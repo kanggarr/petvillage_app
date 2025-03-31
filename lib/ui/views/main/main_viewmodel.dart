@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/common/assets.dart';
 import 'package:petvillage_app/ui/views/blog/blog_view.dart';
 import 'package:petvillage_app/ui/views/home/home_view.dart';
 import 'package:petvillage_app/ui/views/message/message_view.dart';
@@ -15,11 +16,25 @@ class MainViewModel extends BaseViewModel {
     const ProfileView()
   ];
 
-  List<String> pagesLabel = ['home', 'blog', 'post', 'message', 'profile'];
+  List<String> pagesLabel = [
+    'หน้าหลัก',
+    'บล็อก',
+    'โพสต์',
+    'ข้อความ',
+    'โปรไฟล์'
+  ];
+
+  List<String> pagesIcon = [
+    Assets.assetsIconsHomeIcon,
+    Assets.assetsIconsBlogIcon,
+    Assets.assetsIconsPostIcon,
+    Assets.assetsIconsMessageIcon,
+    Assets.assetsIconsProfileIcon
+  ];
 
   int _currentPage = 0;
 
-  get currentPage => _currentPage;
+  int get currentPage => _currentPage;
 
   set currentIndex(int index) {
     _currentPage = index;

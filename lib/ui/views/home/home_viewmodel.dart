@@ -9,4 +9,8 @@ class HomeViewModel extends BaseViewModel {
   Future navigatetoFilter() async {
     _navigationService.navigateToHomeFilterView();
   }
+
+  void navigateToPetDetail() {
+    _navigationService.navigateToPetDetailView();
+  }
 }
