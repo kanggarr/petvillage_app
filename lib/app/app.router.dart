@@ -5,26 +5,27 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i14;
+import 'package:flutter/material.dart' as _i15;
 import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/views/blog/blog_view.dart' as _i4;
 import 'package:petvillage_app/ui/views/home/home_view.dart' as _i8;
 import 'package:petvillage_app/ui/views/home_filter/home_filter_view.dart'
-    as _i10;
+    as _i9;
+import 'package:petvillage_app/ui/views/login/login_view.dart' as _i13;
 import 'package:petvillage_app/ui/views/main/main_view.dart' as _i3;
 import 'package:petvillage_app/ui/views/message/message_view.dart' as _i6;
 import 'package:petvillage_app/ui/views/pet_detail/pet_detail_view.dart'
-    as _i12;
+    as _i11;
 import 'package:petvillage_app/ui/views/post/post_view.dart' as _i5;
 import 'package:petvillage_app/ui/views/profile/profile_view.dart' as _i7;
 import 'package:petvillage_app/ui/views/profile_edit/profile_edit_view.dart'
-    as _i11;
-import 'package:petvillage_app/ui/views/register/register_view.dart' as _i9;
+    as _i10;
+import 'package:petvillage_app/ui/views/register/register_view.dart' as _i14;
 import 'package:petvillage_app/ui/views/splash_page1/splash_page1_view.dart'
-    as _i13;
+    as _i12;
 import 'package:petvillage_app/ui/views/startup/startup_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i15;
+import 'package:stacked_services/stacked_services.dart' as _i16;
 
 class Routes {
   static const startupView = '/startup-view';
@@ -41,8 +42,6 @@ class Routes {
 
   static const homeView = '/home-view';
 
-  static const registerView = '/register-view';
-
   static const homeFilterView = '/home-filter-view';
 
   static const profileEditView = '/profile-edit-view';
@@ -50,6 +49,10 @@ class Routes {
   static const petDetailView = '/pet-detail-view';
 
   static const splashPage1View = '/splash-page1-view';
+
+  static const loginView = '/login-view';
+
+  static const registerView = '/register-view';
 
   static const all = <String>{
     startupView,
@@ -59,11 +62,12 @@ class Routes {
     messageView,
     profileView,
     homeView,
-    registerView,
     homeFilterView,
     profileEditView,
     petDetailView,
     splashPage1View,
+    loginView,
+    registerView,
   };
 }
 
@@ -98,97 +102,107 @@ class StackedRouter extends _i1.RouterBase {
       page: _i8.HomeView,
     ),
     _i1.RouteDef(
-      Routes.registerView,
-      page: _i9.RegisterView,
-    ),
-    _i1.RouteDef(
       Routes.homeFilterView,
-      page: _i10.HomeFilterView,
+      page: _i9.HomeFilterView,
     ),
     _i1.RouteDef(
       Routes.profileEditView,
-      page: _i11.ProfileEditView,
+      page: _i10.ProfileEditView,
     ),
     _i1.RouteDef(
       Routes.petDetailView,
-      page: _i12.PetDetailView,
+      page: _i11.PetDetailView,
     ),
     _i1.RouteDef(
       Routes.splashPage1View,
-      page: _i13.SplashPage1View,
+      page: _i12.SplashPage1View,
+    ),
+    _i1.RouteDef(
+      Routes.loginView,
+      page: _i13.LoginView,
+    ),
+    _i1.RouteDef(
+      Routes.registerView,
+      page: _i14.RegisterView,
     ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.StartupView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.StartupView(),
         settings: data,
       );
     },
     _i3.MainView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.MainView(),
         settings: data,
       );
     },
     _i4.BlogView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.BlogView(),
         settings: data,
       );
     },
     _i5.PostView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.PostView(),
         settings: data,
       );
     },
     _i6.MessageView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.MessageView(),
         settings: data,
       );
     },
     _i7.ProfileView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ProfileView(),
         settings: data,
       );
     },
     _i8.HomeView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
+      return _i15.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.HomeView(),
         settings: data,
       );
     },
-    _i9.RegisterView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i9.RegisterView(),
+    _i9.HomeFilterView: (data) {
+      return _i15.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i9.HomeFilterView(),
         settings: data,
       );
     },
-    _i10.HomeFilterView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i10.HomeFilterView(),
+    _i10.ProfileEditView: (data) {
+      return _i15.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i10.ProfileEditView(),
         settings: data,
       );
     },
-    _i11.ProfileEditView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i11.ProfileEditView(),
+    _i11.PetDetailView: (data) {
+      return _i15.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i11.PetDetailView(),
         settings: data,
       );
     },
-    _i12.PetDetailView: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i12.PetDetailView(),
+    _i12.SplashPage1View: (data) {
+      return _i15.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i12.SplashPage1View(),
         settings: data,
       );
     },
-    _i13.SplashPage1View: (data) {
-      return _i14.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i13.SplashPage1View(),
+    _i13.LoginView: (data) {
+      return _i15.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i13.LoginView(),
+        settings: data,
+      );
+    },
+    _i14.RegisterView: (data) {
+      return _i15.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i14.RegisterView(),
         settings: data,
       );
     },
@@ -201,7 +215,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i15.NavigationService {
+extension NavigatorStateExtension on _i16.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -300,20 +314,6 @@ extension NavigatorStateExtension on _i15.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToRegisterView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.registerView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToHomeFilterView([
     int? routerId,
     bool preventDuplicates = true,
@@ -364,6 +364,34 @@ extension NavigatorStateExtension on _i15.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.splashPage1View,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToLoginView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.loginView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToRegisterView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.registerView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -468,20 +496,6 @@ extension NavigatorStateExtension on _i15.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithRegisterView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.registerView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> replaceWithHomeFilterView([
     int? routerId,
     bool preventDuplicates = true,
@@ -532,6 +546,34 @@ extension NavigatorStateExtension on _i15.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.splashPage1View,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithLoginView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.loginView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithRegisterView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.registerView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

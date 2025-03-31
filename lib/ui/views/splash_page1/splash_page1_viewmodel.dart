@@ -1,8 +1,12 @@
+import 'package:petvillage_app/app/app.locator.dart';
+import 'package:petvillage_app/app/app.router.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class SplashPage1ViewModel extends BaseViewModel {
   int _currentPage = 0;
   int get currentPage => _currentPage;
+  final _navigationService = locator<NavigationService>();
 
   final List<String> titles = [
     'ซื้อ-ขายสัตว์ที่สะดวกปลอดภัย?',
@@ -22,6 +26,9 @@ class SplashPage1ViewModel extends BaseViewModel {
     if (_currentPage < 3) {
       _currentPage++;
       notifyListeners();
+    } else {
+      _currentPage = 0;
+      _navigationService.navigateToLoginView();
     }
   }
 

@@ -9,11 +9,12 @@ import 'package:petvillage_app/ui/views/post/post_view.dart';
 import 'package:petvillage_app/ui/views/message/message_view.dart';
 import 'package:petvillage_app/ui/views/profile/profile_view.dart';
 import 'package:petvillage_app/ui/views/home/home_view.dart';
-import 'package:petvillage_app/ui/views/register/register_view.dart';
 import 'package:petvillage_app/ui/views/home_filter/home_filter_view.dart';
 import 'package:petvillage_app/ui/views/profile_edit/profile_edit_view.dart';
 import 'package:petvillage_app/ui/views/pet_detail/pet_detail_view.dart';
 import 'package:petvillage_app/ui/views/splash_page1/splash_page1_view.dart';
+import 'package:petvillage_app/ui/views/login/login_view.dart';
+import 'package:petvillage_app/ui/views/register/register_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -25,11 +26,12 @@ import 'package:petvillage_app/ui/views/splash_page1/splash_page1_view.dart';
     MaterialRoute(page: MessageView),
     MaterialRoute(page: ProfileView),
     MaterialRoute(page: HomeView),
-    MaterialRoute(page: RegisterView),
     MaterialRoute(page: HomeFilterView),
     MaterialRoute(page: ProfileEditView),
     MaterialRoute(page: PetDetailView),
     MaterialRoute(page: SplashPage1View),
+    MaterialRoute(page: LoginView),
+    MaterialRoute(page: RegisterView),
 // @stacked-route
   ],
   dependencies: [
