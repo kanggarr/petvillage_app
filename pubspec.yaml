@@ -23,8 +23,14 @@ dev_dependencies:
 
 flutter:
   fonts:
-    - family: Poppins
+    - family: Kanit
       fonts:
-      - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Kanit-Regular.ttf
+        - asset: assets/fonts/Kanit-Bold.ttf
+        - asset: assets/fonts/Kanit-Light.ttf
+        - asset: assets/fonts/Kanit-Medium.ttf
+        - asset: assets/fonts/Kanit-SemiBold.ttf
+        - asset: assets/fonts/Kanit-ExtraBold.ttf
+        - asset: assets/fonts/Kanit-Thin.ttf
 
   uses-material-design: true
