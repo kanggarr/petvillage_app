@@ -17,11 +17,12 @@ class PetStore extends StatelessWidget {
                 const CircleAvatar(
                   radius: 24,
                   backgroundImage: AssetImage(
-                      'assets/images/profile.png'), // TODO: เปลี่ยนเป็นภาพร้านค้า
+                      'assets/images/profile.png'), // TODO: เชื่อมกับ API
                 ),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: Text(
+                    // TODO: เชื่อมกับ API
                     'Pets store01',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
@@ -29,13 +30,30 @@ class PetStore extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF4F9451),
+                    backgroundColor: const Color(0xFF4F9451),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   ),
-                  child: const Text('เข้าชมร้านค้า',
-                      style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 16)),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'เข้าชมร้านค้า',
+                        style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal),
+                      ),
+                      SizedBox(width: 4),
+                      Icon(
+                        Icons.navigate_next_outlined,
+                        color: Color(0xFFFFFFFF),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -43,6 +61,7 @@ class PetStore extends StatelessWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // TODO: เชื่อมกับ API
                 _InfoText(label: 'โพสต์ลงขาย', value: '15 โพสต์'),
                 _InfoText(label: 'อัตราการตอบกลับ', value: '85 %'),
               ],
@@ -51,6 +70,7 @@ class PetStore extends StatelessWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // TODO: เชื่อมกับ API
                 _InfoText(label: 'รายการโปรด', value: '131 หัวใจ'),
                 _InfoText(label: 'ปิดการขาย', value: '6 ครั้ง'),
               ],

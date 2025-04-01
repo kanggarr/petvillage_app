@@ -14,6 +14,8 @@ class Assets {
   static String assetsIconsNotificationIcon =
       'assets/icons/notification_icon.svg';
 
+  static String assetsIconsSearchIcon = 'assets/icons/search_icon.svg';
+
   static String assetsIconsPawIcon = 'assets/icons/paw_icon.svg';
 
   static String assetsIconsShopIcon = 'assets/icons/shop_icon.svg';
@@ -38,4 +40,8 @@ class Assets {
   static String assetsIconsHamsterIcon = 'assets/icons/hamster_icon.svg';
 
   static String assetsIconsFilterIcon = 'assets/icons/filter_icon.svg';
+
+  static String assetsIconsLocationIcon = 'assets/icons/location_icon.svg';
+
+  static String assetsIconsDeliveryIcon = 'assets/icons/delivery_icon.svg';
 }

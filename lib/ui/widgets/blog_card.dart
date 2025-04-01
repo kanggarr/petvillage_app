@@ -10,6 +10,7 @@ class BlogCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: const Card(
+        color: Color(0xFFFFFFFF),
         elevation: 4,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

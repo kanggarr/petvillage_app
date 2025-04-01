@@ -18,6 +18,8 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Kanit',
       ),
+      color: Color(0xFFF5F5F5),
+      debugShowCheckedModeBanner: false,
       initialRoute: Routes.startupView,
       onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorKey: StackedService.navigatorKey,
