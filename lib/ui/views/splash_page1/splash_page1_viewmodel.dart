@@ -28,7 +28,7 @@ class SplashPage1ViewModel extends BaseViewModel {
       notifyListeners();
     } else {
       _currentPage = 0;
-      _navigationService.navigateToLoginView();
+      _navigationService.navigateToRegisterView();
     }
   }
 

@@ -27,7 +27,7 @@ class MainView extends StackedView<MainViewModel> {
         items: List.generate(
           [
             viewModel.pagesLabel.length,
-            // viewModel.pagesIcon.length,
+            viewModel.pagesIcon.length,
             viewModel.pages.length
           ].reduce((a, b) => a < b ? a : b),
           (index) {

@@ -82,6 +82,34 @@ class RegisterView extends StackedView<RegisterViewModel> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20),
+                Center(
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'มีบัญชีอยู่แล้วใช่ไหม? ',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF808080),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      children: [
+                        WidgetSpan(
+                          child: GestureDetector(
+                            onTap: viewModel.navigateToLogin,
+                            child: const Text(
+                              'เข้าสู่ระบบ',
+                              style: TextStyle(
+                                color: Color(0xFF4F9451),
+                                decoration: TextDecoration.underline,
+                                decorationColor: Color(0xFF4F9451),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

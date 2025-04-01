@@ -120,6 +120,34 @@ class LoginView extends StackedView<LoginViewModel> {
                   ),
                 ),
               ),
+              const SizedBox(height: 20),
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: 'ยังไม่มีบัญชีใช่ไหม? ',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF808080),
+                      fontWeight: FontWeight.w500,
+                    ),
+                    children: [
+                      WidgetSpan(
+                        child: GestureDetector(
+                          onTap: viewModel.navigateToRegister,
+                          child: const Text(
+                            'สร้างบัญชี',
+                            style: TextStyle(
+                              color: Color(0xFF4F9451),
+                              decoration: TextDecoration.underline,
+                              decorationColor: Color(0xFF4F9451),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

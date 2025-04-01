@@ -15,13 +15,14 @@ class ProfileEditView extends StackedView<ProfileEditViewModel> {
   ) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFFF5F5F5),
         title: const Text("แก้ไขโปรไฟล์"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Color(0xFFF5F5F5),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
         child: Column(
@@ -66,12 +67,12 @@ class ProfileEditView extends StackedView<ProfileEditViewModel> {
               // onPressed: viewModel.saveProfile,
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFFFFFF),
+                  backgroundColor: Color(0xFF4F9451),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
+                      borderRadius: BorderRadius.circular(8))),
               child: const Text(
                 "บันทึกข้อมูล",
-                style: TextStyle(color: Color(0xFF000000), fontSize: 16),
+                style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 16),
               ),
             ),
           ],

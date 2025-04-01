@@ -1,6 +1,10 @@
+import 'package:petvillage_app/app/app.locator.dart';
+import 'package:petvillage_app/app/app.router.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
   String _email = '';
   String _password = '';
 
@@ -14,5 +18,9 @@ class LoginViewModel extends BaseViewModel {
   void setPassword(String value) {
     _password = value;
     notifyListeners();
+  }
+
+  void navigateToRegister() {
+    _navigationService.navigateToRegisterView();
   }
 }

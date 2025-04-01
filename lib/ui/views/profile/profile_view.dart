@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/common/assets.dart';
 import 'package:petvillage_app/ui/widgets/profile_header.dart';
 import 'package:petvillage_app/ui/widgets/profile_menu.dart';
+import 'package:petvillage_app/ui/widgets/user_manual.dart';
 import 'package:stacked/stacked.dart';
 import 'profile_viewmodel.dart';
 
@@ -45,7 +46,12 @@ class ProfileView extends StackedView<ProfileViewModel> {
               ProfileMenuItem(
                 icon: Assets.assetsIconsUserManualIcon,
                 title: "คู่มือการใช้งาน",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const UserManual()),
+                  );
+                },
               ),
               const SizedBox(height: 20),
               ProfileMenuItem(
