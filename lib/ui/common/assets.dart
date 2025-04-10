@@ -44,4 +44,6 @@ class Assets {
   static String assetsIconsLocationIcon = 'assets/icons/location_icon.svg';
 
   static String assetsIconsDeliveryIcon = 'assets/icons/delivery_icon.svg';
+
+  static String assetsIconsUploadIcon = 'assets/icons/upload_icon.svg';
 }
