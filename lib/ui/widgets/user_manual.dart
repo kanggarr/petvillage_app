@@ -9,14 +9,7 @@ class UserManual extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text('คู่มือการใช้งาน',
-            style: TextStyle(color: Colors.black)),
         backgroundColor: const Color(0xFFF5F5F5),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,6 +17,13 @@ class UserManual extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text(
+                'คู่มือการใช้งาน',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),

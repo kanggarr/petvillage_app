@@ -15,11 +15,10 @@ class MessageView extends StackedView<MessageViewModel> {
       backgroundColor: Color(0xFFF5F5F5),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
               const Text('ข้อความ',
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600)),
               const SizedBox(height: 20),

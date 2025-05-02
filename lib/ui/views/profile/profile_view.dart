@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/common/assets.dart';
+import 'package:petvillage_app/ui/widgets/about_us.dart';
 import 'package:petvillage_app/ui/widgets/profile_header.dart';
 import 'package:petvillage_app/ui/widgets/profile_menu.dart';
 import 'package:petvillage_app/ui/widgets/user_manual.dart';
@@ -18,10 +19,13 @@ class ProfileView extends StackedView<ProfileViewModel> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text('โปรไฟล์',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600)),
               const SizedBox(height: 20),
               const ProfileHeader(),
               const SizedBox(height: 20),
@@ -57,7 +61,12 @@ class ProfileView extends StackedView<ProfileViewModel> {
               ProfileMenuItem(
                 icon: Assets.assetsIconsAboutUsIcon,
                 title: "เกี่ยวกับเรา",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AboutUs()),
+                  );
+                },
               ),
               const SizedBox(height: 20),
               ProfileMenuItem(
