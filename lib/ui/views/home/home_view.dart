@@ -71,11 +71,16 @@ class HomeView extends StackedView<HomeViewModel> {
           children: [
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'ค้นหา...',
-                      suffixIcon: Icon(Icons.search),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(14),
+                        child: SvgPicture.asset(
+                          Assets.assetsIconsSearchIcon,
+                        ),
+                      ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),

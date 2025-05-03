@@ -42,7 +42,7 @@ class PetDelivery extends StatelessWidget {
 
   Widget _buildMethodChip(String method) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 6),
       decoration: BoxDecoration(
         color: const Color(0xFF4F9451),
         borderRadius: BorderRadius.circular(10),

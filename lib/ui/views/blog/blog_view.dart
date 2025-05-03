@@ -15,7 +15,7 @@ class BlogView extends StackedView<BlogViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         automaticallyImplyLeading: false,
@@ -67,19 +67,24 @@ class BlogView extends StackedView<BlogViewModel> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'ค้นหา...',
-                      suffixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(14),
+                        child: SvgPicture.asset(
+                          Assets.assetsIconsSearchIcon,
+                        ),
+                      ),
+                      border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
               ],
             ),
             const SizedBox(height: 16),

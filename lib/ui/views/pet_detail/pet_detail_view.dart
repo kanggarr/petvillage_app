@@ -35,7 +35,7 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              const PetImageSlider(), // ใส่รูป
+              const PetImageSlider(),
               const SizedBox(height: 16),
               const PetInfoCard(),
               const SizedBox(height: 8),
