@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const validateToken = require('./middleware/validateToken');
 const app = express();
 
 dotenv.config();
@@ -9,6 +10,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/users', require('./routes/userRoutes')); // ปรับ path ตามจริง
+app.use('/api/pets', require('./routes/pets')); // <- เพิ่มบรรทัดนี้
+
 
 // MongoDB Connection
 const connectDB = async () => {

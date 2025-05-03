@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const validateToken = require("../middleware/validateTokenHandler");
+const validateToken = require("../middleware/validateToken");
 const User = require('../models/user'); // <-- ใช้ schema เดิมของคุณ
 
 // สร้างผู้ใช้ใหม่
