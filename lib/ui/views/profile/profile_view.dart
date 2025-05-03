@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/common/assets.dart';
 import 'package:petvillage_app/ui/widgets/about_us.dart';
+import 'package:petvillage_app/ui/widgets/contact_us.dart';
 import 'package:petvillage_app/ui/widgets/profile_header.dart';
 import 'package:petvillage_app/ui/widgets/profile_menu.dart';
 import 'package:petvillage_app/ui/widgets/user_manual.dart';
@@ -72,6 +73,17 @@ class ProfileView extends StackedView<ProfileViewModel> {
               ProfileMenuItem(
                 icon: Assets.assetsIconsPhoneIcon,
                 title: "ติดต่อเรา",
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ContactUs()),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              ProfileMenuItem(
+                icon: Assets.assetsIconsLogOutIcon,
+                title: "ออกจากระบบ",
                 onPressed: () {},
               ),
             ],
