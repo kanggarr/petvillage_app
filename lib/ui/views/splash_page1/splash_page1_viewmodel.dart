@@ -1,7 +1,9 @@
 import 'package:petvillage_app/app/app.locator.dart';
-import 'package:petvillage_app/app/app.router.dart';
+import 'package:petvillage_app/ui/widgets/auth_selector.dart';
+// import 'package:petvillage_app/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter/material.dart';
 
 class SplashPage1ViewModel extends BaseViewModel {
   int _currentPage = 0;
@@ -22,13 +24,19 @@ class SplashPage1ViewModel extends BaseViewModel {
     'แอปพลิเคชั่นของเราเชื่อมต่อคุณกับผู้รับเลี้ยงที่เอาใจใส่เพื่อให้แน่ใจว่าสัตว์เลี้ยงจะได้บ้านอย่างถาวร'
   ];
 
-  void nextPage() {
+  void nextPage(BuildContext context) {
     if (_currentPage < 3) {
       _currentPage++;
       notifyListeners();
     } else {
       _currentPage = 0;
-      _navigationService.navigateToRegisterView();
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => AuthSelector()),
+      );
+
+      // _navigationService.navigateToRegisterView();
     }
   }
 

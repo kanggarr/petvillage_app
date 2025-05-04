@@ -13,6 +13,7 @@ class StartupViewModel extends BaseViewModel {
     // This is where you can make decisions on where your app should navigate when
     // you have custom startup logic
 
-    _navigationService.replaceWithMainView();
+    // _navigationService.replaceWithMainView();
+    _navigationService.navigateTo(Routes.splashPage1View);
   }
 }

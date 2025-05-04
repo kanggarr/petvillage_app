@@ -5,7 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i16;
+import 'package:flutter/material.dart' as _i17;
 import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/views/blog/blog_view.dart' as _i4;
 import 'package:petvillage_app/ui/views/chat/chat_view.dart' as _i15;
@@ -15,6 +15,7 @@ import 'package:petvillage_app/ui/views/home_filter/home_filter_view.dart'
 import 'package:petvillage_app/ui/views/login/login_view.dart' as _i13;
 import 'package:petvillage_app/ui/views/main/main_view.dart' as _i3;
 import 'package:petvillage_app/ui/views/message/message_view.dart' as _i6;
+import 'package:petvillage_app/ui/views/otp/otp_view.dart' as _i16;
 import 'package:petvillage_app/ui/views/pet_detail/pet_detail_view.dart'
     as _i11;
 import 'package:petvillage_app/ui/views/post/post_view.dart' as _i5;
@@ -26,7 +27,7 @@ import 'package:petvillage_app/ui/views/splash_page1/splash_page1_view.dart'
     as _i12;
 import 'package:petvillage_app/ui/views/startup/startup_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i17;
+import 'package:stacked_services/stacked_services.dart' as _i18;
 
 class Routes {
   static const startupView = '/startup-view';
@@ -57,6 +58,8 @@ class Routes {
 
   static const chatView = '/chat-view';
 
+  static const otpView = '/otp-view';
+
   static const all = <String>{
     startupView,
     mainView,
@@ -72,6 +75,7 @@ class Routes {
     loginView,
     registerView,
     chatView,
+    otpView,
   };
 }
 
@@ -133,90 +137,100 @@ class StackedRouter extends _i1.RouterBase {
       Routes.chatView,
       page: _i15.ChatView,
     ),
+    _i1.RouteDef(
+      Routes.otpView,
+      page: _i16.OtpView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.StartupView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.StartupView(),
         settings: data,
       );
     },
     _i3.MainView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.MainView(),
         settings: data,
       );
     },
     _i4.BlogView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.BlogView(),
         settings: data,
       );
     },
     _i5.PostView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.PostView(),
         settings: data,
       );
     },
     _i6.MessageView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.MessageView(),
         settings: data,
       );
     },
     _i7.ProfileView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ProfileView(),
         settings: data,
       );
     },
     _i8.HomeView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.HomeView(),
         settings: data,
       );
     },
     _i9.HomeFilterView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.HomeFilterView(),
         settings: data,
       );
     },
     _i10.ProfileEditView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.ProfileEditView(),
         settings: data,
       );
     },
     _i11.PetDetailView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.PetDetailView(),
         settings: data,
       );
     },
     _i12.SplashPage1View: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i12.SplashPage1View(),
         settings: data,
       );
     },
     _i13.LoginView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i13.LoginView(),
         settings: data,
       );
     },
     _i14.RegisterView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i14.RegisterView(),
         settings: data,
       );
     },
     _i15.ChatView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i17.MaterialPageRoute<dynamic>(
         builder: (context) => const _i15.ChatView(),
+        settings: data,
+      );
+    },
+    _i16.OtpView: (data) {
+      return _i17.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i16.OtpView(),
         settings: data,
       );
     },
@@ -229,7 +243,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i17.NavigationService {
+extension NavigatorStateExtension on _i18.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -426,6 +440,20 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToOtpView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.otpView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -616,6 +644,20 @@ extension NavigatorStateExtension on _i17.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.chatView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithOtpView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.otpView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

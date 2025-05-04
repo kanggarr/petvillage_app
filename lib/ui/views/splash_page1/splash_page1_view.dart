@@ -50,7 +50,7 @@ class SplashPage1View extends StackedView<SplashPage1ViewModel> {
               const SizedBox(height: 24),
               FittedBox(
                 child: ElevatedButton(
-                  onPressed: viewModel.nextPage,
+                  onPressed: () => viewModel.nextPage(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4F9451),
                     shape: RoundedRectangleBorder(

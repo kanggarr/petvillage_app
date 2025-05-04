@@ -4,26 +4,39 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class RegisterViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
+
   String _username = '';
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
-  String _phoneNumber = '';
   bool _isChecked = false;
+  bool _showEmailError = false;
+  bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
+
+  // เพิ่มตัวแปรเพื่อควบคุมการแสดง errorText
+  bool _showPasswordError = false;
+  bool _showConfirmPasswordError = false;
 
   String get username => _username;
   String get email => _email;
   String get password => _password;
   String get confirmPassword => _confirmPassword;
-  String get phoneNumber => _phoneNumber;
   bool get isChecked => _isChecked;
+  bool get showEmailError => _showEmailError;
+  bool get showPasswordError => _showPasswordError;
+  bool get showConfirmPasswordError => _showConfirmPasswordError;
 
+  bool get isPasswordVisible => _isPasswordVisible;
+  bool get isConfirmPasswordVisible => _isConfirmPasswordVisible;
+
+  // ปรับปรุงการคำนวณ isButtonEnabled
   bool get isButtonEnabled =>
       _username.isNotEmpty &&
       _email.isNotEmpty &&
       _password.isNotEmpty &&
       _confirmPassword.isNotEmpty &&
-      _phoneNumber.isNotEmpty &&
       _isChecked;
 
   void setUsername(String value) {
@@ -33,6 +46,7 @@ class RegisterViewModel extends BaseViewModel {
 
   void setEmail(String value) {
     _email = value;
+    _showEmailError = false;
     notifyListeners();
   }
 
@@ -46,17 +60,52 @@ class RegisterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setPhoneNumber(String value) {
-    _phoneNumber = value;
-    notifyListeners();
-  }
-
   void setChecked(bool? value) {
     _isChecked = value ?? false;
     notifyListeners();
   }
 
-  final _navigationService = locator<NavigationService>();
+  void togglePasswordVisibility() {
+    _isPasswordVisible = !_isPasswordVisible;
+    notifyListeners();
+  }
+
+  void toggleConfirmPasswordVisibility() {
+    _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+    notifyListeners();
+  }
+
+  bool isEmailValid() {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(_email);
+  }
+
+  bool isPasswordValid() {
+    return _password.length >= 6;
+  }
+
+  bool doPasswordsMatch() {
+    return _password == _confirmPassword && _password.isNotEmpty;
+  }
+
+  Future<void> onRegisterPressed() async {
+    // แสดง error ถ้าไม่ผ่าน validation ตอนกดปุ่ม
+    _showEmailError = !isEmailValid();
+    _showPasswordError = !isPasswordValid();
+    _showConfirmPasswordError = !doPasswordsMatch();
+
+    notifyListeners(); // อัปเดต UI
+
+    if (_showEmailError || _showPasswordError || _showConfirmPasswordError) {
+      return; // ยังไม่ลงทะเบียน
+    }
+
+    navigateToOtp();
+  }
+
+  void navigateToOtp() {
+    _navigationService.navigateToOtpView();
+  }
 
   void navigateToLogin() {
     _navigationService.navigateToLoginView();
