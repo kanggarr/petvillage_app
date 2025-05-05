@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'register_viewmodel.dart';
 
-class RegisterView extends StackedView<RegisterViewModel> {
-  const RegisterView({Key? key}) : super(key: key);
+import 'shop_register_viewmodel.dart';
+
+class ShopRegisterView extends StackedView<ShopRegisterViewModel> {
+  const ShopRegisterView({Key? key}) : super(key: key);
 
   @override
   Widget builder(
     BuildContext context,
-    RegisterViewModel viewModel,
+    ShopRegisterViewModel viewModel,
     Widget? child,
   ) {
     return Scaffold(
@@ -22,7 +23,7 @@ class RegisterView extends StackedView<RegisterViewModel> {
             children: [
               const SizedBox(height: 20),
               const Text(
-                'สร้างบัญชี Pet Village',
+                'ลงทะเบียนร้านค้า',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -32,7 +33,7 @@ class RegisterView extends StackedView<RegisterViewModel> {
               const SizedBox(height: 30),
               // Username field
               const Text(
-                'ชื่อผู้ใช้งาน',
+                'ชื่อร้านค้า/ห้างร้าน/บริษัท',
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -41,7 +42,7 @@ class RegisterView extends StackedView<RegisterViewModel> {
               TextField(
                 onChanged: viewModel.setUsername,
                 decoration: InputDecoration(
-                  hintText: 'กรอกชื่อผู้ใช้งาน',
+                  hintText: 'กรอกชื่อร้านของคุณ',
                   hintStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
@@ -165,6 +166,32 @@ class RegisterView extends StackedView<RegisterViewModel> {
                 ),
               ),
               const SizedBox(height: 20),
+              // Username field
+              const Text(
+                'ที่อยู่ร้านค้า',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF808080)),
+              ),
+              TextField(
+                onChanged: viewModel.setUsername,
+                decoration: InputDecoration(
+                  hintText: 'กรอกที่อยู่ร้านค้า',
+                  hintStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: Color(0xFF808080)),
+                  filled: true,
+                  fillColor: const Color(0xFFFFFFFF),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                ),
+              ),
+              const SizedBox(height: 20),
               // Agree to terms checkbox
               Row(
                 children: [
@@ -249,6 +276,8 @@ class RegisterView extends StackedView<RegisterViewModel> {
   }
 
   @override
-  RegisterViewModel viewModelBuilder(BuildContext context) =>
-      RegisterViewModel();
+  ShopRegisterViewModel viewModelBuilder(
+    BuildContext context,
+  ) =>
+      ShopRegisterViewModel();
 }

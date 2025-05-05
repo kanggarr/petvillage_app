@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:petvillage_app/app/app.locator.dart';
 import 'package:petvillage_app/app/app.router.dart';
 import 'package:stacked/stacked.dart';
@@ -5,6 +7,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  final _dialogService = locator<DialogService>();
 
   String _email = '';
   String _password = '';
@@ -23,6 +26,7 @@ class LoginViewModel extends BaseViewModel {
 
   void setEmail(String value) {
     _email = value;
+    _showEmailError = false;
     notifyListeners();
   }
 
@@ -36,11 +40,52 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void submitLogin() {
-    if (!isEmailValid) {
-      _showEmailError = true;
-      notifyListeners();
-      return;
+  Future<void> submitLogin() async {
+    _showEmailError = !isEmailValid;
+    notifyListeners();
+
+    if (_showEmailError) return;
+
+    await _loginUser();
+  }
+
+  Future<void> _loginUser() async {
+    setBusy(true);
+    try {
+      final url = Uri.parse('http://10.0.2.2:5000/api/auth/login');
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': _email,
+          'password': _password,
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        await _dialogService.showDialog(
+          title: 'เข้าสู่ระบบสำเร็จ',
+          description: 'ยินดีต้อนรับ!',
+          buttonTitle: 'ตกลง',
+        );
+        _navigationService.replaceWithMainView();
+      } else {
+        await _dialogService.showDialog(
+          title: 'เกิดข้อผิดพลาด',
+          description: data['msg'] ?? 'เข้าสู่ระบบไม่สำเร็จ',
+          buttonTitle: 'ตกลง',
+        );
+      }
+    } catch (e) {
+      await _dialogService.showDialog(
+        title: 'ข้อผิดพลาดของระบบ',
+        description: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
+        buttonTitle: 'ตกลง',
+      );
+    } finally {
+      setBusy(false);
     }
   }
 

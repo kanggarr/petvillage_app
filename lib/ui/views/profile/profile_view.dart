@@ -41,12 +41,12 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 title: "สัตว์เลี้ยงที่ชอบ",
                 onPressed: () {},
               ),
-              const SizedBox(height: 20),
-              ProfileMenuItem(
-                icon: Assets.assetsIconsNotificationIcon,
-                title: "การแจ้งเตือน",
-                onPressed: () {},
-              ),
+              // const SizedBox(height: 20),
+              // ProfileMenuItem(
+              //   icon: Assets.assetsIconsNotificationIcon,
+              //   title: "การแจ้งเตือน",
+              //   onPressed: () {},
+              // ),
               const SizedBox(height: 20),
               ProfileMenuItem(
                 icon: Assets.assetsIconsUserManualIcon,

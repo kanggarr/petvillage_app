@@ -2,10 +2,8 @@ import 'package:petvillage_app/app/app.locator.dart';
 import 'package:petvillage_app/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class RegisterViewModel extends BaseViewModel {
+class ShopRegisterViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
 
@@ -102,7 +100,7 @@ class RegisterViewModel extends BaseViewModel {
     }
 
     // เชื่อม backend ที่นี่
-    await registerUser();
+    // await registerUser();
   }
 
   void navigateToOtp() {
@@ -111,55 +109,5 @@ class RegisterViewModel extends BaseViewModel {
 
   void navigateToLogin() {
     _navigationService.navigateToLoginView();
-  }
-
-  Future<void> registerUser() async {
-    print('registerUser() ถูกเรียก'); // เพิ่มการ print เพื่อตรวจสอบ
-    setBusy(true); // แสดง loading ถ้ามี
-    try {
-      final url = Uri.parse('http://10.0.2.2:5000/api/auth/register');
-
-      print('กำลังส่งคำขอไปที่: $url'); // เพิ่มการ print เพื่อตรวจสอบ URL
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'username': _username,
-          'email': _email,
-          'password': _password,
-        }),
-      );
-
-      print(
-          'Response status: ${response.statusCode}'); // ตรวจสอบสถานะการตอบกลับ
-      print(
-          'Response body: ${response.body}'); // ตรวจสอบเนื้อหาที่ได้รับจากเซิร์ฟเวอร์
-
-      final data = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        await _dialogService.showDialog(
-          title: 'สำเร็จ',
-          description: data['msg'] ?? 'สร้างบัญชีผู้ใช้เรียบร้อยแล้ว',
-          buttonTitle: 'ตกลง',
-        );
-        navigateToOtp();
-      } else {
-        await _dialogService.showDialog(
-          title: 'เกิดข้อผิดพลาด',
-          description: data['msg'] ?? 'ไม่สามารถลงทะเบียนได้',
-          buttonTitle: 'ตกลง',
-        );
-      }
-    } catch (e) {
-      print('ข้อผิดพลาด: $e'); // ตรวจสอบข้อผิดพลาด
-      await _dialogService.showDialog(
-        title: 'ข้อผิดพลาดของระบบ',
-        description: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
-        buttonTitle: 'ตกลง',
-      );
-    } finally {
-      setBusy(false);
-    }
   }
 }

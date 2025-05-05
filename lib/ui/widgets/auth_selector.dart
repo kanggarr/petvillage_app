@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/views/login/login_view.dart';
 import 'package:petvillage_app/ui/views/register/register_view.dart';
+import 'package:petvillage_app/ui/views/shop_register/shop_register_view.dart';
 
 class AuthSelector extends StatefulWidget {
   const AuthSelector({super.key});
@@ -33,7 +34,6 @@ class _AuthSelectorState extends State<AuthSelector> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +43,7 @@ class _AuthSelectorState extends State<AuthSelector> {
                     child: Column(
                       children: [
                         Text(
-                          'ลงทะเบียนร้านค้า',
+                          'ลงทะเบียนผู้ใช้ทั่วไป',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
@@ -68,7 +68,7 @@ class _AuthSelectorState extends State<AuthSelector> {
                     child: Column(
                       children: [
                         Text(
-                          'เข้าสู่ระบบ',
+                          'ลงทะเบียนร้านค้า',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
@@ -89,10 +89,7 @@ class _AuthSelectorState extends State<AuthSelector> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 30),
-
-              // ปุ่มหลัก
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 80),
                 child: ElevatedButton(
@@ -114,18 +111,51 @@ class _AuthSelectorState extends State<AuthSelector> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LoginView()),
+                            builder: (context) => const ShopRegisterView()),
                       );
                     }
                   },
                   child: Text(
-                    isRegisterSelected ? 'ลงทะเบียน' : 'เข้าสู่ระบบ',
+                    isRegisterSelected ? 'ลงทะเบียน' : 'ลงทะเบียน',
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: 'มีบัญชีอยู่แล้วใช่ไหม? ',
+                    style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF808080),
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Kanit'),
+                    children: [
+                      WidgetSpan(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginView()),
+                            );
+                          },
+                          child: const Text(
+                            'ลงชื่อเข้าใช้',
+                            style: TextStyle(
+                              color: Color(0xFF4F9451),
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Color(0xFF4F9451),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

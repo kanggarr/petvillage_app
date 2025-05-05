@@ -14,6 +14,7 @@ class LoginView extends StackedView<LoginViewModel> {
   ) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
+      appBar: AppBar(backgroundColor: const Color(0xFFF5F5F5)),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(

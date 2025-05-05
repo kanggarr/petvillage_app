@@ -81,7 +81,7 @@ class HomeView extends StackedView<HomeViewModel> {
                           Assets.assetsIconsSearchIcon,
                         ),
                       ),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
                   ),
