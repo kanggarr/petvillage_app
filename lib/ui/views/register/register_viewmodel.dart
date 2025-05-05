@@ -117,7 +117,8 @@ class RegisterViewModel extends BaseViewModel {
     print('registerUser() ถูกเรียก'); // เพิ่มการ print เพื่อตรวจสอบ
     setBusy(true); // แสดง loading ถ้ามี
     try {
-      final url = Uri.parse('http://10.0.2.2:5000/api/register');
+      // final url = Uri.parse('http://10.0.2.2:5000/api/register'); // for windows
+      final url = Uri.parse('http://localhost:5000/api/register'); // for macOS
 
       print('กำลังส่งคำขอไปที่: $url'); // เพิ่มการ print เพื่อตรวจสอบ URL
       final response = await http.post(
