@@ -18,6 +18,7 @@ import 'package:petvillage_app/ui/views/register/register_view.dart';
 import 'package:petvillage_app/ui/views/chat/chat_view.dart';
 import 'package:petvillage_app/ui/views/otp/otp_view.dart';
 import 'package:petvillage_app/ui/views/shop_register/shop_register_view.dart';
+import 'package:petvillage_app/ui/views/forgot_password/forgot_password_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -38,6 +39,7 @@ import 'package:petvillage_app/ui/views/shop_register/shop_register_view.dart';
     MaterialRoute(page: ChatView),
     MaterialRoute(page: OtpView),
     MaterialRoute(page: ShopRegisterView),
+    MaterialRoute(page: ForgotPasswordView),
 // @stacked-route
   ],
   dependencies: [

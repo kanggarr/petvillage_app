@@ -5,7 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class ShopRegisterViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final _dialogService = locator<DialogService>();
+  // final _dialogService = locator<DialogService>();
 
   String _username = '';
   String _email = '';
@@ -39,6 +39,31 @@ class ShopRegisterViewModel extends BaseViewModel {
       _password.isNotEmpty &&
       _confirmPassword.isNotEmpty &&
       _isChecked;
+
+  // ที่อยู่
+  String? selectedLocation;
+  String? selectedDistrict;
+  String? selectedSubDistrict;
+
+  // จังหวัด
+  final List<String> locations = ['กรุงเทพฯ', 'เชียงใหม่', 'ขอนแก่น'];
+  final List<String> districts = ['ทุ่งครุ', 'บางขุนเทียน', 'บางแค'];
+  final List<String> subDistricts = ['บางมด', 'ท่าข้าม', 'บางบอน'];
+
+  void setLocation(String location) {
+    selectedLocation = location;
+    notifyListeners();
+  }
+
+  void setDistrict(String district) {
+    selectedDistrict = district;
+    notifyListeners();
+  }
+
+  void setSubDistrict(String subDistrict) {
+    selectedSubDistrict = subDistrict;
+    notifyListeners();
+  }
 
   void setUsername(String value) {
     _username = value;
@@ -110,4 +135,13 @@ class ShopRegisterViewModel extends BaseViewModel {
   void navigateToLogin() {
     _navigationService.navigateToLoginView();
   }
+
+  List<String> _images = [];
+
+  void setImages(List<String> images) {
+    _images = images;
+    notifyListeners();
+  }
+
+  List<String> get images => _images;
 }

@@ -52,7 +52,9 @@ class LoginViewModel extends BaseViewModel {
   Future<void> _loginUser() async {
     setBusy(true);
     try {
-      final url = Uri.parse('http://10.0.2.2:5000/api/auth/login');
+      // final url = Uri.parse('http://10.0.2.2:5000/api/auth/login');  // for android studio
+      final url =
+          Uri.parse('http://localhost:5000/api/auth/login'); // for xcode
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -91,5 +93,9 @@ class LoginViewModel extends BaseViewModel {
 
   void navigateToRegister() {
     _navigationService.navigateToRegisterView();
+  }
+
+  void navigateToForgotPassword() {
+    _navigationService.navigateToForgotPasswordView();
   }
 }

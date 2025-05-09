@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/widgets/custom_texfeild.dart';
 import 'package:stacked/stacked.dart';
 import 'register_viewmodel.dart';
 
@@ -31,125 +32,49 @@ class RegisterView extends StackedView<RegisterViewModel> {
               ),
               const SizedBox(height: 30),
               // Username field
-              const Text(
-                'ชื่อผู้ใช้งาน',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF808080)),
-              ),
-              TextField(
+              CustomTextField(
+                label: 'ชื่อผู้ใช้งาน',
+                hintText: 'กรอกชื่อผู้ใช้งาน',
                 onChanged: viewModel.setUsername,
-                decoration: InputDecoration(
-                  hintText: 'กรอกชื่อผู้ใช้งาน',
-                  hintStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                      color: Color(0xFF808080)),
-                  filled: true,
-                  fillColor: const Color(0xFFFFFFFF),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                ),
               ),
               const SizedBox(height: 20),
               // Email field
-              const Text(
-                'อีเมล',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF808080)),
-              ),
-              TextField(
+              CustomTextField(
+                label: 'อีเมล',
+                hintText: 'กรอกอีเมลของคุณ',
                 onChanged: viewModel.setEmail,
-                decoration: InputDecoration(
-                  hintText: 'กรอกอีเมลของคุณ',
-                  hintStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                      color: Color(0xFF808080)),
-                  filled: true,
-                  fillColor: const Color(0xFFFFFFFF),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                  errorText:
-                      viewModel.showEmailError && !viewModel.isEmailValid()
-                          ? 'รูปแบบอีเมลไม่ถูกต้อง'
-                          : null,
-                ),
+                errorText: viewModel.showEmailError && !viewModel.isEmailValid()
+                    ? 'รูปแบบอีเมลไม่ถูกต้อง'
+                    : null,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 20),
               // Password field
-              const Text(
-                'รหัสผ่าน',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF808080)),
-              ),
-              TextField(
+              CustomTextField(
+                label: 'รหัสผ่าน',
+                hintText: 'กรอกรหัสผ่านของคุณ',
                 onChanged: viewModel.setPassword,
                 obscureText: !viewModel.isPasswordVisible,
-                decoration: InputDecoration(
-                  hintText: 'กรอกรหัสผ่านของคุณ',
-                  hintStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                      color: Color(0xFF808080)),
-                  filled: true,
-                  fillColor: const Color(0xFFFFFFFF),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                errorText: viewModel.showPasswordError
+                    ? 'รหัสผ่านต้องมีความยาวขั้นต่ำ 6 ตัว'
+                    : null,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    viewModel.isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    color: Colors.grey,
                   ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      viewModel.isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      color: Colors.grey,
-                    ),
-                    onPressed: viewModel.togglePasswordVisibility,
-                  ),
-                  errorText: viewModel.showPasswordError
-                      ? 'รหัสผ่านต้องมีความยาวขั้นต่ำ 6 ตัว'
-                      : null,
+                  onPressed: viewModel.togglePasswordVisibility,
                 ),
               ),
               const SizedBox(height: 20),
               // Confirm Password field
-              const Text(
-                'ยืนยันรหัสผ่าน',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF808080)),
-              ),
-              TextField(
-                onChanged: viewModel.setConfirmPassword,
-                obscureText: !viewModel.isConfirmPasswordVisible,
-                decoration: InputDecoration(
+              CustomTextField(
+                  label: 'ยืนยันรหัสผ่าน',
                   hintText: 'ยืนยันรหัสผ่านของคุณ',
-                  hintStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                      color: Color(0xFF808080)),
-                  filled: true,
-                  fillColor: const Color(0xFFFFFFFF),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                  obscureText: !viewModel.isConfirmPasswordVisible,
+                  onChanged: viewModel.setConfirmPassword,
                   suffixIcon: IconButton(
                     icon: Icon(
                       viewModel.isConfirmPasswordVisible
@@ -160,10 +85,8 @@ class RegisterView extends StackedView<RegisterViewModel> {
                     onPressed: viewModel.toggleConfirmPasswordVisibility,
                   ),
                   errorText: viewModel.showConfirmPasswordError
-                      ? 'ยืนยันรหัสผ่านไม่ถูกต้อง'
-                      : null,
-                ),
-              ),
+                      ? 'รหัสผ่านไม่ตรงกัน'
+                      : null),
               const SizedBox(height: 20),
               // Agree to terms checkbox
               Row(
@@ -212,35 +135,7 @@ class RegisterView extends StackedView<RegisterViewModel> {
                 ),
               ),
 
-              const SizedBox(height: 20),
-              Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: 'มีบัญชีอยู่แล้วใช่ไหม? ',
-                    style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF808080),
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Kanit'),
-                    children: [
-                      WidgetSpan(
-                        child: GestureDetector(
-                          onTap: viewModel.navigateToLogin,
-                          child: const Text(
-                            'เข้าสู่ระบบ',
-                            style: TextStyle(
-                              color: Color(0xFF4F9451),
-                              fontWeight: FontWeight.w500,
-                              decoration: TextDecoration.underline,
-                              decorationColor: Color(0xFF4F9451),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              //
             ],
           ),
         ),

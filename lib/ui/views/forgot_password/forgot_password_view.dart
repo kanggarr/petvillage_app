@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/widgets/custom_texfeild.dart';
 import 'package:stacked/stacked.dart';
 
-import 'login_viewmodel.dart';
+import 'forgot_password_viewmodel.dart';
 
-class LoginView extends StackedView<LoginViewModel> {
-  const LoginView({Key? key}) : super(key: key);
+class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
+  const ForgotPasswordView({Key? key}) : super(key: key);
 
   @override
   Widget builder(
     BuildContext context,
-    LoginViewModel viewModel,
+    ForgotPasswordViewModel viewModel,
     Widget? child,
   ) {
     return Scaffold(
@@ -25,33 +25,22 @@ class LoginView extends StackedView<LoginViewModel> {
             children: [
               const SizedBox(height: 20),
               const Text(
-                'เข้าสู่ระบบ',
+                'สร้างรหัสผ่านใหม่',
                 style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF242424)),
               ),
               const SizedBox(height: 30),
-              // Email Field
-              CustomTextField(
-                label: 'อีเมล',
-                hintText: 'กรอกอีเมลของคุณ',
-                onChanged: viewModel.setEmail,
-                errorText: viewModel.showEmailError && !viewModel.isEmailValid
-                    ? 'อีเมลไม่ถูกต้อง'
-                    : null,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: 20),
               // Password Field
               CustomTextField(
-                label: 'รหัสผ่าน',
+                label: 'รหัสผ่านใหม่',
                 hintText: 'กรอกรหัสผ่านของคุณ',
-                onChanged: viewModel.setPassword,
                 obscureText: !viewModel.isPasswordVisible,
-                // errorText: viewModel.showPasswordError
-                //     ? 'รหัสผ่านไม่ถูกต้อง'
-                //     : null,
+                onChanged: viewModel.setPassword,
+                errorText: viewModel.showPasswordError
+                    ? 'รหัสผ่านต้องมีความยาวขั้นต่ำ 6 ตัว'
+                    : null,
                 suffixIcon: IconButton(
                   icon: Icon(
                     viewModel.isPasswordVisible
@@ -61,28 +50,35 @@ class LoginView extends StackedView<LoginViewModel> {
                   ),
                   onPressed: viewModel.togglePasswordVisibility,
                 ),
+                keyboardType: TextInputType.emailAddress,
               ),
-              const SizedBox(height: 10),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    viewModel.navigateToForgotPassword();
-                  },
-                  child: const Text(
-                    'ลืมรหัสผ่าน',
-                    style: TextStyle(
-                        color: Color(0xFF808080),
-                        decoration: TextDecoration.underline),
-                  ),
-                ),
-              ),
+
               const SizedBox(height: 20),
+              // Confirm Password Field
+              CustomTextField(
+                  label: 'ยืนยันรหัสผ่าน',
+                  hintText: 'ยืนยันรหัสผ่านของคุณ',
+                  obscureText: !viewModel.isConfirmPasswordVisible,
+                  onChanged: viewModel.setConfirmPassword,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      viewModel.isConfirmPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+                    onPressed: viewModel.toggleConfirmPasswordVisibility,
+                  ),
+                  errorText: viewModel.showConfirmPasswordError
+                      ? 'รหัสผ่านไม่ตรงกัน'
+                      : null),
+              const SizedBox(height: 30),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed:
-                      viewModel.isButtonEnabled ? viewModel.submitLogin : null,
+                  onPressed: viewModel.isButtonEnabled
+                      ? viewModel.onConfirmPressed
+                      : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: viewModel.isButtonEnabled
                         ? const Color(0xFF4F9451)
@@ -93,7 +89,7 @@ class LoginView extends StackedView<LoginViewModel> {
                     ),
                   ),
                   child: Text(
-                    'เข้าสู่ระบบ',
+                    'ยืนยัน',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -112,8 +108,8 @@ class LoginView extends StackedView<LoginViewModel> {
   }
 
   @override
-  LoginViewModel viewModelBuilder(
+  ForgotPasswordViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      LoginViewModel();
+      ForgotPasswordViewModel();
 }

@@ -33,7 +33,7 @@ class SplashPage1ViewModel extends BaseViewModel {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AuthSelector()),
+        MaterialPageRoute(builder: (context) => const AuthSelector()),
       );
 
       // _navigationService.navigateToRegisterView();

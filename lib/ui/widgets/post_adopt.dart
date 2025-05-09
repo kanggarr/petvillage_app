@@ -70,36 +70,38 @@ class PostAdoptForm extends StatelessWidget {
           viewModel.setImages(images); // หรือเก็บในตัวแปรใน ViewModel
         }),
         const SizedBox(height: 20),
-        const Text(
-          'ประเภทสัตว์',
-          style: TextStyle(
-            fontSize: 15,
-            color: Color(0xFF808080),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 5),
+        // const Text(
+        //   'ประเภทสัตว์',
+        //   style: TextStyle(
+        //     fontSize: 15,
+        //     color: Color(0xFF808080),
+        //     fontWeight: FontWeight.w500,
+        //   ),
+        // ),
+        // const SizedBox(height: 5),
         ReusableDropdown(
           value: viewModel.selectedAnimalType,
           items: viewModel.animalTypes,
           onChanged: (value) {
             if (value != null) viewModel.setAnimalType(value);
           },
+          label: 'ประเภทสัตว์',
           hintText: 'เลือกประเภทสัตว์',
         ),
         const SizedBox(height: 20),
-        const Text('พันธุ์สัตว์',
-            style: TextStyle(
-                fontSize: 15,
-                color: Color(0xFF808080),
-                fontWeight: FontWeight.w500)),
-        const SizedBox(height: 5),
+        // const Text('พันธุ์สัตว์',
+        //     style: TextStyle(
+        //         fontSize: 15,
+        //         color: Color(0xFF808080),
+        //         fontWeight: FontWeight.w500)),
+        // const SizedBox(height: 5),
         ReusableDropdown(
           value: viewModel.selectedBreed,
           items: viewModel.breeds,
           onChanged: (value) {
             if (value != null) viewModel.setBreed(value);
           },
+          label: 'พันธุ์สัตว์',
           hintText: 'เลือกพันธุ์สัตว์',
         ),
         const SizedBox(height: 20),
@@ -117,48 +119,51 @@ class PostAdoptForm extends StatelessWidget {
             setMaleSelected: viewModel.setMaleSelected,
             setFemaleSelected: viewModel.setFemaleSelected),
         const SizedBox(height: 20),
-        const Text('อายุ',
-            style: TextStyle(
-                fontSize: 15,
-                color: Color(0xFF808080),
-                fontWeight: FontWeight.w500)),
-        const SizedBox(height: 5),
+        // const Text('อายุ',
+        //     style: TextStyle(
+        //         fontSize: 15,
+        //         color: Color(0xFF808080),
+        //         fontWeight: FontWeight.w500)),
+        // const SizedBox(height: 5),
         ReusableDropdown(
           value: viewModel.selectedAge,
           items: viewModel.ages,
           onChanged: (value) {
             if (value != null) viewModel.setAge(value);
           },
+          label: 'อายุ',
           hintText: 'เลือกอายุ',
         ),
         const SizedBox(height: 20),
-        const Text('ที่ตั้ง',
-            style: TextStyle(
-                fontSize: 15,
-                color: Color(0xFF808080),
-                fontWeight: FontWeight.w500)),
-        const SizedBox(height: 5),
+        // const Text('ที่ตั้ง',
+        //     style: TextStyle(
+        //         fontSize: 15,
+        //         color: Color(0xFF808080),
+        //         fontWeight: FontWeight.w500)),
+        // const SizedBox(height: 5),
         ReusableDropdown(
           value: viewModel.selectedLocation,
           items: viewModel.locations,
           onChanged: (value) {
             if (value != null) viewModel.setLocation(value);
           },
+          label: 'ที่ตั้ง',
           hintText: 'เลือกที่ตั้ง',
         ),
         const SizedBox(height: 20),
-        const Text('การจัดส่ง',
-            style: TextStyle(
-                fontSize: 15,
-                color: Color(0xFF808080),
-                fontWeight: FontWeight.w500)),
-        const SizedBox(height: 5),
+        // const Text('การจัดส่ง',
+        //     style: TextStyle(
+        //         fontSize: 15,
+        //         color: Color(0xFF808080),
+        //         fontWeight: FontWeight.w500)),
+        // const SizedBox(height: 5),
         ReusableDropdown(
           value: viewModel.selectedDelivery,
           items: viewModel.deliveryMethods,
           onChanged: (value) {
             if (value != null) viewModel.setDelivery(value);
           },
+          label: 'การจัดส่ง',
           hintText: 'เลือกวิธีการจัดส่ง',
         ),
       ],
