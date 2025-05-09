@@ -63,8 +63,8 @@ class RegisterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setChecked(bool? value) {
-    _isChecked = value ?? false;
+  void setConsentFromView() {
+    _isChecked = true;
     notifyListeners();
   }
 
@@ -117,9 +117,9 @@ class RegisterViewModel extends BaseViewModel {
     print('registerUser() ถูกเรียก'); // เพิ่มการ print เพื่อตรวจสอบ
     setBusy(true); // แสดง loading ถ้ามี
     try {
-      // final url = Uri.parse('http://10.0.2.2:5000/api/auth/register');  // for android studio
-      final url =
-          Uri.parse('http://localhost:5000/api/auth/register'); // for xcode
+      final url = Uri.parse(
+          'http://10.0.2.2:5000/api/auth/register'); // for android studio
+      // final url = Uri.parse('http://localhost:5000/api/auth/register'); // for xcode
 
       print('กำลังส่งคำขอไปที่: $url'); // เพิ่มการ print เพื่อตรวจสอบ URL
       final response = await http.post(

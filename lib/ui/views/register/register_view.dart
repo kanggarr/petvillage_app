@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/widgets/agreement.dart';
 import 'package:petvillage_app/ui/widgets/custom_texfeild.dart';
 import 'package:stacked/stacked.dart';
 import 'register_viewmodel.dart';
@@ -93,14 +94,26 @@ class RegisterView extends StackedView<RegisterViewModel> {
                 children: [
                   Checkbox(
                     value: viewModel.isChecked,
-                    onChanged: viewModel.setChecked,
+                    onChanged: null, // ปิดการติ๊กเอง
                   ),
-                  const Expanded(
-                    child: Text(
-                      'ยินยอมตามข้อตกลงและเงื่อนไข',
-                      style: TextStyle(
-                        color: Color(0xFF808080),
-                        decoration: TextDecoration.underline,
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async {
+                        final agreed = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Agreement()),
+                        );
+                        if (agreed == true) {
+                          viewModel.setConsentFromView();
+                        }
+                      },
+                      child: const Text(
+                        'ยินยอมตามข้อตกลงและเงื่อนไข',
+                        style: TextStyle(
+                          color: Color(0xFF808080),
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
                   ),
