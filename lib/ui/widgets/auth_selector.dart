@@ -135,6 +135,7 @@ class _AuthSelectorState extends State<AuthSelector> {
                       WidgetSpan(
                         child: GestureDetector(
                           onTap: () {
+                            print('กดลงชื่อเข้าใช้แล้ว');
                             Navigator.push(
                               context,
                               MaterialPageRoute(

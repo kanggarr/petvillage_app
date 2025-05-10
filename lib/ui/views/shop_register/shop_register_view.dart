@@ -39,7 +39,7 @@ class ShopRegisterView extends StackedView<ShopRegisterViewModel> {
               CustomTextField(
                 label: 'ชื่อร้านค้า/ห้างร้าน/บริษัท',
                 hintText: 'กรอกชื่อร้านของคุณ',
-                onChanged: viewModel.setUsername,
+                onChanged: viewModel.setShopname,
               ),
               const SizedBox(height: 20),
               // Email field
@@ -96,19 +96,21 @@ class ShopRegisterView extends StackedView<ShopRegisterViewModel> {
               CustomTextField(
                 label: 'ที่อยู่',
                 hintText: 'กรอกที่อยู่ร้านค้า',
-                onChanged: viewModel.setUsername,
+                onChanged: viewModel.setAddress,
               ),
               const SizedBox(height: 20),
               // Province
               ReusableDropdown(
+                value: null, // ลองให้เป็น null ชั่วคราว
+                items: viewModel.locations,
+                onChanged: (val) {
+                  print('เลือกจังหวัด: $val');
+                  viewModel.setLocation(val!);
+                },
                 label: 'จังหวัด',
                 hintText: 'เลือกจังหวัด',
-                value: viewModel.selectedLocation,
-                items: viewModel.locations,
-                onChanged: (value) {
-                  if (value != null) viewModel.setLocation(value);
-                },
               ),
+
               const SizedBox(height: 20),
               // District
               ReusableDropdown(
