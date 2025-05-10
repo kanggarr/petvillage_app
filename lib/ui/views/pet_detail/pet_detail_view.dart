@@ -18,10 +18,10 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
         backgroundColor: const Color(0xFFF5F5F5),
       ),
       body: SafeArea(
@@ -32,15 +32,18 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
             children: [
               const Text(
                 "Pet Village",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF242424)),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               const PetImageSlider(),
               const SizedBox(height: 16),
               const PetInfoCard(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               PetDelivery(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               PetStore(),
               const SizedBox(height: 16),
               Center(

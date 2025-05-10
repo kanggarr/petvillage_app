@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class PostViewModel extends BaseViewModel {
+  PostViewModel() {
+    blogTitleController.addListener(notifyListeners);
+    blogContentController.addListener(notifyListeners);
+    petNameController.addListener(notifyListeners);
+  }
+
   // เพศ
   bool isBothSelected = false;
   bool isMaleSelected = false;
@@ -103,5 +109,13 @@ class PostViewModel extends BaseViewModel {
           selectedAnimalType != null &&
           selectedBreed != null;
     }
+  }
+
+  @override
+  void dispose() {
+    blogTitleController.dispose();
+    blogContentController.dispose();
+    petNameController.dispose();
+    super.dispose();
   }
 }

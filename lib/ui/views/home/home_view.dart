@@ -81,7 +81,7 @@ class HomeView extends StackedView<HomeViewModel> {
                           Assets.assetsIconsSearchIcon,
                         ),
                       ),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                     ),
                   ),
@@ -144,7 +144,7 @@ class HomeView extends StackedView<HomeViewModel> {
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                 ),
-                itemCount: 8,
+                itemCount: 4,
                 itemBuilder: (context, index) {
                   return PetCard(
                     onPressed: viewModel.navigateToPetDetail,
