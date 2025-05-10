@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/widgets/agreement.dart';
 import 'package:petvillage_app/ui/widgets/custom_texfeild.dart';
 import 'package:petvillage_app/ui/widgets/dropdown.dart';
 import 'package:petvillage_app/ui/widgets/image_picker.dart';
@@ -149,14 +150,28 @@ class ShopRegisterView extends StackedView<ShopRegisterViewModel> {
                 children: [
                   Checkbox(
                     value: viewModel.isChecked,
-                    onChanged: viewModel.setChecked,
+                    onChanged: (_) {}, // ปิดการติ๊กเอง
+                    activeColor: const Color(0xFF4F9451),
+                    checkColor: const Color(0xFFFFFFFF),
                   ),
-                  const Expanded(
-                    child: Text(
-                      'ยินยอมตามข้อตกลงและเงื่อนไข',
-                      style: TextStyle(
-                        color: Color(0xFF808080),
-                        decoration: TextDecoration.underline,
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async {
+                        final agreed = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Agreement()),
+                        );
+                        if (agreed == true) {
+                          viewModel.setConsentFromView();
+                        }
+                      },
+                      child: const Text(
+                        'ยินยอมตามข้อตกลงและเงื่อนไข',
+                        style: TextStyle(
+                          color: Color(0xFF808080),
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
                   ),

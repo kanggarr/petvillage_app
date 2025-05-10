@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/views/shop_register/shop_register_view.dart';
 import 'package:petvillage_app/ui/widgets/profile_register_store.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -26,7 +27,13 @@ class ProfileHeader extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             RegisterStoreButton(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ShopRegisterView(),
+                  ),
+                );
+              },
             ),
           ],
         ),

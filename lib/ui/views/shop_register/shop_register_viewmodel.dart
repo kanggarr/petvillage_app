@@ -86,8 +86,8 @@ class ShopRegisterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setChecked(bool? value) {
-    _isChecked = value ?? false;
+  void setConsentFromView() {
+    _isChecked = true;
     notifyListeners();
   }
 

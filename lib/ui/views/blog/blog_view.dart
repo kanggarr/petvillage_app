@@ -98,7 +98,9 @@ class BlogView extends StackedView<BlogViewModel> {
                 itemCount: 8,
                 itemBuilder: (context, index) {
                   return BlogCard(
-                    onPressed: () {},
+                    onPressed: () {
+                      viewModel.navigateToBlogDetail();
+                    },
                   );
                 },
               ),

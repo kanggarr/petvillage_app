@@ -94,7 +94,9 @@ class RegisterView extends StackedView<RegisterViewModel> {
                 children: [
                   Checkbox(
                     value: viewModel.isChecked,
-                    onChanged: null, // ปิดการติ๊กเอง
+                    onChanged: (_) {}, // ปิดการติ๊กเอง
+                    activeColor: const Color(0xFF4F9451),
+                    checkColor: const Color(0xFFFFFFFF),
                   ),
                   Expanded(
                     child: GestureDetector(

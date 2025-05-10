@@ -70,6 +70,8 @@ class _AgreementState extends State<Agreement> {
                               isChecked = value ?? false;
                             });
                           },
+                          activeColor: const Color(0xFF4F9451),
+                          checkColor: const Color(0xFFFFFFFF),
                         ),
                         const Expanded(
                           child: Text(

@@ -144,7 +144,7 @@ class HomeView extends StackedView<HomeViewModel> {
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                 ),
-                itemCount: 10,
+                itemCount: 4,
                 itemBuilder: (context, index) {
                   return PetCard(
                     onPressed: viewModel.navigateToPetDetail,
