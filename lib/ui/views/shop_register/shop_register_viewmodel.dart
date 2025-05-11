@@ -1,14 +1,17 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:path/path.dart'; // Import path package for basename
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+// import 'package:path/path.dart'; // Import path package for basename
 import 'package:petvillage_app/app/app.locator.dart';
 import 'package:petvillage_app/app/app.router.dart';
+import 'package:petvillage_app/constants/thai_location.dart';
+import 'package:petvillage_app/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class ShopRegisterViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  // final _dialogService = locator<DialogService>();
+  final _dialogService = locator<DialogService>();
+  final _shopService = locator<AuthService>();
 
   String _shopname = '';
   String _email = '';
@@ -53,80 +56,13 @@ class ShopRegisterViewModel extends BaseViewModel {
   String? selectedDistrict;
   String? selectedSubDistrict;
 
-  // จังหวัด
-  final List<String> locations = [
-    "กรุงเทพมหานคร",
-    "เชียงใหม่",
-    "ภูเก็ต",
-    "ชลบุรี",
-    "อยุธยา",
-    "นครราชสีมา",
-    "ขอนแก่น",
-    "สงขลา",
-    "สุราษฎร์ธานี",
-    "เชียงราย",
-    "อุดรธานี",
-    "สุพรรณบุรี",
-    "ระยอง",
-    "พิษณุโลก",
-    "นครปฐม",
-    "ตรัง",
-    "นครศรีธรรมราช",
-    "ปทุมธานี",
-    "อุบลราชธานี",
-    "ลำปาง",
-    "สมุทรปราการ",
-    "อำนาจเจริญ",
-    "กาญจนบุรี",
-    "สระบุรี",
-    "ศรีสะเกษ",
-    "สกลนคร",
-    "หนองคาย",
-    "ร้อยเอ็ด",
-    "ตราด",
-    "ลพบุรี",
-    "สระแก้ว",
-    "น่าน",
-    "มุกดาหาร",
-    "พังงา",
-    "เพชรบุรี",
-    "ปัตตานี",
-    "นครพนม",
-    "จันทบุรี",
-    "กาฬสินธุ์",
-    "แม่ฮ่องสอน",
-    "ลำพูน",
-    "อุตรดิตถ์",
-    "พะเยา",
-    "เลย",
-    "หนองบัวลำภู",
-    "มหาสารคาม",
-    "ยโสธร",
-    "บึงกาฬ",
-    "อ่างทอง",
-    "นครนายก",
-    "นนทบุรี",
-    "พิจิตร",
-    "เพชรบูรณ์",
-    "ราชบุรี",
-    "สมุทรสงคราม",
-    "สมุทรสาคร",
-    "สิงห์บุรี",
-    "สุโขทัย",
-    "อุทัยธานี",
-    "ฉะเชิงเทรา",
-    "ปราจีนบุรี",
-    "กระบี่",
-    "ชุมพร",
-    "นราธิวาส",
-    "พัทลุง",
-    "ยะลา",
-    "ระนอง",
-    "สตูล"
-  ];
+  final List<String> locations = provinces;
 
-  final List<String> districts = ['ทุ่งครุ', 'บางขุนเทียน', 'บางแค'];
-  final List<String> subDistricts = ['บางมด', 'ท่าข้าม', 'บางบอน'];
+  List<String> get districts =>
+      selectedLocation != null ? getDistricts(selectedLocation!) : [];
+
+  List<String> get subDistricts =>
+      selectedDistrict != null ? getSubDistricts(selectedDistrict!) : [];
 
   void setLocation(String location) {
     selectedLocation = location;
@@ -212,7 +148,6 @@ class ShopRegisterViewModel extends BaseViewModel {
         selectedDistrict == null ||
         selectedSubDistrict == null ||
         _images.isEmpty) {
-      // คุณอาจแสดง dialog หรือ print error ตรงนี้ก็ได้
       print('กรุณากรอกจังหวัด เขต แขวง และอัปโหลดรูปภาพ');
       return;
     }
@@ -238,42 +173,35 @@ class ShopRegisterViewModel extends BaseViewModel {
   List<String> get images => _images;
 
   Future<void> registerShop() async {
-    final url = Uri.parse(
-        'http://10.0.2.2:5000/api/shop/register'); // for android studio
-    // final url = Uri.parse('http://localhost:5000/api/auth/register'); // for xcode
+    final imagePath = _images.first;
 
-    var request = http.MultipartRequest('POST', url);
-
-    // เพิ่มข้อมูลฟอร์ม
-    request.fields['shopName'] = _shopname;
-    request.fields['email'] = _email;
-    request.fields['password'] = _password;
-    request.fields['address'] = _address;
-    request.fields['province'] = selectedLocation ?? '';
-    request.fields['district'] = selectedDistrict ?? '';
-    request.fields['subdistrict'] = selectedSubDistrict ?? '';
-
-    // เพิ่มไฟล์ (business license)
-    var file = await http.MultipartFile.fromPath(
-      'businessLicense',
-      _images.first,
-      filename: basename(_images.first),
+    setBusy(true);
+    await _shopService.registerShop(
+      shopName: _shopname,
+      email: _email,
+      password: _password,
+      address: _address,
+      province: selectedLocation!,
+      district: selectedDistrict!,
+      subdistrict: selectedSubDistrict!,
+      imagePath: imagePath,
+      onResult: (success, message) async {
+        setBusy(false);
+        if (success) {
+          await _dialogService.showDialog(
+            title: 'ลงทะเบียนสำเร็จ',
+            description: 'รอการยืนยันจากแอดมิน',
+            buttonTitle: 'ตกลง',
+          );
+          navigateToOtp();
+        } else {
+          await _dialogService.showDialog(
+            title: 'เกิดข้อผิดพลาด',
+            description: message ?? 'ลงทะเบียนไม่สำเร็จ กรุณาลองใหม่',
+            buttonTitle: 'ตกลง',
+          );
+        }
+      },
     );
-
-    request.files.add(file);
-
-    try {
-      var streamedResponse = await request.send();
-      var response = await http.Response.fromStream(streamedResponse);
-
-      if (response.statusCode == 201) {
-        var responseData = json.decode(response.body);
-        print('ลงทะเบียนสำเร็จ: $responseData');
-      } else {
-        print('ลงทะเบียนล้มเหลว: ${response.statusCode} - ${response.body}');
-      }
-    } catch (e) {
-      print('เกิดข้อผิดพลาด: $e');
-    }
   }
 }

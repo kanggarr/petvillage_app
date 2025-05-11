@@ -1,13 +1,12 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:petvillage_app/app/app.locator.dart';
 import 'package:petvillage_app/app/app.router.dart';
+import 'package:petvillage_app/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  final _dialogService = locator<DialogService>();
+  final _authService = locator<AuthService>();
 
   String _email = '';
   String _password = '';
@@ -52,39 +51,12 @@ class LoginViewModel extends BaseViewModel {
   Future<void> _loginUser() async {
     setBusy(true);
     try {
-      final url = Uri.parse(
-          'http://10.0.2.2:5000/api/auth/login'); // for android studio
-      // final url = Uri.parse('http://localhost:5000/api/auth/login'); // for xcode
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'email': _email,
-          'password': _password,
-        }),
-      );
-
-      final data = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        await _dialogService.showDialog(
-          title: 'เข้าสู่ระบบสำเร็จ',
-          description: 'ยินดีต้อนรับ!',
-          buttonTitle: 'ตกลง',
-        );
-        _navigationService.replaceWithMainView();
-      } else {
-        await _dialogService.showDialog(
-          title: 'เกิดข้อผิดพลาด',
-          description: data['msg'] ?? 'เข้าสู่ระบบไม่สำเร็จ',
-          buttonTitle: 'ตกลง',
-        );
-      }
-    } catch (e) {
-      await _dialogService.showDialog(
-        title: 'ข้อผิดพลาดของระบบ',
-        description: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
-        buttonTitle: 'ตกลง',
+      await _authService.loginUser(
+        email: _email,
+        password: _password,
+        onSuccess: () {
+          _navigationService.replaceWithMainView();
+        },
       );
     } finally {
       setBusy(false);
