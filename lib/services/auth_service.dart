@@ -145,4 +145,42 @@ class AuthService {
       onResult(false, 'เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้');
     }
   }
+
+  Future<void> loginShop({
+    required String email,
+    required String password,
+    required Function(bool success, String? message) onResult,
+  }) async {
+    final url = Uri.parse(
+      Platform.isAndroid
+          ? 'http://10.0.2.2:5000/api/shop/login'
+          : 'http://localhost:5000/api/shop/login',
+    );
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email, 'password': password}),
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        // สามารถเก็บ token ได้ที่นี่ถ้าจำเป็น
+        // final token = data['token'];
+
+        await _dialogService.showDialog(
+          title: 'เข้าสู่ระบบร้านค้าสำเร็จ',
+          description: 'ยินดีต้อนรับร้านค้า ${data['shop']['shopName']}',
+          buttonTitle: 'ตกลง',
+        );
+        onResult(true, null);
+      } else {
+        onResult(false, data['msg'] ?? 'เข้าสู่ระบบไม่สำเร็จ');
+      }
+    } catch (e) {
+      onResult(false, 'เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้');
+    }
+  }
 }

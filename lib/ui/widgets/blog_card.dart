@@ -2,22 +2,66 @@ import 'package:flutter/material.dart';
 
 class BlogCard extends StatelessWidget {
   final VoidCallback onPressed;
+  final String imageUrl;
+  final String title;
+  final String subtitle;
+  final String description;
 
-  const BlogCard({Key? key, required this.onPressed}) : super(key: key);
+  const BlogCard({
+    Key? key,
+    required this.onPressed,
+    required this.imageUrl,
+    required this.title,
+    required this.subtitle,
+    required this.description,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: const Card(
-        color: Color(0xFFFFFFFF),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 4,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.image, size: 40),
-            SizedBox(height: 8),
-            Text('...ข้อมูลเพิ่มเติม...', textAlign: TextAlign.center),
+            ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
+              child: Image.asset(
+                imageUrl,
+                width: double.infinity,
+                height: 120,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: Color(0xFF242424)),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    description,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style:
+                        const TextStyle(fontSize: 12, color: Color(0xFF242424)),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

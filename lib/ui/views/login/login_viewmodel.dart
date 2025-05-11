@@ -39,32 +39,96 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  // Future<void> submitLogin() async {
+  //   _showEmailError = !isEmailValid;
+  //   notifyListeners();
+
+  //   if (_showEmailError) return;
+
+  //   await _loginUser();
+  // }
+
+  // Future<void> _loginUser() async {
+  //   setBusy(true);
+  //   try {
+  //     await _authService.loginUser(
+  //       email: _email,
+  //       password: _password,
+  //       onSuccess: () {
+  //         _navigationService.replaceWithMainView();
+  //       },
+  //     );
+  //   } finally {
+  //     setBusy(false);
+  //   }
+  // }
+
+  // void navigateToRegister() {
+  //   _navigationService.navigateToRegisterView();
+  // }
+
+  // void navigateToForgotPassword() {
+  //   _navigationService.navigateToForgotPasswordView();
+  // }
+
   Future<void> submitLogin() async {
     _showEmailError = !isEmailValid;
     notifyListeners();
 
     if (_showEmailError) return;
 
-    await _loginUser();
+    await _loginUserOrShop();
   }
 
-  Future<void> _loginUser() async {
+  Future<void> _loginUserOrShop() async {
     setBusy(true);
+    bool loginSuccess = false;
+
     try {
+      // 1. ลอง login user ปกติ
       await _authService.loginUser(
         email: _email,
         password: _password,
         onSuccess: () {
-          _navigationService.replaceWithMainView();
+          loginSuccess = true;
         },
       );
-    } finally {
-      setBusy(false);
+    } catch (_) {
+      // ไปต่อ
     }
-  }
 
-  void navigateToRegister() {
-    _navigationService.navigateToRegisterView();
+    // 2. ถ้า user login ไม่สำเร็จ → ลอง login ร้านค้า
+    if (!loginSuccess) {
+      try {
+        await _authService.loginShop(
+          email: _email,
+          password: _password,
+          onResult: (success, message) {
+            loginSuccess = success;
+            if (!success) {
+              locator<DialogService>().showDialog(
+                title: 'เข้าสู่ระบบไม่สำเร็จ',
+                description: message ?? 'ไม่สามารถเข้าสู่ระบบได้',
+                buttonTitle: 'ตกลง',
+              );
+            }
+          },
+        );
+      } catch (_) {
+        await locator<DialogService>().showDialog(
+          title: 'ข้อผิดพลาด',
+          description: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
+          buttonTitle: 'ตกลง',
+        );
+      }
+    }
+
+    // ✅ ถ้า login สำเร็จจากฝั่งไหนก็แล้วแต่ → ไป main view
+    if (loginSuccess) {
+      _navigationService.replaceWithMainView();
+    }
+
+    setBusy(false);
   }
 
   void navigateToForgotPassword() {

@@ -19,10 +19,10 @@ class BlogView extends StackedView<BlogViewModel> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         automaticallyImplyLeading: false,
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
+            Row(
               children: [
                 CircleAvatar(
                   radius: 24,
@@ -51,14 +51,6 @@ class BlogView extends StackedView<BlogViewModel> {
                   ],
                 ),
               ],
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: SvgPicture.asset(
-                Assets.assetsIconsNotificationIcon,
-                width: 24,
-                height: 24,
-              ),
             ),
           ],
         ),
@@ -92,8 +84,9 @@ class BlogView extends StackedView<BlogViewModel> {
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  mainAxisExtent: 230,
                 ),
                 itemCount: 8,
                 itemBuilder: (context, index) {
@@ -101,6 +94,11 @@ class BlogView extends StackedView<BlogViewModel> {
                     onPressed: () {
                       viewModel.navigateToBlogDetail();
                     },
+                    imageUrl: 'assets/images/dog.png',
+                    title: '10 เรื่องต้องคิดก่อนรับเลี้ยงสัตว์เลี้ยง',
+                    subtitle: 'ก่อนรับเลี้ยงสัตว์เลี้ยง',
+                    description:
+                        'สัตว์เลี้ยง คือ สัตว์ที่เลี้ยงไว้ที่บ้านเพื่อเป็นเพื่อน ไม่ใช่สัตว์ที่เลี้ยงไว้เพื่อใช้งาน สัตว์เลี้ยงยอดนิยม มักรู้สึกผูกพันกับเจ้าของ...',
                   );
                 },
               ),

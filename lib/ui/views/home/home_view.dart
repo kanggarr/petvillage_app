@@ -53,14 +53,14 @@ class HomeView extends StackedView<HomeViewModel> {
                 ),
               ],
             ),
-            GestureDetector(
-              onTap: () {},
-              child: SvgPicture.asset(
-                Assets.assetsIconsNotificationIcon,
-                width: 24,
-                height: 24,
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {},
+            //   child: SvgPicture.asset(
+            //     Assets.assetsIconsNotificationIcon,
+            //     width: 24,
+            //     height: 24,
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -141,13 +141,21 @@ class HomeView extends StackedView<HomeViewModel> {
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  mainAxisExtent: 250, // กำหนดความสูงของแต่ละการ์ด
                 ),
                 itemCount: 4,
                 itemBuilder: (context, index) {
                   return PetCard(
                     onPressed: viewModel.navigateToPetDetail,
+                    imageUrl: 'assets/images/dog.png',
+                    name: 'Scottish Fold Cat',
+                    age: '2 เดือน',
+                    breedDescription:
+                        'Scottish Fold หูตั้ง เลี้ยงง่าย ขี้อ้อน ขี้เล่น กินเก่ง',
+                    gender: 'ผู้',
+                    price: '12,000',
                   );
                 },
               ),

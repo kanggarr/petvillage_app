@@ -143,12 +143,14 @@ class ShopRegisterViewModel extends BaseViewModel {
     if (_showEmailError || _showPasswordError || _showConfirmPasswordError)
       return;
 
-    // ตรวจสอบ dropdown และรูปภาพ
-    if (selectedLocation == null ||
-        selectedDistrict == null ||
-        selectedSubDistrict == null ||
-        _images.isEmpty) {
-      print('กรุณากรอกจังหวัด เขต แขวง และอัปโหลดรูปภาพ');
+    List<String> errors = [];
+    if (selectedLocation == null) errors.add('จังหวัด');
+    if (selectedDistrict == null) errors.add('เขต');
+    if (selectedSubDistrict == null) errors.add('แขวง');
+    if (_images.isEmpty) errors.add('รูปภาพ');
+
+    if (errors.isNotEmpty) {
+      print('กรุณากรอก: ${errors.join(", ")}');
       return;
     }
 
