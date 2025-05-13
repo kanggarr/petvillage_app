@@ -27,7 +27,7 @@ class LoginView extends StackedView<LoginViewModel> {
               const Text(
                 'เข้าสู่ระบบ',
                 style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF242424)),
               ),
