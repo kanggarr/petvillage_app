@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:petvillage_app/app/app.locator.dart';
@@ -16,8 +17,8 @@ class AuthService {
   }) async {
     final url = Uri.parse(
       Platform.isAndroid
-          ? 'http://10.0.2.2:5000/api/auth/register'
-          : 'http://localhost:5000/api/auth/register',
+          ? '${dotenv.env['API_ANDROID_URL']}api/auth/register'
+          : '${dotenv.env['API_IOS_URL']}api/auth/register',
     );
 
     try {
@@ -63,7 +64,7 @@ class AuthService {
     final url = Uri.parse(
       Platform.isAndroid
           ? 'http://10.0.2.2:5000/api/auth/login'
-          : 'http://localhost:5000/api/auth/login',
+          : 'http://127.0.0.1:8080/api/auth/login',
     );
 
     try {
@@ -111,7 +112,7 @@ class AuthService {
     final url = Uri.parse(
       Platform.isAndroid
           ? 'http://10.0.2.2:5000/api/shop/register'
-          : 'http://localhost:5000/api/shop/register',
+          : 'http://127.0.0.1:8080/api/shop/register',
     );
 
     var request = http.MultipartRequest('POST', url);
@@ -154,7 +155,7 @@ class AuthService {
     final url = Uri.parse(
       Platform.isAndroid
           ? 'http://10.0.2.2:5000/api/shop/login'
-          : 'http://localhost:5000/api/shop/login',
+          : 'http://127.0.0.1:8080/api/shop/login',
     );
 
     try {
