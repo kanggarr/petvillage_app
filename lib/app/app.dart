@@ -23,7 +23,6 @@ import 'package:petvillage_app/ui/views/blog_detail/blog_detail_view.dart';
 import 'package:petvillage_app/services/auth_service.dart';
 import 'package:petvillage_app/ui/views/favorite/favorite_view.dart';
 import 'package:petvillage_app/services/post_service.dart';
-import 'package:petvillage_app/services/otp_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -55,7 +54,6 @@ import 'package:petvillage_app/services/otp_service.dart';
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: AuthService),
     LazySingleton(classType: PostService),
-    LazySingleton(classType: OtpService),
 // @stacked-service
   ],
   bottomsheets: [

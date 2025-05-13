@@ -6,6 +6,7 @@ import 'package:petvillage_app/services/auth_service.dart';
 
 class RegisterViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  // final _dialogService = locator<DialogService>();
   final _authService = locator<AuthService>();
 
   String _username = '';
@@ -13,20 +14,17 @@ class RegisterViewModel extends BaseViewModel {
   String _password = '';
   String _confirmPassword = '';
   bool _isChecked = false;
-
   bool _showEmailError = false;
-  bool _showPasswordError = false;
-  bool _showConfirmPasswordError = false;
-
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
-  // Getters
+  bool _showPasswordError = false;
+  bool _showConfirmPasswordError = false;
+
   String get username => _username;
   String get email => _email;
   String get password => _password;
   String get confirmPassword => _confirmPassword;
-
   bool get isChecked => _isChecked;
   bool get showEmailError => _showEmailError;
   bool get showPasswordError => _showPasswordError;
@@ -42,7 +40,6 @@ class RegisterViewModel extends BaseViewModel {
       _confirmPassword.isNotEmpty &&
       _isChecked;
 
-  // Setters
   void setUsername(String value) {
     _username = value;
     notifyListeners();
@@ -79,7 +76,6 @@ class RegisterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // Validators
   bool isEmailValid() {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(_email);
@@ -103,7 +99,15 @@ class RegisterViewModel extends BaseViewModel {
       return;
     }
 
-    await _registerUserWithService();
+    await _registerUserWithService(); // เรียกใช้ auth service
+  }
+
+  void navigateToOtp() {
+    _navigationService.navigateToOtpView();
+  }
+
+  void navigateToLogin() {
+    _navigationService.navigateToLoginView();
   }
 
   Future<void> _registerUserWithService() async {
@@ -112,19 +116,8 @@ class RegisterViewModel extends BaseViewModel {
       username: _username,
       email: _email,
       password: _password,
-      onSuccess: () => navigateToOtp(_email),
+      onSuccess: () => navigateToOtp(),
     );
     setBusy(false);
-  }
-
-  void navigateToOtp(String email) {
-    _navigationService.navigateTo(
-      Routes.otpView,
-      arguments: email,
-    );
-  }
-
-  void navigateToLogin() {
-    _navigationService.navigateToLoginView();
   }
 }
