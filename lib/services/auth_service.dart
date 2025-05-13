@@ -167,9 +167,6 @@ class AuthService {
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        // สามารถเก็บ token ได้ที่นี่ถ้าจำเป็น
-        // final token = data['token'];
-
         await _dialogService.showDialog(
           title: 'เข้าสู่ระบบร้านค้าสำเร็จ',
           description: 'ยินดีต้อนรับร้านค้า ${data['shop']['shopName']}',

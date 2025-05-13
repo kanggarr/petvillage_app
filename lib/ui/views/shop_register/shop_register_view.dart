@@ -135,7 +135,7 @@ class ShopRegisterView extends StackedView<ShopRegisterViewModel> {
               ),
               const SizedBox(height: 20),
               const Text(
-                'รูปภาพ',
+                'ใบจดทะเบียนพาณิชย์',
                 style: TextStyle(
                     fontSize: 15,
                     color: Color(0xFF808080),

@@ -687,4 +687,104 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
 /// A class which mocks [AuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthService extends _i1.Mock implements _i7.AuthService {}
+class MockAuthService extends _i1.Mock implements _i7.AuthService {
+  @override
+  _i5.Future<void> registerUser({
+    required String? username,
+    required String? email,
+    required String? password,
+    required Function? onSuccess,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #registerUser,
+          [],
+          {
+            #username: username,
+            #email: email,
+            #password: password,
+            #onSuccess: onSuccess,
+          },
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> loginUser({
+    required String? email,
+    required String? password,
+    required Function? onSuccess,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #loginUser,
+          [],
+          {
+            #email: email,
+            #password: password,
+            #onSuccess: onSuccess,
+          },
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> registerShop({
+    required String? shopName,
+    required String? email,
+    required String? password,
+    required String? address,
+    required String? province,
+    required String? district,
+    required String? subdistrict,
+    required String? imagePath,
+    required dynamic Function(
+      bool,
+      String?,
+    )? onResult,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #registerShop,
+          [],
+          {
+            #shopName: shopName,
+            #email: email,
+            #password: password,
+            #address: address,
+            #province: province,
+            #district: district,
+            #subdistrict: subdistrict,
+            #imagePath: imagePath,
+            #onResult: onResult,
+          },
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> loginShop({
+    required String? email,
+    required String? password,
+    required dynamic Function(
+      bool,
+      String?,
+    )? onResult,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #loginShop,
+          [],
+          {
+            #email: email,
+            #password: password,
+            #onResult: onResult,
+          },
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+}

@@ -9,4 +9,8 @@ class ProfileViewModel extends BaseViewModel {
   void navigateToEditProfile() {
     _navigationService.navigateToProfileEditView();
   }
+
+  void navigateToFavorite() {
+    _navigationService.navigateToFavoriteView();
+  }
 }
