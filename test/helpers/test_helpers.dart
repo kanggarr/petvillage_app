@@ -4,6 +4,9 @@ import 'package:petvillage_app/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:petvillage_app/services/auth_service.dart';
 import 'package:petvillage_app/services/post_service.dart';
+import 'package:petvillage_app/services/chat_service.dart';
+import 'package:petvillage_app/services/message_service.dart';
+import 'package:petvillage_app/services/otp_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -14,6 +17,9 @@ import 'test_helpers.mocks.dart';
   MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<AuthService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<PostService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<ChatService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<MessageService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<OtpService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -22,6 +28,9 @@ void registerServices() {
   getAndRegisterDialogService();
   getAndRegisterAuthService();
   getAndRegisterPostService();
+  getAndRegisterChatService();
+  getAndRegisterMessageService();
+  getAndRegisterOtpService();
 // @stacked-mock-register
 }
 
@@ -86,6 +95,27 @@ MockPostService getAndRegisterPostService() {
   _removeRegistrationIfExists<PostService>();
   final service = MockPostService();
   locator.registerSingleton<PostService>(service);
+  return service;
+}
+
+MockChatService getAndRegisterChatService() {
+  _removeRegistrationIfExists<ChatService>();
+  final service = MockChatService();
+  locator.registerSingleton<ChatService>(service);
+  return service;
+}
+
+MockMessageService getAndRegisterMessageService() {
+  _removeRegistrationIfExists<MessageService>();
+  final service = MockMessageService();
+  locator.registerSingleton<MessageService>(service);
+  return service;
+}
+
+MockOtpService getAndRegisterOtpService() {
+  _removeRegistrationIfExists<OtpService>();
+  final service = MockOtpService();
+  locator.registerSingleton<OtpService>(service);
   return service;
 }
 // @stacked-mock-create
