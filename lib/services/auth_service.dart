@@ -9,6 +9,22 @@ import 'package:stacked_services/stacked_services.dart';
 class AuthService {
   final _dialogService = locator<DialogService>();
 
+  // 🔸 ตัวแปรภายในสำหรับเก็บ session ของ user หลังเข้าสู่ระบบ
+  String? _userId;
+  String? _roomId;
+
+  /// 🔸 บันทึก session หลังจาก login สำเร็จ (ทั้ง userId และ roomId)
+  void setUserSession({required String userId, required String roomId}) {
+    _userId = userId;
+    _roomId = roomId;
+  }
+
+  /// 🔸 ดึง userId ของผู้ใช้ที่ล็อกอินอยู่ (จะใช้ใน Chat หรือโปรไฟล์)
+  String getUserId() => _userId!;
+
+  /// 🔸 ดึง roomId สำหรับการใช้งานแชทของผู้ใช้
+  String getRoomId() => _roomId!;
+
   Future<void> registerUser({
     required String username,
     required String email,
@@ -63,8 +79,8 @@ class AuthService {
   }) async {
     final url = Uri.parse(
       Platform.isAndroid
-          ? 'http://10.0.2.2:5000/api/auth/login'
-          : 'http://127.0.0.1:8080/api/auth/login',
+          ? '${dotenv.env['API_ANDROID_URL']}api/auth/login'
+          : '${dotenv.env['API_IOS_URL']}api/auth/login',
     );
 
     try {
@@ -76,6 +92,17 @@ class AuthService {
 
       final data = jsonDecode(response.body);
       if (response.statusCode == 200) {
+        // ✅ เพิ่มการดึง userId และ roomId จาก response หลัง login
+        final userId = data['user']['_id'];
+        final roomId = data['roomId'];
+
+        if (userId == null || roomId == null) {
+          throw Exception('Missing userId or roomId');
+        }
+
+        // ✅ เก็บ user session ไว้ในตัวแปรภายใน
+        setUserSession(userId: userId, roomId: roomId);
+
         await _dialogService.showDialog(
           title: 'เข้าสู่ระบบสำเร็จ',
           description: 'ยินดีต้อนรับ!',
@@ -111,8 +138,8 @@ class AuthService {
   }) async {
     final url = Uri.parse(
       Platform.isAndroid
-          ? 'http://10.0.2.2:5000/api/shop/register'
-          : 'http://127.0.0.1:8080/api/shop/register',
+          ? '${dotenv.env['API_ANDROID_URL']}api/shop/register'
+          : '${dotenv.env['API_IOS_URL']}/api/shop/register',
     );
 
     var request = http.MultipartRequest('POST', url);
@@ -154,8 +181,8 @@ class AuthService {
   }) async {
     final url = Uri.parse(
       Platform.isAndroid
-          ? 'http://10.0.2.2:5000/api/shop/login'
-          : 'http://127.0.0.1:8080/api/shop/login',
+          ? '${dotenv.env['API_ANDROID_URL']}api/shop/login'
+          : '${dotenv.env['API_IOS_URL']}api/shop/login',
     );
 
     try {

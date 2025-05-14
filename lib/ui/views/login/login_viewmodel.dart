@@ -85,7 +85,6 @@ class LoginViewModel extends BaseViewModel {
     bool loginSuccess = false;
 
     try {
-      // 1. ลอง login user ปกติ
       await _authService.loginUser(
         email: _email,
         password: _password,
@@ -93,12 +92,8 @@ class LoginViewModel extends BaseViewModel {
           loginSuccess = true;
         },
       );
-    } catch (_) {
-      // ไปต่อ
-    }
-
-    // 2. ถ้า user login ไม่สำเร็จ → ลอง login ร้านค้า
-    if (!loginSuccess) {
+    } catch (e) {
+      // ลอง loginShop เฉพาะถ้า loginUser ล้มเหลว
       try {
         await _authService.loginShop(
           email: _email,
@@ -114,7 +109,7 @@ class LoginViewModel extends BaseViewModel {
             }
           },
         );
-      } catch (_) {
+      } catch (e) {
         await locator<DialogService>().showDialog(
           title: 'ข้อผิดพลาด',
           description: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
