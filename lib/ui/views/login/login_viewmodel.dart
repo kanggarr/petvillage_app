@@ -39,38 +39,6 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // Future<void> submitLogin() async {
-  //   _showEmailError = !isEmailValid;
-  //   notifyListeners();
-
-  //   if (_showEmailError) return;
-
-  //   await _loginUser();
-  // }
-
-  // Future<void> _loginUser() async {
-  //   setBusy(true);
-  //   try {
-  //     await _authService.loginUser(
-  //       email: _email,
-  //       password: _password,
-  //       onSuccess: () {
-  //         _navigationService.replaceWithMainView();
-  //       },
-  //     );
-  //   } finally {
-  //     setBusy(false);
-  //   }
-  // }
-
-  // void navigateToRegister() {
-  //   _navigationService.navigateToRegisterView();
-  // }
-
-  // void navigateToForgotPassword() {
-  //   _navigationService.navigateToForgotPasswordView();
-  // }
-
   Future<void> submitLogin() async {
     _showEmailError = !isEmailValid;
     notifyListeners();
@@ -85,23 +53,29 @@ class LoginViewModel extends BaseViewModel {
     bool loginSuccess = false;
 
     try {
+      print('➡️ loginUser กำลังทำงาน...');
       await _authService.loginUser(
         email: _email,
         password: _password,
         onSuccess: () {
+          print('✅ loginUser สำเร็จ');
           loginSuccess = true;
         },
       );
     } catch (e) {
-      // ลอง loginShop เฉพาะถ้า loginUser ล้มเหลว
+      print('❌ loginUser ล้มเหลว: $e');
+
       try {
+        print('➡️ loginShop กำลังทำงาน...');
         await _authService.loginShop(
           email: _email,
           password: _password,
-          onResult: (success, message) {
+          onResult: (success, message) async {
             loginSuccess = success;
+            print('✅ loginShop success = $success, message = $message');
+
             if (!success) {
-              locator<DialogService>().showDialog(
+              await locator<DialogService>().showDialog(
                 title: 'เข้าสู่ระบบไม่สำเร็จ',
                 description: message ?? 'ไม่สามารถเข้าสู่ระบบได้',
                 buttonTitle: 'ตกลง',
@@ -110,6 +84,7 @@ class LoginViewModel extends BaseViewModel {
           },
         );
       } catch (e) {
+        print('❌ loginShop ล้มเหลว: $e');
         await locator<DialogService>().showDialog(
           title: 'ข้อผิดพลาด',
           description: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
@@ -118,7 +93,6 @@ class LoginViewModel extends BaseViewModel {
       }
     }
 
-    // ✅ ถ้า login สำเร็จจากฝั่งไหนก็แล้วแต่ → ไป main view
     if (loginSuccess) {
       _navigationService.replaceWithMainView();
     }

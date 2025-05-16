@@ -39,10 +39,10 @@ class ProfileEditView extends StackedView<ProfileEditViewModel> {
             const SizedBox(height: 16),
             CustomTextField(label: 'รหัสผ่าน', hintText: 'แก้ไขรหัสผ่าน'),
             const SizedBox(height: 16),
-            CustomTextField(
-                label: 'ที่อยู่ปัจุบัน',
-                hintText: viewModel.addressController.text),
-            const SizedBox(height: 16),
+            // CustomTextField(
+            //     label: 'ที่อยู่ปัจุบัน',
+            //     hintText: viewModel.addressController.text),
+            // const SizedBox(height: 16),
             // ReusableDropdown(label: 'จังหวัด', hintText: '',),
             const SizedBox(height: 16),
             // ProfileDropdownField(

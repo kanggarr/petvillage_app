@@ -9,20 +9,19 @@ import 'package:stacked_services/stacked_services.dart';
 class AuthService {
   final _dialogService = locator<DialogService>();
 
-  // 🔸 ตัวแปรภายในสำหรับเก็บ session ของ user หลังเข้าสู่ระบบ
   String? _userId;
   String? _roomId;
 
-  /// 🔸 บันทึก session หลังจาก login สำเร็จ (ทั้ง userId และ roomId)
-  void setUserSession({required String userId, required String roomId}) {
+  void setUserSession(
+      {required String userId,
+      required String roomId,
+      required String username}) {
     _userId = userId;
     _roomId = roomId;
   }
 
-  /// 🔸 ดึง userId ของผู้ใช้ที่ล็อกอินอยู่ (จะใช้ใน Chat หรือโปรไฟล์)
   String getUserId() => _userId!;
 
-  /// 🔸 ดึง roomId สำหรับการใช้งานแชทของผู้ใช้
   String getRoomId() => _roomId!;
 
   Future<void> registerUser({
@@ -82,6 +81,7 @@ class AuthService {
           ? '${dotenv.env['API_ANDROID_URL']}api/auth/login'
           : '${dotenv.env['API_IOS_URL']}api/auth/login',
     );
+    print('🔗 Login URL: $url');
 
     try {
       final response = await http.post(
@@ -91,17 +91,23 @@ class AuthService {
       );
 
       final data = jsonDecode(response.body);
-      if (response.statusCode == 200) {
-        // ✅ เพิ่มการดึง userId และ roomId จาก response หลัง login
-        final userId = data['user']['_id'];
-        final roomId = data['roomId'];
+      print('📥 Response: $data');
 
-        if (userId == null || roomId == null) {
-          throw Exception('Missing userId or roomId');
+      if (response.statusCode == 200) {
+        final userId = data['user']['_id'];
+        final username = data['user']['username'];
+        final roomId = data['roomId']; // <-- ถ้ามีค่อยใช้งาน
+
+        if (userId == null || username == null) {
+          throw Exception('Missing userId or username');
         }
 
-        // ✅ เก็บ user session ไว้ในตัวแปรภายใน
-        setUserSession(userId: userId, roomId: roomId);
+        // แก้ตรงนี้ให้เช็คก่อน set session
+        setUserSession(
+          userId: userId,
+          roomId: roomId ?? '', // ให้เป็น '' ถ้าไม่มี
+          username: username,
+        );
 
         await _dialogService.showDialog(
           title: 'เข้าสู่ระบบสำเร็จ',
@@ -115,13 +121,16 @@ class AuthService {
           description: data['msg'] ?? 'เข้าสู่ระบบไม่สำเร็จ',
           buttonTitle: 'ตกลง',
         );
+        throw Exception(data['msg'] ?? 'เข้าสู่ระบบไม่สำเร็จ');
       }
     } catch (e) {
+      print('❌ loginUser error: $e');
       await _dialogService.showDialog(
         title: 'ข้อผิดพลาดของระบบ',
         description: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
         buttonTitle: 'ตกลง',
       );
+      throw e;
     }
   }
 
@@ -139,7 +148,7 @@ class AuthService {
     final url = Uri.parse(
       Platform.isAndroid
           ? '${dotenv.env['API_ANDROID_URL']}api/shop/register'
-          : '${dotenv.env['API_IOS_URL']}/api/shop/register',
+          : '${dotenv.env['API_IOS_URL']}api/shop/register',
     );
 
     var request = http.MultipartRequest('POST', url);
@@ -148,9 +157,9 @@ class AuthService {
     request.fields['email'] = email;
     request.fields['password'] = password;
     request.fields['address'] = address;
-    request.fields['province'] = province;
-    request.fields['district'] = district;
-    request.fields['subdistrict'] = subdistrict;
+    request.fields['shop_province'] = province;
+    request.fields['shop_district'] = district;
+    request.fields['shop_subdistrict'] = subdistrict;
 
     var file = await http.MultipartFile.fromPath(
       'businessLicense',
@@ -163,10 +172,11 @@ class AuthService {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
-      if (response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
         onResult(true, null);
       } else {
-        final data = jsonDecode(response.body);
         onResult(false, data['msg'] ?? 'ลงทะเบียนไม่สำเร็จ');
       }
     } catch (e) {

@@ -20,10 +20,10 @@ class HomeView extends StackedView<HomeViewModel> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         automaticallyImplyLeading: false,
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
+            Row(
               children: [
                 CircleAvatar(
                   radius: 24,
@@ -42,13 +42,13 @@ class HomeView extends StackedView<HomeViewModel> {
                         color: Colors.black,
                       ),
                     ),
-                    Text(
-                      'General user',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
-                    ),
+                    // Text(
+                    //   'General user',
+                    //   style: TextStyle(
+                    //     fontSize: 14,
+                    //     color: Colors.grey,
+                    //   ),
+                    // ),
                   ],
                 ),
               ],
