@@ -1,10 +1,12 @@
 // import 'dart:convert';
 // import 'package:http/http.dart' as http;
 // import 'package:path/path.dart'; // Import path package for basename
+import 'package:flutter/material.dart';
 import 'package:petvillage_app/app/app.locator.dart';
 import 'package:petvillage_app/app/app.router.dart';
 import 'package:petvillage_app/constants/thai_location.dart';
 import 'package:petvillage_app/services/auth_service.dart';
+import 'package:petvillage_app/ui/widgets/auth_selector.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -134,7 +136,7 @@ class ShopRegisterViewModel extends BaseViewModel {
     return _password == _confirmPassword && _password.isNotEmpty;
   }
 
-  Future<void> onRegisterPressed() async {
+  Future<void> onRegisterPressed(BuildContext context) async {
     _showEmailError = !isEmailValid();
     _showPasswordError = !isPasswordValid();
     _showConfirmPasswordError = !doPasswordsMatch();
@@ -154,7 +156,7 @@ class ShopRegisterViewModel extends BaseViewModel {
       return;
     }
 
-    await registerShop();
+    await registerShop(context); // ✅ ส่ง context มาที่นี่
   }
 
   void navigateToOtp() {
@@ -174,7 +176,7 @@ class ShopRegisterViewModel extends BaseViewModel {
 
   List<String> get images => _images;
 
-  Future<void> registerShop() async {
+  Future<void> registerShop(BuildContext context) async {
     final imagePath = _images.first;
 
     setBusy(true);
@@ -195,7 +197,12 @@ class ShopRegisterViewModel extends BaseViewModel {
             description: 'รอการยืนยันจากแอดมิน',
             buttonTitle: 'ตกลง',
           );
-          navigateToOtp();
+
+          // ✅ ใช้ pushReplacement หลังจากกด "ตกลง"
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const AuthSelector()),
+          );
         } else {
           await _dialogService.showDialog(
             title: 'เกิดข้อผิดพลาด',

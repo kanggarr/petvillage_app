@@ -184,7 +184,7 @@ class ShopRegisterView extends StackedView<ShopRegisterViewModel> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: viewModel.isButtonEnabled
-                      ? () => viewModel.onRegisterPressed()
+                      ? () => viewModel.onRegisterPressed(context)
                       : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: viewModel.isButtonEnabled
