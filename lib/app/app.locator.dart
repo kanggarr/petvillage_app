@@ -13,6 +13,7 @@ import 'package:stacked_shared/stacked_shared.dart';
 
 import '../services/auth_service.dart';
 import '../services/chat_service.dart';
+import '../services/filter_service.dart';
 import '../services/message_service.dart';
 import '../services/otp_service.dart';
 import '../services/post_service.dart';
@@ -36,4 +37,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => ChatService());
   locator.registerLazySingleton(() => MessageService());
   locator.registerLazySingleton(() => OtpService());
+  locator.registerLazySingleton(() => FilterService());
 }

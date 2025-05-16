@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petvillage_app/ui/common/assets.dart';
 import 'package:petvillage_app/ui/widgets/catagory_icon.dart';
@@ -42,25 +45,10 @@ class HomeView extends StackedView<HomeViewModel> {
                         color: Colors.black,
                       ),
                     ),
-                    // Text(
-                    //   'General user',
-                    //   style: TextStyle(
-                    //     fontSize: 14,
-                    //     color: Colors.grey,
-                    //   ),
-                    // ),
                   ],
                 ),
               ],
             ),
-            // GestureDetector(
-            //   onTap: () {},
-            //   child: SvgPicture.asset(
-            //     Assets.assetsIconsNotificationIcon,
-            //     width: 24,
-            //     height: 24,
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -97,65 +85,67 @@ class HomeView extends StackedView<HomeViewModel> {
             ),
             const SizedBox(height: 16),
             SizedBox(
-              height: 100,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    CategoryIcon(
-                      iconPath: Assets.assetsIconsPawIcon,
-                      label: 'ทั้งหมด',
-                      color: const Color(0xFFD4F4C4),
-                    ),
-                    const SizedBox(width: 32),
-                    CategoryIcon(
-                      iconPath: Assets.assetsIconsDogIcon,
-                      label: 'สุนัข',
-                      color: const Color(0xFFC89AFF),
-                    ),
-                    const SizedBox(width: 32),
-                    CategoryIcon(
-                      iconPath: Assets.assetsIconsCatIcon,
-                      label: 'แมว',
-                      color: const Color(0xFFA8C4F8),
-                    ),
-                    const SizedBox(width: 32),
-                    CategoryIcon(
-                      iconPath: Assets.assetsIconsRabbitIcon,
-                      label: 'กระต่าย',
-                      color: const Color(0xFFFFB3B3),
-                    ),
-                    const SizedBox(width: 32),
-                    CategoryIcon(
-                      iconPath: Assets.assetsIconsHamsterIcon,
-                      label: 'แฮมสเตอร์',
-                      color: const Color(0xFF00C26B),
-                    ),
-                    // const SizedBox(width: 16),
-                  ],
-                ),
-              ),
+              height: 50,
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      viewModel.resetFilters(); // เคลียร์ค่าทั้งหมดใน ViewModel
+                      _navigationService.back(
+                          result: []); // ส่ง empty list กลับเพื่อบอกว่าไม่มีการกรอง
+                    },
+                    child: Text('ล้างตัวกรอง'),
+                  )),
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  mainAxisExtent: 250, // กำหนดความสูงของแต่ละการ์ด
-                ),
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return PetCard(
-                    onPressed: viewModel.navigateToPetDetail,
-                    imageUrl: 'assets/images/dog.png',
-                    name: 'Scottish Fold Cat',
-                    age: '2 เดือน',
-                    breedDescription:
-                        'Scottish Fold หูตั้ง เลี้ยงง่าย ขี้อ้อน ขี้เล่น กินเก่ง',
-                    gender: 'ผู้',
-                    price: '12,000',
+              child: Builder(
+                builder: (context) {
+                  final baseUrl = (Platform.isAndroid
+                          ? dotenv.env['API_ANDROID_URL']
+                          : dotenv.env['API_IOS_URL'])
+                      ?.replaceAll(RegExp(r'/$'), '');
+
+                  if (viewModel.filteredPets.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        "ไม่พบสัตว์ที่ตรงกับตัวกรอง",
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                    );
+                  }
+                  return GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      mainAxisExtent: 250,
+                    ),
+                    itemCount: viewModel.filteredPets.length,
+                    itemBuilder: (context, index) {
+                      final pet = viewModel.filteredPets[index];
+
+                      final imagePath = pet["pet_image"] != null &&
+                              pet["pet_image"] is List &&
+                              pet["pet_image"].isNotEmpty
+                          ? pet["pet_image"][0]
+                          : null;
+
+                      final imageUrl = imagePath != null
+                          ? '$baseUrl${imagePath.startsWith("/") ? imagePath : '/$imagePath'}'
+                          : 'https://via.placeholder.com/150';
+
+                      return PetCard(
+                        onPressed: viewModel.navigateToPetDetail,
+                        imageUrl: imageUrl,
+                        name: pet["pet_name"] ?? 'ไม่ทราบชื่อ',
+                        age: '${pet["pet_age"] ?? '-'} ปี',
+                        breedDescription: pet["pet_description"] ?? '',
+                        gender: pet["pet_gender"] ?? '',
+                        price: '${pet["pet_price"] ?? '-'}',
+                      );
+                    },
                   );
                 },
               ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/app/app.locator.dart';
 import 'package:petvillage_app/ui/widgets/dropdown.dart';
 import 'package:petvillage_app/ui/widgets/gender.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'home_filter_viewmodel.dart';
 
@@ -32,14 +34,6 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
             const SizedBox(
               height: 20,
             ),
-            // const Text('ประเภทสัตว์เลี้ยง',
-            //     style: TextStyle(
-            //         fontSize: 15,
-            //         color: Color(0xFF808080),
-            //         fontWeight: FontWeight.w500)),
-            // const SizedBox(
-            //   height: 5,
-            // ),
             ReusableDropdown(
               value: viewModel.selectedAnimalType,
               items: viewModel.animalTypes,
@@ -50,12 +44,6 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
               hintText: 'เลือกประเภทสัตว์',
             ),
             const SizedBox(height: 20),
-            // const Text('พันธุ์สัตว์',
-            //     style: TextStyle(
-            //         fontSize: 15,
-            //         color: Color(0xFF808080),
-            //         fontWeight: FontWeight.w500)),
-            // const SizedBox(height: 5),
             ReusableDropdown(
               value: viewModel.selectedBreed,
               items: viewModel.breeds,
@@ -80,12 +68,6 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
                 setMaleSelected: viewModel.setMaleSelected,
                 setFemaleSelected: viewModel.setFemaleSelected),
             const SizedBox(height: 20),
-            // const Text('อายุ',
-            //     style: TextStyle(
-            //         fontSize: 15,
-            //         color: Color(0xFF808080),
-            //         fontWeight: FontWeight.w500)),
-            // const SizedBox(height: 5),
             ReusableDropdown(
               value: viewModel.selectedAge,
               items: viewModel.ages,
@@ -96,12 +78,6 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
               hintText: 'เลือกอายุ',
             ),
             const SizedBox(height: 20),
-            // const Text('ที่ตั้ง',
-            //     style: TextStyle(
-            //         fontSize: 15,
-            //         color: Color(0xFF808080),
-            //         fontWeight: FontWeight.w500)),
-            // const SizedBox(height: 5),
             ReusableDropdown(
               value: viewModel.selectedLocation,
               items: viewModel.locations,
@@ -112,12 +88,6 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
               hintText: 'เลือกที่ตั้ง',
             ),
             const SizedBox(height: 20),
-            // const Text('การจัดส่ง',
-            //     style: TextStyle(
-            //         fontSize: 15,
-            //         color: Color(0xFF808080),
-            //         fontWeight: FontWeight.w500)),
-            // const SizedBox(height: 5),
             ReusableDropdown(
               value: viewModel.selectedDelivery,
               items: viewModel.deliveryMethods,
@@ -145,8 +115,8 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
                           color: viewModel.hasFilter()
-                              ? const Color(0xFFF18F26) // สีตอนเปิดใช้งาน
-                              : const Color(0xFFD9D9D9), // สีตอนปิด
+                              ? const Color(0xFFF18F26)
+                              : const Color(0xFFD9D9D9),
                         ),
                         child: Text(
                           'ล้างตัวกรอง',
@@ -165,9 +135,10 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
                   Expanded(
                     child: InkWell(
                       onTap: viewModel.hasFilter()
-                          ? () {
-                              // เพิ่มฟังก์ชันค้นหาตามฟิลเตอร์ที่เลือก
-                              print("ค้นหาด้วยฟิลเตอร์");
+                          ? () async {
+                              final pets = await viewModel.filterPets();
+                              print('ผลลัพธ์จาก filterPets: $pets');
+                              locator<NavigationService>().back(result: pets);
                             }
                           : null,
                       child: Container(
@@ -191,7 +162,7 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
                         ),
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

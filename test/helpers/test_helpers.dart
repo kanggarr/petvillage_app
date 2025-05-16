@@ -7,6 +7,7 @@ import 'package:petvillage_app/services/post_service.dart';
 import 'package:petvillage_app/services/chat_service.dart';
 import 'package:petvillage_app/services/message_service.dart';
 import 'package:petvillage_app/services/otp_service.dart';
+import 'package:petvillage_app/services/filter_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -20,6 +21,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<ChatService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<MessageService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<OtpService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<FilterService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -31,6 +33,7 @@ void registerServices() {
   getAndRegisterChatService();
   getAndRegisterMessageService();
   getAndRegisterOtpService();
+  getAndRegisterFilterService();
 // @stacked-mock-register
 }
 
@@ -116,6 +119,13 @@ MockOtpService getAndRegisterOtpService() {
   _removeRegistrationIfExists<OtpService>();
   final service = MockOtpService();
   locator.registerSingleton<OtpService>(service);
+  return service;
+}
+
+MockFilterService getAndRegisterFilterService() {
+  _removeRegistrationIfExists<FilterService>();
+  final service = MockFilterService();
+  locator.registerSingleton<FilterService>(service);
   return service;
 }
 // @stacked-mock-create
