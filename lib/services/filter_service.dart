@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,7 +26,9 @@ class FilterService {
 
     if (petType != null) queryParameters['pet_type'] = petType;
     if (petBreed != null) queryParameters['pet_breed'] = petBreed;
-    if (petGender != null) queryParameters['pet_gender'] = petGender;
+    if (petGender != null && petGender != 'ทั้งคู่') {
+      queryParameters['pet_gender'] = petGender;
+    }
     if (petAge != null) queryParameters['pet_age'] = petAge.toString();
     if (petProvince != null) queryParameters['pet_province'] = petProvince;
     if (petShipping != null) queryParameters['pet_shipping'] = petShipping;
@@ -41,7 +42,7 @@ class FilterService {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return data['data']; // สมมติ backend ส่งกลับ key 'data'
+        return data['data'];
       } else {
         print('Failed to fetch pets: ${response.statusCode}');
         print(response.body);

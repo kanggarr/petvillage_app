@@ -5,10 +5,11 @@ import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
-  // final NavigationService _navigationService = NavigationService();
 
   List<dynamic> allPets = [];
   List<dynamic> filteredPets = [];
+
+  bool hasFilterApplied = false;
 
   HomeViewModel() {
     loadAllPets();
@@ -19,7 +20,7 @@ class HomeViewModel extends BaseViewModel {
       {
         'pet_name': 'หมา1',
         'category': 'สุนัข',
-        'pet_image': [],
+        'pet_image': ['/uploads/dog1.jpg'],
         'pet_age': 2,
         'pet_description': 'น่ารัก',
         'pet_gender': 'ผู้',
@@ -28,7 +29,7 @@ class HomeViewModel extends BaseViewModel {
       {
         'pet_name': 'แมว1',
         'category': 'แมว',
-        'pet_image': [],
+        'pet_image': ['/uploads/cat1.jpg'],
         'pet_age': 1,
         'pet_description': 'ซุกซน',
         'pet_gender': 'เมีย',
@@ -37,17 +38,16 @@ class HomeViewModel extends BaseViewModel {
       {
         'pet_name': 'กระต่าย1',
         'category': 'กระต่าย',
-        'pet_image': [],
+        'pet_image': ['/uploads/rabbit1.jpg'],
         'pet_age': 1,
         'pet_description': 'นุ่มนิ่ม',
         'pet_gender': 'ผู้',
         'pet_price': 800
       },
-      // ข้อมูลอื่นๆ เพิ่มเติม
     ];
 
-    // แสดงทั้งหมดโดยไม่มีการกรอง category
     filteredPets = List.from(allPets);
+    hasFilterApplied = false;
     notifyListeners();
   }
 
@@ -57,21 +57,25 @@ class HomeViewModel extends BaseViewModel {
     print('Filter result: $result');
 
     if (result != null && result is List<dynamic>) {
-      if (result.isEmpty) {
-        // กรณีล้างตัวกรอง => กลับมาแสดงทั้งหมด
-        loadAllPets();
-      } else {
-        // กรณีกรอง => ใช้ผลลัพธ์จาก filter API
-        allPets = result;
-        filteredPets = List.from(allPets);
-        notifyListeners();
-      }
+      filteredPets = result;
+
+      hasFilterApplied = !(filteredPets.length == allPets.length &&
+          _listEquals(filteredPets, allPets));
+
+      notifyListeners();
     }
   }
 
   void resetFilters() {
-    // ฟังก์ชันล้างตัวกรอง -> โหลดข้อมูลทั้งหมดใหม่
     loadAllPets();
+  }
+
+  bool _listEquals(List a, List b) {
+    if (a.length != b.length) return false;
+    for (int i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
   }
 
   void navigateToPetDetail() {
