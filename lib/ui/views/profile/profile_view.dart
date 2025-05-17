@@ -80,7 +80,9 @@ class ProfileView extends StackedView<ProfileViewModel> {
               ProfileMenuItem(
                 icon: Assets.assetsIconsLogOutIcon,
                 title: "ออกจากระบบ",
-                onPressed: () {},
+                onPressed: () {
+                  viewModel.logout();
+                },
               ),
             ],
           ),
