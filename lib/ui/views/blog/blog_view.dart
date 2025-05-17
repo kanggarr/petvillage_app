@@ -26,8 +26,8 @@ class BlogView extends StackedView<BlogViewModel> {
               children: [
                 CircleAvatar(
                   radius: 24,
-                  backgroundImage: AssetImage(
-                      'assets/images/avatar.png'), // TODO: รอเอารูปจาก database
+                  // backgroundImage: AssetImage(
+                  //     'assets/images/avatar.png'), // TODO: รอเอารูปจาก database
                 ),
                 SizedBox(width: 12),
                 Column(
@@ -41,13 +41,13 @@ class BlogView extends StackedView<BlogViewModel> {
                         color: Colors.black,
                       ),
                     ),
-                    Text(
-                      'General user',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
-                    ),
+                    // Text(
+                    //   'General user',
+                    //   style: TextStyle(
+                    //     fontSize: 14,
+                    //     color: Colors.grey,
+                    //   ),
+                    // ),
                   ],
                 ),
               ],

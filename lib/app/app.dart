@@ -27,6 +27,7 @@ import 'package:petvillage_app/services/chat_service.dart';
 import 'package:petvillage_app/services/message_service.dart';
 import 'package:petvillage_app/services/otp_service.dart';
 import 'package:petvillage_app/services/filter_service.dart';
+import 'package:petvillage_app/services/pet_detail_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -62,6 +63,7 @@ import 'package:petvillage_app/services/filter_service.dart';
     LazySingleton(classType: MessageService),
     LazySingleton(classType: OtpService),
     LazySingleton(classType: FilterService),
+    LazySingleton(classType: PetDetailService),
 // @stacked-service
   ],
   bottomsheets: [
