@@ -1,13 +1,16 @@
 import 'package:petvillage_app/app/app.locator.dart';
 import 'package:petvillage_app/app/app.router.dart';
+import 'package:petvillage_app/models/pet_model.dart';
+import 'package:petvillage_app/services/pet_detail_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
+  // final _petDetailService = PetDetailService();
 
-  List<dynamic> allPets = [];
-  List<dynamic> filteredPets = [];
+  List<PetModel> allPets = [];
+  List<PetModel> filteredPets = [];
 
   bool hasFilterApplied = false;
 
@@ -15,49 +18,29 @@ class HomeViewModel extends BaseViewModel {
     loadAllPets();
   }
 
-  void loadAllPets() {
-    allPets = [
-      {
-        'pet_name': 'หมา1',
-        'category': 'สุนัข',
-        'pet_image': ['/uploads/dog1.jpg'],
-        'pet_age': 2,
-        'pet_description': 'น่ารัก',
-        'pet_gender': 'ผู้',
-        'pet_price': 1000
-      },
-      {
-        'pet_name': 'แมว1',
-        'category': 'แมว',
-        'pet_image': ['/uploads/cat1.jpg'],
-        'pet_age': 1,
-        'pet_description': 'ซุกซน',
-        'pet_gender': 'เมีย',
-        'pet_price': 1500
-      },
-      {
-        'pet_name': 'กระต่าย1',
-        'category': 'กระต่าย',
-        'pet_image': ['/uploads/rabbit1.jpg'],
-        'pet_age': 1,
-        'pet_description': 'นุ่มนิ่ม',
-        'pet_gender': 'ผู้',
-        'pet_price': 800
-      },
-    ];
-
-    filteredPets = List.from(allPets);
-    hasFilterApplied = false;
+  Future<void> loadAllPets() async {
+    setBusy(true);
+    try {
+      final pets = await PetDetailService.fetchAllPets();
+      allPets = pets;
+      filteredPets = List.from(allPets);
+      hasFilterApplied = false;
+    } catch (e) {
+      print('เกิดข้อผิดพลาดในการโหลดสัตว์: $e');
+    }
+    setBusy(false);
     notifyListeners();
   }
 
   Future<void> navigatetoFilter() async {
     final result = await _navigationService.navigateToHomeFilterView();
 
-    print('Filter result: $result');
-
     if (result != null && result is List<dynamic>) {
-      filteredPets = result;
+      filteredPets = result.map((e) {
+        if (e is PetModel) return e;
+        if (e is Map<String, dynamic>) return PetModel.fromJson(e);
+        throw Exception('Invalid filter result type');
+      }).toList();
 
       hasFilterApplied = !(filteredPets.length == allPets.length &&
           _listEquals(filteredPets, allPets));
@@ -67,7 +50,9 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void resetFilters() {
-    loadAllPets();
+    filteredPets = List.from(allPets);
+    hasFilterApplied = false;
+    notifyListeners();
   }
 
   bool _listEquals(List a, List b) {

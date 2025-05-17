@@ -126,24 +126,15 @@ class HomeView extends StackedView<HomeViewModel> {
                       itemBuilder: (context, index) {
                         final pet = viewModel.filteredPets[index];
 
-                        final imagePath = pet["pet_image"] != null &&
-                                pet["pet_image"] is List &&
-                                pet["pet_image"].isNotEmpty
-                            ? pet["pet_image"][0]
-                            : null;
-
-                        final imageUrl = imagePath != null && baseUrl != null
-                            ? '$baseUrl${imagePath.startsWith("/") ? imagePath : '/$imagePath'}'
-                            : 'https://via.placeholder.com/150';
-
+                        print('Pet image: ${pet.image}');
                         return PetCard(
-                          onPressed: viewModel.navigateToPetDetail,
-                          imageUrl: imageUrl,
-                          name: pet["pet_name"] ?? 'ไม่ทราบชื่อ',
-                          age: '${pet["pet_age"] ?? '-'} ปี',
-                          breedDescription: pet["pet_description"] ?? '',
-                          gender: pet["pet_gender"] ?? '',
-                          price: '${pet["pet_price"] ?? '-'}',
+                          onPressed: () => viewModel.navigateToPetDetail(),
+                          imageUrl: pet.image,
+                          name: pet.name,
+                          age: '${pet.age} ปี',
+                          breedDescription: pet.description,
+                          gender: pet.gender,
+                          price: pet.price.toString(),
                         );
                       },
                     ),

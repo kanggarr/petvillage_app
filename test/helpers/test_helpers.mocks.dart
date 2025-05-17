@@ -15,6 +15,7 @@ import 'package:petvillage_app/services/chat_service.dart' as _i9;
 import 'package:petvillage_app/services/filter_service.dart' as _i13;
 import 'package:petvillage_app/services/message_service.dart' as _i10;
 import 'package:petvillage_app/services/otp_service.dart' as _i12;
+import 'package:petvillage_app/services/pet_detail_service.dart' as _i14;
 import 'package:petvillage_app/services/post_service.dart' as _i8;
 import 'package:stacked_services/stacked_services.dart' as _i2;
 
@@ -994,3 +995,8 @@ class MockOtpService extends _i1.Mock implements _i12.OtpService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFilterService extends _i1.Mock implements _i13.FilterService {}
+
+/// A class which mocks [PetDetailService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPetDetailService extends _i1.Mock implements _i14.PetDetailService {}

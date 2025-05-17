@@ -2,10 +2,48 @@ import 'package:petvillage_app/services/filter_service.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeFilterViewModel extends BaseViewModel {
+  // ตัวเลือก
+  String? selectedAnimalType;
+  String? selectedBreed;
+  String? selectedAge;
+  String? selectedLocation;
+  String? selectedDelivery;
+
+  List<String> animalTypes = ['แมว', 'สุนัข', 'กระต่าย'];
+  List<String> breeds = ['เปอร์เซีย', 'ชิสุ', 'บางแก้ว'];
+  List<String> ages = ['1', '2', '3', '4', '5+'];
+  List<String> locations = ['กรุงเทพ', 'เชียงใหม่', 'ขอนแก่น'];
+  List<String> deliveryMethods = ['นัดรับ', 'ส่งถึงบ้าน'];
+
   // เพศ
-  bool isBothSelected = false;
+  bool isBothSelected = true;
   bool isMaleSelected = false;
   bool isFemaleSelected = false;
+
+  void setAnimalType(String value) {
+    selectedAnimalType = value;
+    notifyListeners();
+  }
+
+  void setBreed(String value) {
+    selectedBreed = value;
+    notifyListeners();
+  }
+
+  void setAge(String value) {
+    selectedAge = value;
+    notifyListeners();
+  }
+
+  void setLocation(String value) {
+    selectedLocation = value;
+    notifyListeners();
+  }
+
+  void setDelivery(String value) {
+    selectedDelivery = value;
+    notifyListeners();
+  }
 
   void setBothSelected() {
     isBothSelected = !isBothSelected;
@@ -18,74 +56,26 @@ class HomeFilterViewModel extends BaseViewModel {
 
   void setMaleSelected() {
     isMaleSelected = !isMaleSelected;
-
-    if (isMaleSelected && isFemaleSelected) {
-      isBothSelected = true;
-      isMaleSelected = false;
-      isFemaleSelected = false;
-    } else {
+    if (isMaleSelected) {
       isBothSelected = false;
+      isFemaleSelected = false;
     }
-
     notifyListeners();
   }
 
   void setFemaleSelected() {
     isFemaleSelected = !isFemaleSelected;
-
-    if (isMaleSelected && isFemaleSelected) {
-      isBothSelected = true;
-      isMaleSelected = false;
-      isFemaleSelected = false;
-    } else {
+    if (isFemaleSelected) {
       isBothSelected = false;
+      isMaleSelected = false;
     }
-
     notifyListeners();
   }
 
-  // ประเภทสัตว์
-  String? selectedAnimalType;
-  String? selectedBreed;
-  String? selectedAge;
-  String? selectedLocation;
-  String? selectedDelivery;
-
-  final List<String> animalTypes = ['สุนัข', 'แมว', 'กระต่าย', 'อื่น ๆ'];
-  final List<String> breeds = [
-    'พันธุ์ไทย',
-    'พันธุ์เปอร์เซีย',
-    'พันธุ์ชิสุ',
-    'อื่น ๆ'
-  ];
-
-  final List<String> ages = ['น้อยกว่า 1 ปี', '1-3 ปี', 'มากกว่า 3 ปี'];
-  final List<String> locations = ['กรุงเทพฯ', 'เชียงใหม่', 'ขอนแก่น'];
-  final List<String> deliveryMethods = ['รับเอง', 'จัดส่งทางขนส่ง'];
-
-  void setAnimalType(String type) {
-    selectedAnimalType = type;
-    notifyListeners();
-  }
-
-  void setBreed(String breed) {
-    selectedBreed = breed;
-    notifyListeners();
-  }
-
-  void setAge(String age) {
-    selectedAge = age;
-    notifyListeners();
-  }
-
-  void setLocation(String location) {
-    selectedLocation = location;
-    notifyListeners();
-  }
-
-  void setDelivery(String delivery) {
-    selectedDelivery = delivery;
-    notifyListeners();
+  String get gender {
+    if (isMaleSelected) return 'เพศผู้';
+    if (isFemaleSelected) return 'เพศเมีย';
+    return 'ทั้งคู่'; // default
   }
 
   bool hasFilter() {
@@ -94,9 +84,7 @@ class HomeFilterViewModel extends BaseViewModel {
         selectedAge != null ||
         selectedLocation != null ||
         selectedDelivery != null ||
-        isBothSelected ||
-        isMaleSelected ||
-        isFemaleSelected;
+        !isBothSelected;
   }
 
   void resetFilters() {
@@ -106,40 +94,22 @@ class HomeFilterViewModel extends BaseViewModel {
     selectedLocation = null;
     selectedDelivery = null;
 
-    isBothSelected = false;
     isMaleSelected = false;
     isFemaleSelected = false;
+    isBothSelected = true;
 
     notifyListeners();
   }
 
-  // ฟังก์ชันเรียกใช้ filter API
   Future<List<dynamic>> filterPets() async {
-    final age = selectedAge == 'น้อยกว่า 1 ปี'
-        ? 0
-        : selectedAge == '1-3 ปี'
-            ? 2
-            : selectedAge == 'มากกว่า 3 ปี'
-                ? 4
-                : null;
-
-    final gender = isMaleSelected
-        ? 'เพศผู้'
-        : isFemaleSelected
-            ? 'เพศเมีย'
-            : isBothSelected
-                ? 'ทั้งคู่'
-                : null;
-
-    final pets = await FilterService.filterPets(
+    final result = await FilterService.filterPets(
       petType: selectedAnimalType,
       petBreed: selectedBreed,
+      petAge: selectedAge != null ? int.tryParse(selectedAge!) : null,
       petGender: gender,
-      petAge: age,
       petProvince: selectedLocation,
       petShipping: selectedDelivery,
     );
-
-    return pets;
+    return result;
   }
 }
