@@ -1,3 +1,4 @@
+import 'package:petvillage_app/services/filter_service.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeFilterViewModel extends BaseViewModel {
@@ -9,7 +10,6 @@ class HomeFilterViewModel extends BaseViewModel {
   void setBothSelected() {
     isBothSelected = !isBothSelected;
     if (isBothSelected) {
-      // ถ้าเลือกทั้งคู่ → ยกเลิกเพศผู้และเพศเมีย
       isMaleSelected = false;
       isFemaleSelected = false;
     }
@@ -18,19 +18,29 @@ class HomeFilterViewModel extends BaseViewModel {
 
   void setMaleSelected() {
     isMaleSelected = !isMaleSelected;
-    if (isMaleSelected) {
-      // ถ้าเลือกเพศผู้ → ยกเลิกทั้งคู่
+
+    if (isMaleSelected && isFemaleSelected) {
+      isBothSelected = true;
+      isMaleSelected = false;
+      isFemaleSelected = false;
+    } else {
       isBothSelected = false;
     }
+
     notifyListeners();
   }
 
   void setFemaleSelected() {
     isFemaleSelected = !isFemaleSelected;
-    if (isFemaleSelected) {
-      // ถ้าเลือกเพศเมีย → ยกเลิกทั้งคู่
+
+    if (isMaleSelected && isFemaleSelected) {
+      isBothSelected = true;
+      isMaleSelected = false;
+      isFemaleSelected = false;
+    } else {
       isBothSelected = false;
     }
+
     notifyListeners();
   }
 
@@ -50,9 +60,7 @@ class HomeFilterViewModel extends BaseViewModel {
   ];
 
   final List<String> ages = ['น้อยกว่า 1 ปี', '1-3 ปี', 'มากกว่า 3 ปี'];
-
   final List<String> locations = ['กรุงเทพฯ', 'เชียงใหม่', 'ขอนแก่น'];
-
   final List<String> deliveryMethods = ['รับเอง', 'จัดส่งทางขนส่ง'];
 
   void setAnimalType(String type) {
@@ -80,8 +88,6 @@ class HomeFilterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // filter
-
   bool hasFilter() {
     return selectedAnimalType != null ||
         selectedBreed != null ||
@@ -105,5 +111,35 @@ class HomeFilterViewModel extends BaseViewModel {
     isFemaleSelected = false;
 
     notifyListeners();
+  }
+
+  // ฟังก์ชันเรียกใช้ filter API
+  Future<List<dynamic>> filterPets() async {
+    final age = selectedAge == 'น้อยกว่า 1 ปี'
+        ? 0
+        : selectedAge == '1-3 ปี'
+            ? 2
+            : selectedAge == 'มากกว่า 3 ปี'
+                ? 4
+                : null;
+
+    final gender = isMaleSelected
+        ? 'เพศผู้'
+        : isFemaleSelected
+            ? 'เพศเมีย'
+            : isBothSelected
+                ? 'ทั้งคู่'
+                : null;
+
+    final pets = await FilterService.filterPets(
+      petType: selectedAnimalType,
+      petBreed: selectedBreed,
+      petGender: gender,
+      petAge: age,
+      petProvince: selectedLocation,
+      petShipping: selectedDelivery,
+    );
+
+    return pets;
   }
 }

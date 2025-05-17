@@ -35,6 +35,7 @@ class AuthService {
           ? '${dotenv.env['API_ANDROID_URL']}api/auth/register'
           : '${dotenv.env['API_IOS_URL']}api/auth/register',
     );
+    print('🔗 Login URL: $url');
 
     try {
       final response = await http.post(

@@ -31,22 +31,24 @@ class PetCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(12)),
-              child: Image.asset(
-                imageUrl,
-                height: 120,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)),
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.image_not_supported);
+                  },
+                )),
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
                 name,
                 style: const TextStyle(
-                    fontWeight: FontWeight.w600, color: Color(0xFF242424)),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF242424)),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -55,13 +57,13 @@ class PetCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text('อายุ : $age',
                   style:
-                      const TextStyle(fontSize: 12, color: Color(0xFF242424))),
+                      const TextStyle(fontSize: 16, color: Color(0xFF242424))),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
                 breedDescription,
-                style: const TextStyle(fontSize: 12, color: Color(0xFF242424)),
+                style: const TextStyle(fontSize: 16, color: Color(0xFF242424)),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -71,7 +73,7 @@ class PetCard extends StatelessWidget {
               child: Text('เพศ : $gender',
                   style: const TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 12,
+                      fontSize: 16,
                       color: Color(0xFF242424))),
             ),
             Padding(
@@ -80,7 +82,7 @@ class PetCard extends StatelessWidget {
                 '$price Bath',
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 14,
+                  fontSize: 16,
                 ),
               ),
             ),
