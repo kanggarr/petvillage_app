@@ -126,6 +126,7 @@ class HomeView extends StackedView<HomeViewModel> {
                       itemBuilder: (context, index) {
                         final pet = viewModel.filteredPets[index];
 
+                        print('Pet image: ${pet.image}');
                         return PetCard(
                           onPressed: () => viewModel.navigateToPetDetail(),
                           imageUrl: pet.image,

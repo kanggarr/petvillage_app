@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class PetModel {
   final String id;
   final String name;
@@ -26,14 +30,21 @@ class PetModel {
   });
 
   factory PetModel.fromJson(Map<String, dynamic> json) {
-    // ดึงรูปแรกจาก pet_image list และเติม base URL (แก้ตามจริง)
     String imageUrl = '';
-    if (json['pet_image'] != null &&
-        json['pet_image'] is List &&
-        (json['pet_image'] as List).isNotEmpty) {
-      imageUrl =
-          'https://via.placeholder.com/150${(json['pet_image'] as List).first}';
-    }
+
+    final imageName = (json['pet_image'] as List).first;
+
+// ลบ '/uploads/' ที่ต้น string ออก
+    final cleanedImageName = imageName.startsWith('/uploads/')
+        ? imageName.substring('/uploads/'.length)
+        : imageName;
+
+    final baseUrl = (Platform.isAndroid
+            ? dotenv.env['API_ANDROID_URL']
+            : dotenv.env['API_IOS_URL'])
+        ?.replaceAll(RegExp(r'/$'), '');
+
+    imageUrl = '$baseUrl/uploads/$cleanedImageName';
 
     return PetModel(
       id: json['_id'] ?? '',
