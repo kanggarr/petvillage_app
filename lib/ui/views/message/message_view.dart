@@ -45,20 +45,22 @@ class MessageView extends StackedView<MessageViewModel> {
                               return ListTile(
                                 contentPadding:
                                     const EdgeInsets.symmetric(vertical: 8),
+                                leading: CircleAvatar(
+                                  radius: 28,
+                                  backgroundImage: AssetImage(
+                                    message.profileImage.isNotEmpty
+                                        ? message.profileImage
+                                        : viewModel.userRole == 'shop'
+                                            ? 'assets/images/free.png'
+                                            : 'assets/images/shop_profile.png',
+                                  ),
+                                ),
                                 title: Text(
                                   message.shopName,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 20,
                                     color: Color(0xFF242424),
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  message.lastMessage,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: Color(0xFF808080),
                                   ),
                                 ),
                                 trailing: Text(
@@ -70,7 +72,8 @@ class MessageView extends StackedView<MessageViewModel> {
                                   ),
                                 ),
                                 onTap: () {
-                                  viewModel.navigateToChat(message.shopId);
+                                  viewModel.navigateToChat(
+                                      message.shopId, message.shopName);
                                 },
                               );
                             },
@@ -85,7 +88,7 @@ class MessageView extends StackedView<MessageViewModel> {
 
   @override
   void onViewModelReady(MessageViewModel viewModel) {
-    viewModel.init(); // ✅ เรียกเมื่อ ViewModel พร้อมใช้งาน
+    viewModel.init();
     super.onViewModelReady(viewModel);
   }
 
