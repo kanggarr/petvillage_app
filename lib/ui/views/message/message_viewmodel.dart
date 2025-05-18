@@ -1,6 +1,6 @@
-import 'dart:developer';
+// import 'dart:developer';
 
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:petvillage_app/models/message_model.dart';
 import 'package:petvillage_app/app/app.locator.dart';
@@ -16,6 +16,8 @@ class MessageViewModel extends BaseViewModel {
 
   List<MessageModel> messageList = [];
 
+  String get userRole => _authService.getUserRole();
+
   Future<void> init() async {
     setBusy(true);
     final userId = _authService.getUserId(); // ✅ userId ต้องมีจาก login
@@ -30,8 +32,10 @@ class MessageViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void navigateToChat(String shopId) {
-    _navigationService
-        .navigateTo(Routes.chatRoomView, arguments: {'shopId': shopId});
+  void navigateToChat(String roomId) {
+    _navigationService.navigateTo(
+      Routes.chatRoomView,
+      arguments: {'roomId': roomId},
+    );
   }
 }
