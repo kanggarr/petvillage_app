@@ -4,7 +4,7 @@ import 'package:petvillage_app/services/chat_service.dart';
 import 'package:petvillage_app/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 
-class ChatViewModel extends BaseViewModel {
+class ChatRoomViewModel extends BaseViewModel {
   final _chatService = locator<ChatService>();
   final _authService = locator<AuthService>();
 
@@ -57,10 +57,10 @@ class ChatViewModel extends BaseViewModel {
     }
   }
 
-  @override
-  void dispose() {
-    _chatService.disconnectSocket();
-    messageController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _chatService.disconnectSocket();
+  //   messageController.dispose();
+  //   super.dispose();
+  // }
 }

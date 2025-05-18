@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:petvillage_app/models/message_model.dart';
 import 'package:petvillage_app/app/app.locator.dart';
@@ -16,13 +19,19 @@ class MessageViewModel extends BaseViewModel {
   Future<void> init() async {
     setBusy(true);
     final userId = _authService.getUserId(); // ✅ userId ต้องมีจาก login
-    messageList = await _messageService.fetchLatestMessages(userId);
+
+    final userRole = _authService.getUserRole();
+    if (userRole == 'user') {
+      messageList = await _messageService.fetchUserMessages(userId);
+    } else {
+      messageList = await _messageService.fetchShopMessages(userId);
+    }
     setBusy(false);
     notifyListeners();
   }
 
   void navigateToChat(String shopId) {
     _navigationService
-        .navigateTo(Routes.chatView, arguments: {'shopId': shopId});
+        .navigateTo(Routes.chatRoomView, arguments: {'shopId': shopId});
   }
 }

@@ -10,19 +10,23 @@ class AuthService {
   final _dialogService = locator<DialogService>();
 
   String? _userId;
-  String? _roomId;
+  String? _userRole;
+  String? _username;
 
   void setUserSession(
       {required String userId,
-      required String roomId,
-      required String username}) {
+      required String username,
+      required String? userRole}) {
     _userId = userId;
-    _roomId = roomId;
+    _userRole = userRole;
+    _username = username;
   }
 
-  String getUserId() => _userId!;
+  // String getUserId() => _userId!;
 
-  String getRoomId() => _roomId!;
+  String getUserId() => "6827850c78fc8c59d2fac526";
+
+  String getUserRole() => _userRole ?? 'user';
 
   Future<void> registerUser({
     required String username,
@@ -97,7 +101,7 @@ class AuthService {
       if (response.statusCode == 200) {
         final userId = data['user']['_id'];
         final username = data['user']['username'];
-        final roomId = data['roomId']; // <-- ถ้ามีค่อยใช้งาน
+        final userRole = data['user']['role'];
 
         if (userId == null || username == null) {
           throw Exception('Missing userId or username');
@@ -106,7 +110,7 @@ class AuthService {
         // แก้ตรงนี้ให้เช็คก่อน set session
         setUserSession(
           userId: userId,
-          roomId: roomId ?? '', // ให้เป็น '' ถ้าไม่มี
+          userRole: userRole,
           username: username,
         );
 

@@ -12,15 +12,17 @@ class MessageView extends StackedView<MessageViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('ข้อความ',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600)),
+              const Text(
+                'ข้อความ',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
@@ -29,17 +31,13 @@ class MessageView extends StackedView<MessageViewModel> {
                     final message = viewModel.messageList[index];
                     return ListTile(
                       contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                      leading: const CircleAvatar(
-                        radius: 22,
-                        backgroundImage: AssetImage(
-                            'assets/shop_icon.png'), // เปลี่ยนตามจริง
-                      ),
                       title: Text(
                         message.shopName,
                         style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
-                            color: Color(0xFF242424)),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                          color: Color(0xFF242424),
+                        ),
                       ),
                       subtitle: Text(
                         message.lastMessage,
@@ -52,9 +50,10 @@ class MessageView extends StackedView<MessageViewModel> {
                       trailing: Text(
                         message.time,
                         style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            color: Color(0xFF808080)),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: Color(0xFF808080),
+                        ),
                       ),
                       onTap: () {
                         viewModel.navigateToChat(message.shopId);
@@ -68,6 +67,12 @@ class MessageView extends StackedView<MessageViewModel> {
         ),
       ),
     );
+  }
+
+  @override
+  void onViewModelReady(MessageViewModel viewModel) {
+    viewModel.init(); // ✅ เรียกเมื่อ ViewModel พร้อมใช้งาน
+    super.onViewModelReady(viewModel);
   }
 
   @override
