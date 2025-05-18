@@ -12,6 +12,7 @@ class AuthService {
   String? _userId;
   String? _userRole;
   String? _username;
+  String? _roomId;
 
   void setUserSession(
       {required String userId,
@@ -20,6 +21,15 @@ class AuthService {
     _userId = userId;
     _userRole = userRole;
     _username = username;
+  }
+
+  void setRoomId(String roomId) {
+    _roomId = roomId;
+  }
+
+  String getRoomId() {
+    if (_roomId == null) throw Exception('Room ID ยังไม่ได้ถูกตั้งค่า');
+    return _roomId!;
   }
 
   String getUserId() => _userId!;
