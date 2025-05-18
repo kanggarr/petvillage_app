@@ -25,42 +25,56 @@ class MessageView extends StackedView<MessageViewModel> {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: ListView.builder(
-                  itemCount: viewModel.messageList.length,
-                  itemBuilder: (context, index) {
-                    final message = viewModel.messageList[index];
-                    return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                      title: Text(
-                        message.shopName,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20,
-                          color: Color(0xFF242424),
-                        ),
-                      ),
-                      subtitle: Text(
-                        message.lastMessage,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: Color(0xFF808080),
-                        ),
-                      ),
-                      trailing: Text(
-                        message.time,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          color: Color(0xFF808080),
-                        ),
-                      ),
-                      onTap: () {
-                        viewModel.navigateToChat(message.shopId);
-                      },
-                    );
-                  },
-                ),
+                child: viewModel.isBusy
+                    ? const Center(child: CircularProgressIndicator())
+                    : viewModel.messageList.isEmpty
+                        ? const Center(
+                            child: Text(
+                              'เริ่มต้นการสนทนา',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF808080),
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: viewModel.messageList.length,
+                            itemBuilder: (context, index) {
+                              final message = viewModel.messageList[index];
+                              return ListTile(
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                title: Text(
+                                  message.shopName,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                    color: Color(0xFF242424),
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  message.lastMessage,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    color: Color(0xFF808080),
+                                  ),
+                                ),
+                                trailing: Text(
+                                  message.time,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    color: Color(0xFF808080),
+                                  ),
+                                ),
+                                onTap: () {
+                                  viewModel.navigateToChat(message.shopId);
+                                },
+                              );
+                            },
+                          ),
               ),
             ],
           ),

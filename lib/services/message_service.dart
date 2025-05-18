@@ -16,20 +16,15 @@ class MessageService {
   // 👉 สำหรับใช้ในหน้าแชทรายบุคคล
   Future<List<MessageModel>> fetchShopMessages(String shopId) async {
     try {
-      final userId = _authService.getUserId();
-      final roomId = '${shopId}_$userId';
       final base = baseUrl.substring(0, baseUrl.length - 1);
-      final url = Uri.parse('$base/api/chat/userchats?userId=$roomId');
+      final url = Uri.parse('$base/api/chat/shopchats?shopId=$shopId');
       final response = await http.get(url);
-
+      print(jsonDecode(response.body));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        if (data.isEmpty) return [];
-
-        final lastMessage = data.last;
-        return [MessageModel.fromJson(lastMessage)];
+        return data.map((json) => MessageModel.fromJson(json)).toList();
       } else {
-        throw Exception('Failed to load messages');
+        throw Exception('Failed to load latest messages');
       }
     } catch (e) {
       rethrow;

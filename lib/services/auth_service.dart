@@ -22,9 +22,7 @@ class AuthService {
     _username = username;
   }
 
-  // String getUserId() => _userId!;
-
-  String getUserId() => "6827850c78fc8c59d2fac526";
+  String getUserId() => _userId!;
 
   String getUserRole() => _userRole ?? 'user';
 
