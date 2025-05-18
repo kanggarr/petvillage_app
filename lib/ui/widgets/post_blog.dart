@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/views/post/post_viewmodel.dart';
 import 'package:petvillage_app/ui/widgets/image_picker.dart';
 
 class PostBlogForm extends StatelessWidget {
-  final dynamic viewModel; // Add this line to define viewModel
+  final PostViewModel viewModel; // Add this line to define viewModel
 
   const PostBlogForm({super.key, required this.viewModel});
 
@@ -56,6 +57,7 @@ class PostBlogForm extends StatelessWidget {
               filled: true,
               fillColor: Colors.white,
             ),
+            onChanged: viewModel.onChangeTitle,
           ),
         ),
         const SizedBox(height: 20),
@@ -104,6 +106,7 @@ class PostBlogForm extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 30, vertical: 16),
               filled: true,
               fillColor: Colors.white),
+          onChanged: viewModel.oChangeContent,
         ),
       ],
     );
