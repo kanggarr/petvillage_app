@@ -697,9 +697,9 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
 class MockAuthService extends _i1.Mock implements _i7.AuthService {
   @override
   void setUserSession({
-    required String? userId,
-    required String? roomId,
-    required String? username,
+    required String userId,
+    String? userRole,
+    required String username,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -707,7 +707,7 @@ class MockAuthService extends _i1.Mock implements _i7.AuthService {
           [],
           {
             #userId: userId,
-            #roomId: roomId,
+            #userRole: userRole,
             #username: username,
           },
         ),

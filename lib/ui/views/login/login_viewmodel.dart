@@ -53,44 +53,15 @@ class LoginViewModel extends BaseViewModel {
     bool loginSuccess = false;
 
     try {
-      print('➡️ loginUser กำลังทำงาน...');
-      await _authService.loginUser(
+      await _authService.login(
         email: _email,
         password: _password,
         onSuccess: () {
-          print('✅ loginUser สำเร็จ');
           loginSuccess = true;
         },
       );
     } catch (e) {
       print('❌ loginUser ล้มเหลว: $e');
-
-      try {
-        print('➡️ loginShop กำลังทำงาน...');
-        await _authService.loginShop(
-          email: _email,
-          password: _password,
-          onResult: (success, message) async {
-            loginSuccess = success;
-            print('✅ loginShop success = $success, message = $message');
-
-            if (!success) {
-              await locator<DialogService>().showDialog(
-                title: 'เข้าสู่ระบบไม่สำเร็จ',
-                description: message ?? 'ไม่สามารถเข้าสู่ระบบได้',
-                buttonTitle: 'ตกลง',
-              );
-            }
-          },
-        );
-      } catch (e) {
-        print('❌ loginShop ล้มเหลว: $e');
-        await locator<DialogService>().showDialog(
-          title: 'ข้อผิดพลาด',
-          description: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
-          buttonTitle: 'ตกลง',
-        );
-      }
     }
 
     if (loginSuccess) {

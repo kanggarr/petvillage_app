@@ -76,7 +76,7 @@ class AuthService {
     }
   }
 
-  Future<void> loginUser({
+  Future<void> login({
     required String email,
     required String password,
     required Function onSuccess,
@@ -120,13 +120,18 @@ class AuthService {
           buttonTitle: 'ตกลง',
         );
         onSuccess();
+      } else if (response.statusCode == 403) {
+        await _dialogService.showDialog(
+          title: 'ไม่อนุญาต',
+          description: data['msg'] ?? 'ยังไม่มีสิทธิ์เข้าถึง',
+          buttonTitle: 'ตกลง',
+        );
       } else {
         await _dialogService.showDialog(
           title: 'เกิดข้อผิดพลาด',
           description: data['msg'] ?? 'เข้าสู่ระบบไม่สำเร็จ',
           buttonTitle: 'ตกลง',
         );
-        throw Exception(data['msg'] ?? 'เข้าสู่ระบบไม่สำเร็จ');
       }
     } catch (e) {
       print('❌ loginUser error: $e');
@@ -152,8 +157,8 @@ class AuthService {
   }) async {
     final url = Uri.parse(
       Platform.isAndroid
-          ? '${dotenv.env['API_ANDROID_URL']}api/shop/register'
-          : '${dotenv.env['API_IOS_URL']}api/shop/register',
+          ? '${dotenv.env['API_ANDROID_URL']}api/auth/register/shop'
+          : '${dotenv.env['API_IOS_URL']}api/auth/register/shop',
     );
 
     var request = http.MultipartRequest('POST', url);
@@ -183,41 +188,6 @@ class AuthService {
         onResult(true, null);
       } else {
         onResult(false, data['msg'] ?? 'ลงทะเบียนไม่สำเร็จ');
-      }
-    } catch (e) {
-      onResult(false, 'เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้');
-    }
-  }
-
-  Future<void> loginShop({
-    required String email,
-    required String password,
-    required Function(bool success, String? message) onResult,
-  }) async {
-    final url = Uri.parse(
-      Platform.isAndroid
-          ? '${dotenv.env['API_ANDROID_URL']}api/shop/login'
-          : '${dotenv.env['API_IOS_URL']}api/shop/login',
-    );
-
-    try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'email': email, 'password': password}),
-      );
-
-      final data = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        await _dialogService.showDialog(
-          title: 'เข้าสู่ระบบร้านค้าสำเร็จ',
-          description: 'ยินดีต้อนรับร้านค้า ${data['shop']['shopName']}',
-          buttonTitle: 'ตกลง',
-        );
-        onResult(true, null);
-      } else {
-        onResult(false, data['msg'] ?? 'เข้าสู่ระบบไม่สำเร็จ');
       }
     } catch (e) {
       onResult(false, 'เกิดข้อผิดพลาด: ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้');
