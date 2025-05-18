@@ -4,7 +4,7 @@ import 'package:petvillage_app/app/app.locator.dart';
 import '../helpers/test_helpers.dart';
 
 void main() {
-  group('ChatViewModel Tests -', () {
+  group('ChatRoomViewModel Tests -', () {
     setUp(() => registerServices());
     tearDown(() => locator.reset());
   });

@@ -15,7 +15,6 @@ import 'package:petvillage_app/ui/views/pet_detail/pet_detail_view.dart';
 import 'package:petvillage_app/ui/views/splash_page1/splash_page1_view.dart';
 import 'package:petvillage_app/ui/views/login/login_view.dart';
 import 'package:petvillage_app/ui/views/register/register_view.dart';
-import 'package:petvillage_app/ui/views/chat/chat_view.dart';
 import 'package:petvillage_app/ui/views/otp/otp_view.dart';
 import 'package:petvillage_app/ui/views/shop_register/shop_register_view.dart';
 import 'package:petvillage_app/ui/views/forgot_password/forgot_password_view.dart';
@@ -28,6 +27,7 @@ import 'package:petvillage_app/services/message_service.dart';
 import 'package:petvillage_app/services/otp_service.dart';
 import 'package:petvillage_app/services/filter_service.dart';
 import 'package:petvillage_app/services/pet_detail_service.dart';
+import 'package:petvillage_app/ui/views/chat_room/chat_room_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -45,12 +45,12 @@ import 'package:petvillage_app/services/pet_detail_service.dart';
     MaterialRoute(page: SplashPage1View),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: RegisterView),
-    MaterialRoute(page: ChatView),
     MaterialRoute(page: OtpView),
     MaterialRoute(page: ShopRegisterView),
     MaterialRoute(page: ForgotPasswordView),
     MaterialRoute(page: BlogDetailView),
     MaterialRoute(page: FavoriteView),
+    MaterialRoute(page: ChatRoomView),
 // @stacked-route
   ],
   dependencies: [

@@ -14,22 +14,17 @@ class MessageService {
       : dotenv.env['API_IOS_URL']!;
 
   // 👉 สำหรับใช้ในหน้าแชทรายบุคคล
-  Future<List<MessageModel>> fetchMessages(String shopId) async {
+  Future<List<MessageModel>> fetchShopMessages(String shopId) async {
     try {
-      final userId = _authService.getUserId();
-      final roomId = '${shopId}_$userId';
-
-      final url = Uri.parse('$baseUrl/api/message/$roomId');
+      final base = baseUrl.substring(0, baseUrl.length - 1);
+      final url = Uri.parse('$base/api/chat/shopchats?shopId=$shopId');
       final response = await http.get(url);
-
+      print(jsonDecode(response.body));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        if (data.isEmpty) return [];
-
-        final lastMessage = data.last;
-        return [MessageModel.fromJson(lastMessage)];
+        return data.map((json) => MessageModel.fromJson(json)).toList();
       } else {
-        throw Exception('Failed to load messages');
+        throw Exception('Failed to load latest messages');
       }
     } catch (e) {
       rethrow;
@@ -37,9 +32,10 @@ class MessageService {
   }
 
   // 👉 สำหรับใช้ในหน้า Message List (inbox)
-  Future<List<MessageModel>> fetchLatestMessages(String userId) async {
+  Future<List<MessageModel>> fetchUserMessages(String userId) async {
     try {
-      final url = Uri.parse('$baseUrl/api/messages/latest/$userId');
+      final base = baseUrl.substring(0, baseUrl.length - 1);
+      final url = Uri.parse('$base/api/chat/userchats?userId=$userId');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {

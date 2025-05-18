@@ -9,18 +9,18 @@ import 'package:flutter/material.dart' as _i21;
 import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/views/blog/blog_view.dart' as _i4;
 import 'package:petvillage_app/ui/views/blog_detail/blog_detail_view.dart'
-    as _i19;
-import 'package:petvillage_app/ui/views/chat/chat_view.dart' as _i15;
-import 'package:petvillage_app/ui/views/favorite/favorite_view.dart' as _i20;
-import 'package:petvillage_app/ui/views/forgot_password/forgot_password_view.dart'
     as _i18;
+import 'package:petvillage_app/ui/views/chat_room/chat_room_view.dart' as _i20;
+import 'package:petvillage_app/ui/views/favorite/favorite_view.dart' as _i19;
+import 'package:petvillage_app/ui/views/forgot_password/forgot_password_view.dart'
+    as _i17;
 import 'package:petvillage_app/ui/views/home/home_view.dart' as _i8;
 import 'package:petvillage_app/ui/views/home_filter/home_filter_view.dart'
     as _i9;
 import 'package:petvillage_app/ui/views/login/login_view.dart' as _i13;
 import 'package:petvillage_app/ui/views/main/main_view.dart' as _i3;
 import 'package:petvillage_app/ui/views/message/message_view.dart' as _i6;
-import 'package:petvillage_app/ui/views/otp/otp_view.dart' as _i16;
+import 'package:petvillage_app/ui/views/otp/otp_view.dart' as _i15;
 import 'package:petvillage_app/ui/views/pet_detail/pet_detail_view.dart'
     as _i11;
 import 'package:petvillage_app/ui/views/post/post_view.dart' as _i5;
@@ -29,7 +29,7 @@ import 'package:petvillage_app/ui/views/profile_edit/profile_edit_view.dart'
     as _i10;
 import 'package:petvillage_app/ui/views/register/register_view.dart' as _i14;
 import 'package:petvillage_app/ui/views/shop_register/shop_register_view.dart'
-    as _i17;
+    as _i16;
 import 'package:petvillage_app/ui/views/splash_page1/splash_page1_view.dart'
     as _i12;
 import 'package:petvillage_app/ui/views/startup/startup_view.dart' as _i2;
@@ -63,8 +63,6 @@ class Routes {
 
   static const registerView = '/register-view';
 
-  static const chatView = '/chat-view';
-
   static const otpView = '/otp-view';
 
   static const shopRegisterView = '/shop-register-view';
@@ -74,6 +72,8 @@ class Routes {
   static const blogDetailView = '/blog-detail-view';
 
   static const favoriteView = '/favorite-view';
+
+  static const chatRoomView = '/chat-room-view';
 
   static const all = <String>{
     startupView,
@@ -89,12 +89,12 @@ class Routes {
     splashPage1View,
     loginView,
     registerView,
-    chatView,
     otpView,
     shopRegisterView,
     forgotPasswordView,
     blogDetailView,
     favoriteView,
+    chatRoomView,
   };
 }
 
@@ -153,28 +153,28 @@ class StackedRouter extends _i1.RouterBase {
       page: _i14.RegisterView,
     ),
     _i1.RouteDef(
-      Routes.chatView,
-      page: _i15.ChatView,
-    ),
-    _i1.RouteDef(
       Routes.otpView,
-      page: _i16.OtpView,
+      page: _i15.OtpView,
     ),
     _i1.RouteDef(
       Routes.shopRegisterView,
-      page: _i17.ShopRegisterView,
+      page: _i16.ShopRegisterView,
     ),
     _i1.RouteDef(
       Routes.forgotPasswordView,
-      page: _i18.ForgotPasswordView,
+      page: _i17.ForgotPasswordView,
     ),
     _i1.RouteDef(
       Routes.blogDetailView,
-      page: _i19.BlogDetailView,
+      page: _i18.BlogDetailView,
     ),
     _i1.RouteDef(
       Routes.favoriteView,
-      page: _i20.FavoriteView,
+      page: _i19.FavoriteView,
+    ),
+    _i1.RouteDef(
+      Routes.chatRoomView,
+      page: _i20.ChatRoomView,
     ),
   ];
 
@@ -257,39 +257,39 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i15.ChatView: (data) {
+    _i15.OtpView: (data) {
       return _i21.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i15.ChatView(),
+        builder: (context) => const _i15.OtpView(),
         settings: data,
       );
     },
-    _i16.OtpView: (data) {
+    _i16.ShopRegisterView: (data) {
       return _i21.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i16.OtpView(),
+        builder: (context) => const _i16.ShopRegisterView(),
         settings: data,
       );
     },
-    _i17.ShopRegisterView: (data) {
+    _i17.ForgotPasswordView: (data) {
       return _i21.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i17.ShopRegisterView(),
+        builder: (context) => const _i17.ForgotPasswordView(),
         settings: data,
       );
     },
-    _i18.ForgotPasswordView: (data) {
+    _i18.BlogDetailView: (data) {
       return _i21.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i18.ForgotPasswordView(),
+        builder: (context) => const _i18.BlogDetailView(),
         settings: data,
       );
     },
-    _i19.BlogDetailView: (data) {
+    _i19.FavoriteView: (data) {
       return _i21.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i19.BlogDetailView(),
+        builder: (context) => const _i19.FavoriteView(),
         settings: data,
       );
     },
-    _i20.FavoriteView: (data) {
+    _i20.ChatRoomView: (data) {
       return _i21.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i20.FavoriteView(),
+        builder: (context) => const _i20.ChatRoomView(),
         settings: data,
       );
     },
@@ -485,20 +485,6 @@ extension NavigatorStateExtension on _i22.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToChatView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.chatView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToOtpView([
     int? routerId,
     bool preventDuplicates = true,
@@ -563,6 +549,20 @@ extension NavigatorStateExtension on _i22.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.favoriteView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToChatRoomView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.chatRoomView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -751,20 +751,6 @@ extension NavigatorStateExtension on _i22.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithChatView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.chatView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> replaceWithOtpView([
     int? routerId,
     bool preventDuplicates = true,
@@ -829,6 +815,20 @@ extension NavigatorStateExtension on _i22.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.favoriteView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithChatRoomView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.chatRoomView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

@@ -14,6 +14,7 @@ class StartupViewModel extends BaseViewModel {
     // you have custom startup logic
 
     _navigationService.navigateToSplashPage1View();
+    // _navigationService.navigateToMessageView();
     // _navigationService.replaceWithMainView();
   }
 }
