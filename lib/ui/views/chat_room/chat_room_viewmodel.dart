@@ -10,7 +10,6 @@ class ChatRoomViewModel extends BaseViewModel {
 
   final TextEditingController messageController = TextEditingController();
   List<Map<String, dynamic>> messages = [];
-  
 
   void setRoomId(String roomId) {
     _authService.setRoomId(roomId); // <-- เพิ่มบรรทัดนี้

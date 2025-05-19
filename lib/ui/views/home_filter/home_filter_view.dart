@@ -38,7 +38,7 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
               value: viewModel.selectedAnimalType,
               items: viewModel.animalTypes,
               onChanged: (value) {
-                if (value != null) viewModel.setAnimalType(value);
+                if (value != null) viewModel.onSelectAnimalType(value);
               },
               label: 'ประเภทสัตว์เลี้ยง',
               hintText: 'เลือกประเภทสัตว์',
@@ -48,7 +48,7 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
               value: viewModel.selectedBreed,
               items: viewModel.breeds,
               onChanged: (value) {
-                if (value != null) viewModel.setBreed(value);
+                if (value != null) viewModel.onSelectBreed(value);
               },
               label: 'พันธุ์สัตว์',
               hintText: 'เลือกพันธุ์สัตว์',
@@ -79,13 +79,13 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
             ),
             const SizedBox(height: 20),
             ReusableDropdown(
-              value: viewModel.selectedLocation,
-              items: viewModel.locations,
+              value: viewModel.selectedProvince,
+              items: viewModel.province,
               onChanged: (value) {
-                if (value != null) viewModel.setLocation(value);
+                if (value != null) viewModel.setProvince(value);
               },
-              label: 'ที่ตั้ง',
-              hintText: 'เลือกที่ตั้ง',
+              label: 'ที่อยู่',
+              hintText: 'เลือกที่อยู่',
             ),
             const SizedBox(height: 20),
             ReusableDropdown(

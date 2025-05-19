@@ -23,10 +23,10 @@ class MessageService {
       print(jsonDecode(response.body));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        final result = data
-            .map((json) => MessageModel.fromJson(json, userRole))
-            .toList();
-        print('✅✅✅✅✅✅ fetchShopMessages result: ${result.map((msg) => msg.toString()).toList()}');
+        final result =
+            data.map((json) => MessageModel.fromJson(json, userRole)).toList();
+        print(
+            '✅✅✅✅✅✅ fetchShopMessages result: ${result.map((msg) => msg.toString()).toList()}');
         return result;
       } else {
         throw Exception('Failed to load latest messages');
