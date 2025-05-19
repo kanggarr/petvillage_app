@@ -4,8 +4,8 @@ import 'package:petvillage_app/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:petvillage_app/services/auth_service.dart';
 import 'package:petvillage_app/services/post_service.dart';
-import 'package:petvillage_app/services/chat_service.dart';
-import 'package:petvillage_app/services/message_service.dart';
+import 'package:petvillage_app/services/chat_messages_service.dart';
+import 'package:petvillage_app/services/chat_room_service.dart';
 import 'package:petvillage_app/services/otp_service.dart';
 import 'package:petvillage_app/services/filter_service.dart';
 import 'package:petvillage_app/services/pet_detail_service.dart';
@@ -19,8 +19,8 @@ import 'test_helpers.mocks.dart';
   MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<AuthService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<PostService>(onMissingStub: OnMissingStub.returnDefault),
-  MockSpec<ChatService>(onMissingStub: OnMissingStub.returnDefault),
-  MockSpec<MessageService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<ChatRoomService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<ChatMessagesService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<OtpService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<FilterService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<PetDetailService>(onMissingStub: OnMissingStub.returnDefault),

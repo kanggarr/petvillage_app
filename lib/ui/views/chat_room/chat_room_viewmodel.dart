@@ -1,52 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:petvillage_app/app/app.locator.dart';
-import 'package:petvillage_app/services/chat_service.dart';
+import 'package:petvillage_app/services/chat_messages_service.dart';
 import 'package:petvillage_app/services/auth_service.dart';
+import 'package:petvillage_app/models/message_model.dart';
 import 'package:stacked/stacked.dart';
 
 class ChatRoomViewModel extends BaseViewModel {
-  final _chatService = locator<ChatService>();
+  final _chatService = locator<ChatMessagesService>();
   final _authService = locator<AuthService>();
 
   final TextEditingController messageController = TextEditingController();
-  List<Map<String, dynamic>> messages = [];
-  
+  List<Message> messages = [];
 
-  void setRoomId(String roomId) {
-    _authService.setRoomId(roomId); // <-- เพิ่มบรรทัดนี้
-  }
-
-  void init() async {
-    await fetchMessages();
-    _chatService.connectSocket(onMessageReceived);
-  }
-
-  Future<void> fetchMessages() async {
+  /// Initialize: load historic messages and open socket
+  Future<void> init() async {
     setBusy(true);
+    await _loadMessages();
+    _chatService.connectSocket(_onMessageReceived);
+    setBusy(false);
+  }
+
+  Future<void> _loadMessages() async {
     try {
-      final fetchedMessages = await _chatService.fetchMessages();
-      messages = fetchedMessages.map((msg) {
-        final senderId = msg['sender'];
-        final isUser = senderId == _authService.getUserId();
-        return {
-          'type': isUser ? 'user' : 'store',
-          'text': msg['content'],
-        };
-      }).toList();
-      setBusy(false);
-      notifyListeners();
+      final raw = await _chatService.fetchMessages();
+      messages = raw.map((json) => Message.fromJson(json)).toList();
     } catch (e) {
-      setBusy(false);
       debugPrint('❌ Fetch messages error: $e');
+      messages = [];
     }
   }
 
-  void onMessageReceived(Map<String, dynamic> data) {
-    final isUser = data['senderId'] == _authService.getUserId();
-    messages.add({
-      'type': isUser ? 'user' : 'store',
-      'text': data['content'],
-    });
+  void _onMessageReceived(Map<String, dynamic> data) {
+    final msg = Message.fromJson(data);
+    messages.add(msg);
     notifyListeners();
   }
 
@@ -54,9 +40,16 @@ class ChatRoomViewModel extends BaseViewModel {
     final text = messageController.text.trim();
     if (text.isEmpty) return;
 
+    print('Sending message: $text');
+    print('Room ID: ${_authService.getRoomId()}');
+    print('User ID: ${_authService.getUserId()}');
+
     try {
-      await _chatService.sendMessage(text);
+      final raw = await _chatService.sendMessage(text);
+      final sent = Message.fromJson(raw);
+      messages.add(sent);
       messageController.clear();
+      notifyListeners();
     } catch (e) {
       debugPrint('❌ Send message error: $e');
     }
