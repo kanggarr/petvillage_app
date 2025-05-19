@@ -222,7 +222,6 @@ class PostViewModel extends BaseViewModel {
       notifyListeners();
       final blog = BlogModel.fromJson(data['blog']);
       navigateToBlogDetail(blog);
-
     } else {
       final streamRes = await postService.postPet(
         petNameController.text,

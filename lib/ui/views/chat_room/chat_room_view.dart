@@ -14,7 +14,7 @@ class ChatRoomView extends StackedView<ChatRoomViewModel> {
   ) {
     final args = ModalRoute.of(context)?.settings.arguments as Map?;
     final roomId = args != null ? args['roomId'] as String : '';
-    
+
     // reverse once
     final displayed = viewModel.messages.reversed.toList();
 

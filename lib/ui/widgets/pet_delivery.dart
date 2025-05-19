@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/models/pet_model.dart';
 
 class PetDelivery extends StatelessWidget {
-  final List<String> methods = [
-    'นัดรับ',
-    'ร้านส่งเอง',
-    'รับหน้าร้าน',
-    'เครื่องบิน',
-    'รถส่งสัตว์เลี้ยง'
-  ];
+  final PetModel petModel;
+
+  PetDelivery({Key? key, required this.petModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final List<String> methods = List.filled(1, petModel.delivery);
     return SizedBox(
       width: double.infinity,
       child: Card(
