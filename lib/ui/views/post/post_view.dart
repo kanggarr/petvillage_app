@@ -28,6 +28,7 @@ class PostView extends StackedView<PostViewModel> {
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 20),
+              if (viewModel.userRole == 'shop')
               PostToggle(viewModel: viewModel),
               const SizedBox(height: 20),
               if (viewModel.selectedCategory == 'บล็อก')
@@ -62,6 +63,20 @@ class PostView extends StackedView<PostViewModel> {
         ),
       ),
     );
+  }
+
+  Widget body(PostViewModel viewModel) {
+    if (viewModel.userRole == 'user') {
+      return PostBlogForm(viewModel: viewModel);
+    } else {
+      if (viewModel.selectedCategory == 'บล็อก') {
+        return PostBlogForm(viewModel: viewModel);
+      }
+      if (viewModel.selectedCategory == 'ขาย/รับเลี้ยง') {
+        return PostAdoptForm(viewModel: viewModel);
+      }
+    }
+    return Container();
   }
 
   @override
