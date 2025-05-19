@@ -17,6 +17,7 @@ import 'package:petvillage_app/services/message_service.dart' as _i10;
 import 'package:petvillage_app/services/otp_service.dart' as _i12;
 import 'package:petvillage_app/services/pet_detail_service.dart' as _i14;
 import 'package:petvillage_app/services/post_service.dart' as _i8;
+import 'package:petvillage_app/services/profile_service.dart' as _i15;
 import 'package:stacked_services/stacked_services.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -697,9 +698,9 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
 class MockAuthService extends _i1.Mock implements _i7.AuthService {
   @override
   void setUserSession({
-    required String userId,
-    String? userRole,
-    required String username,
+    required String? userId,
+    required String? username,
+    required String? userRole,
   }) =>
       super.noSuchMethod(
         Invocation.method(
@@ -707,8 +708,8 @@ class MockAuthService extends _i1.Mock implements _i7.AuthService {
           [],
           {
             #userId: userId,
-            #userRole: userRole,
             #username: username,
+            #userRole: userRole,
           },
         ),
         returnValueForMissingStub: null,
@@ -737,22 +738,22 @@ class MockAuthService extends _i1.Mock implements _i7.AuthService {
       ) as String);
 
   @override
-  String getRoomId() => (super.noSuchMethod(
+  String getUserRole() => (super.noSuchMethod(
         Invocation.method(
-          #getRoomId,
+          #getUserRole,
           [],
         ),
         returnValue: _i3.dummyValue<String>(
           this,
           Invocation.method(
-            #getRoomId,
+            #getUserRole,
             [],
           ),
         ),
         returnValueForMissingStub: _i3.dummyValue<String>(
           this,
           Invocation.method(
-            #getRoomId,
+            #getUserRole,
             [],
           ),
         ),
@@ -781,14 +782,14 @@ class MockAuthService extends _i1.Mock implements _i7.AuthService {
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<void> loginUser({
+  _i5.Future<void> login({
     required String? email,
     required String? password,
     required Function? onSuccess,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
-          #loginUser,
+          #login,
           [],
           {
             #email: email,
@@ -828,29 +829,6 @@ class MockAuthService extends _i1.Mock implements _i7.AuthService {
             #district: district,
             #subdistrict: subdistrict,
             #imagePath: imagePath,
-            #onResult: onResult,
-          },
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
-
-  @override
-  _i5.Future<void> loginShop({
-    required String? email,
-    required String? password,
-    required dynamic Function(
-      bool,
-      String?,
-    )? onResult,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #loginShop,
-          [],
-          {
-            #email: email,
-            #password: password,
             #onResult: onResult,
           },
         ),
@@ -900,15 +878,6 @@ class MockChatService extends _i1.Mock implements _i9.ChatService {
         ),
         returnValueForMissingStub: null,
       );
-
-  @override
-  void disconnectSocket() => super.noSuchMethod(
-        Invocation.method(
-          #disconnectSocket,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
 }
 
 /// A class which mocks [MessageService].
@@ -929,10 +898,10 @@ class MockMessageService extends _i1.Mock implements _i10.MessageService {
       ) as String);
 
   @override
-  _i5.Future<List<_i11.MessageModel>> fetchMessages(String? shopId) =>
+  _i5.Future<List<_i11.MessageModel>> fetchShopMessages(String? shopId) =>
       (super.noSuchMethod(
         Invocation.method(
-          #fetchMessages,
+          #fetchShopMessages,
           [shopId],
         ),
         returnValue:
@@ -942,10 +911,10 @@ class MockMessageService extends _i1.Mock implements _i10.MessageService {
       ) as _i5.Future<List<_i11.MessageModel>>);
 
   @override
-  _i5.Future<List<_i11.MessageModel>> fetchLatestMessages(String? userId) =>
+  _i5.Future<List<_i11.MessageModel>> fetchUserMessages(String? userId) =>
       (super.noSuchMethod(
         Invocation.method(
-          #fetchLatestMessages,
+          #fetchUserMessages,
           [userId],
         ),
         returnValue:
@@ -1000,3 +969,8 @@ class MockFilterService extends _i1.Mock implements _i13.FilterService {}
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPetDetailService extends _i1.Mock implements _i14.PetDetailService {}
+
+/// A class which mocks [ProfileService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockProfileService extends _i1.Mock implements _i15.ProfileService {}

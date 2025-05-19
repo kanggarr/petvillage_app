@@ -5,9 +5,15 @@ import 'package:petvillage_app/ui/widgets/custom_texfeild.dart';
 // import 'package:petvillage_app/ui/widgets/profile_text_field.dart';
 import 'package:stacked/stacked.dart';
 import 'profile_edit_viewmodel.dart';
+import 'package:petvillage_app/ui/views/forgot_password/forgot_password_view.dart';
 
 class ProfileEditView extends StackedView<ProfileEditViewModel> {
   const ProfileEditView({Key? key}) : super(key: key);
+
+  @override
+  void onViewModelReady(ProfileEditViewModel viewModel) {
+    viewModel.init(); // เรียก init เมื่อ ViewModel พร้อม
+  }
 
   @override
   Widget builder(
@@ -31,20 +37,61 @@ class ProfileEditView extends StackedView<ProfileEditViewModel> {
             ),
             const SizedBox(height: 20),
             CustomTextField(
-                label: 'ชื่อผู้ใช้งาน',
-                hintText: viewModel.nameController.text),
+                label: 'ชื่อผู้ใช้งาน', controller: viewModel.nameController),
             const SizedBox(height: 16),
             CustomTextField(
-                label: 'อีเมล', hintText: viewModel.emailController.text),
+                label: 'อีเมล', controller: viewModel.emailController),
             const SizedBox(height: 16),
-            CustomTextField(label: 'รหัสผ่าน', hintText: 'แก้ไขรหัสผ่าน'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'รหัสผ่าน',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black54,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ForgotPasswordView(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 18),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black26),
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'แก้ไขรหัสผ่านของคุณ',
+                          style: TextStyle(fontSize: 16, color: Colors.black87),
+                        ),
+                        Icon(Icons.arrow_forward_ios,
+                            size: 16, color: Colors.black54),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 16),
-            // CustomTextField(
-            //     label: 'ที่อยู่ปัจุบัน',
-            //     hintText: viewModel.addressController.text),
+            //  CustomTextField(
+            //      label: 'ที่อยู่ปัจุบัน',
+            //      hintText: viewModel.addressController.text),
+            //  const SizedBox(height: 16),
+            //  ReusableDropdown(label: 'จังหวัด', hintText: '',),
             // const SizedBox(height: 16),
-            // ReusableDropdown(label: 'จังหวัด', hintText: '',),
-            const SizedBox(height: 16),
             // ProfileDropdownField(
             //   label: "จังหวัด",
             //   value: viewModel.selectedProvince,
@@ -67,8 +114,8 @@ class ProfileEditView extends StackedView<ProfileEditViewModel> {
             //     label: "รหัสไปรษณีย์",
             //     controller: viewModel.postCodeController),
             ElevatedButton(
-              // onPressed: viewModel.saveProfile,
-              onPressed: () {},
+              onPressed: viewModel.saveProfile,
+              // onPressed: () {},
               style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF4F9451),
                   shape: RoundedRectangleBorder(

@@ -18,6 +18,7 @@ import '../services/message_service.dart';
 import '../services/otp_service.dart';
 import '../services/pet_detail_service.dart';
 import '../services/post_service.dart';
+import '../services/profile_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -40,4 +41,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => OtpService());
   locator.registerLazySingleton(() => FilterService());
   locator.registerLazySingleton(() => PetDetailService());
+  locator.registerLazySingleton(() => ProfileService());
 }

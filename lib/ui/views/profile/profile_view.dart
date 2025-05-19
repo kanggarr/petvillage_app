@@ -12,6 +12,11 @@ class ProfileView extends StackedView<ProfileViewModel> {
   const ProfileView({Key? key}) : super(key: key);
 
   @override
+  void onViewModelReady(ProfileViewModel viewModel) {
+  viewModel.loadUserProfile();
+  }
+
+  @override
   Widget builder(
     BuildContext context,
     ProfileViewModel viewModel,
