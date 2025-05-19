@@ -73,7 +73,7 @@ class MessageView extends StackedView<MessageViewModel> {
                                 ),
                                 onTap: () {
                                   viewModel.navigateToChat(
-                                      message.shopId, message.shopName);
+                                      message.roomId, message.shopName);
                                 },
                               );
                             },

@@ -13,14 +13,22 @@ class ChatService {
   /// ✅ ดึงข้อความแชททั้งหมดจาก room
   Future<List<Map<String, dynamic>>> fetchMessages() async {
     final roomId = _authService.getRoomId();
+    print("✅ roomId : $roomId");
+    final token = _authService.getToken();
     final url = Uri.parse(
       Platform.isAndroid
-          ? '${dotenv.env['API_ANDROID_URL']}api/messages/$roomId'
-          : '${dotenv.env['API_IOS_URL']}api/messages/$roomId',
+          ? '${dotenv.env['API_ANDROID_URL']}api/chat/room/$roomId'
+          : '${dotenv.env['API_IOS_URL']}api/chat/room/$roomId',
     );
 
     try {
-      final response = await http.get(url);
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
       if (response.statusCode == 200) {
         final List<dynamic> messages = jsonDecode(response.body);
         return messages.map((msg) => msg as Map<String, dynamic>).toList();
@@ -34,39 +42,58 @@ class ChatService {
   }
 
   /// ✅ ส่งข้อความใหม่เข้าไปในห้องแชท
+  /// ✅ ส่งข้อความใหม่เข้าไปในห้องแชท
   Future<void> sendMessage(String content) async {
     final roomId = _authService.getRoomId();
     final senderId = _authService.getUserId();
+    final token = _authService.getToken();
+    print("✅ roomId : $roomId");
+    print("✅ senderId : $senderId");
+    print("✅ token : $token");
+
+    // Validate inputs
+    if (roomId == null || content.isEmpty || token == null) {
+      throw Exception('roomId, content, or token is missing');
+    }
 
     final url = Uri.parse(
       Platform.isAndroid
-          ? '${dotenv.env['API_ANDROID_URL']}api/messages'
-          : '${dotenv.env['API_IOS_URL']}api/messages',
+          ? '${dotenv.env['API_ANDROID_URL']}api/chat/send'
+          : '${dotenv.env['API_IOS_URL']}api/chat/send',
     );
 
     try {
       final response = await http.post(
         url,
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
         body: jsonEncode({
           'roomId': roomId,
-          'senderId': senderId,
           'content': content,
         }),
       );
 
       if (response.statusCode == 201) {
-        // ✅ ถ้าส่งสำเร็จ ให้ emit ไปยัง socket ด้วย (สำหรับผู้ใช้คนอื่น)
+        // ✅ Emit to socket for real-time update
         _socket?.emit('newMessage', {
           'roomId': roomId,
-          'senderId': senderId,
-          'content': content,
+          'message': {
+            'roomId': roomId,
+            'sender': senderId,
+            'content': content,
+            'senderType':
+                _authService.getUserRole() == 'shop' ? 'Shop' : 'User',
+          },
         });
       } else {
         final data = jsonDecode(response.body);
-        throw Exception(data['msg'] ?? 'ส่งข้อความไม่สำเร็จ');
+        throw Exception(
+            data['error'] ?? 'ส่งข้อความไม่สำเร็จ: ${response.statusCode}');
       }
     } catch (e) {
+      print('Error sending message: $e');
       throw Exception('เกิดข้อผิดพลาดในการส่งข้อความ: $e');
     }
   }
