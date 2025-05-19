@@ -80,8 +80,8 @@ class PostViewModel extends BaseViewModel {
 
   final List<String> province = provinces;
 
-  List<String> district = List<String>.from(
-      districtsByProvince['กรุงเทพมหานคร'] ?? <String>[]);
+  List<String> district =
+      List<String>.from(districtsByProvince['กรุงเทพมหานคร'] ?? <String>[]);
   List<String> subDistrict = [];
 
   final List<String> deliveryMethods = ['นัดรับ', 'จัดส่งทั่วประเทศ'];
@@ -110,34 +110,34 @@ class PostViewModel extends BaseViewModel {
     selectedBreed = breed;
     notifyListeners();
   }
-  
+
   void setAdopt(bool value) {
     isAdopt = value;
     notifyListeners();
   }
 
   void setProvince(String province) {
-  selectedProvince = province;
-  district.clear();
-  final newDistricts = getDistricts(province);
-  district.addAll(newDistricts);
-  selectedDistrict = null;
-  
-  subDistrict.clear();
-  if (district.isNotEmpty) {
-    subDistrict.addAll(getSubDistricts(district.first));
+    selectedProvince = province;
+    district.clear();
+    final newDistricts = getDistricts(province);
+    district.addAll(newDistricts);
+    selectedDistrict = null;
+
+    subDistrict.clear();
+    if (district.isNotEmpty) {
+      subDistrict.addAll(getSubDistricts(district.first));
+    }
+    selectedSubDistrict = null;
+    notifyListeners();
   }
-  selectedSubDistrict = null;
-  notifyListeners();
-}
 
   void setDistrict(String district) {
-  selectedDistrict = district;
-  subDistrict.clear();
-  subDistrict.addAll(getSubDistricts(district)); // ควรเช็คก่อน
-  selectedSubDistrict = null;
-  notifyListeners();
-}
+    selectedDistrict = district;
+    subDistrict.clear();
+    subDistrict.addAll(getSubDistricts(district)); // ควรเช็คก่อน
+    selectedSubDistrict = null;
+    notifyListeners();
+  }
 
   void setSubDistrict(String subDistrict) {
     selectedSubDistrict = subDistrict;
@@ -211,13 +211,17 @@ class PostViewModel extends BaseViewModel {
       final data = jsonDecode(res.body);
       debugPrint('statusCode => ${res.statusCode}');
       debugPrint('Success => $data');
-
     } else {
       final streamRes = await postService.postPet(
         petNameController.text,
         selectedAnimalType!,
         selectedBreed!,
-        (isBothSelected ? 'ทั้งคู่' : isMaleSelected ? 'เพศผู้' : 'เพศเมีย').toString(),
+        (isBothSelected
+                ? 'ทั้งคู่'
+                : isMaleSelected
+                    ? 'เพศผู้'
+                    : 'เพศเมีย')
+            .toString(),
         petAge.text,
         petDescriptionController.text,
         petPrice.text,
@@ -262,7 +266,5 @@ class PostViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  void init() async {
-    
-  }
+  void init() async {}
 }

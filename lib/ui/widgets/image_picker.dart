@@ -17,26 +17,26 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   final List<File> _images = [];
 
   Future<void> _pickImages() async {
-  final result = await FilePicker.platform.pickFiles(
-    allowMultiple: true,
-    type: FileType.image,   // เปิดแกลเลอรี
-    withData: false,
-  );
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.image, // เปิดแกลเลอรี
+      withData: false,
+    );
 
-  if (result != null && result.files.isNotEmpty) {
-    final allowed = ['.jpg', '.jpeg', '.png'];
+    if (result != null && result.files.isNotEmpty) {
+      final allowed = ['.jpg', '.jpeg', '.png'];
 
-    final validFiles = result.files.where((f) {
-      final ext = f.extension != null ? '.${f.extension!.toLowerCase()}' : '';
-      return allowed.contains(ext);
-    }).toList();
+      final validFiles = result.files.where((f) {
+        final ext = f.extension != null ? '.${f.extension!.toLowerCase()}' : '';
+        return allowed.contains(ext);
+      }).toList();
 
-    setState(() {
-      _images.addAll(validFiles.map((f) => File(f.path!)));
-    });
-    widget.onImagesChanged(_images);
+      setState(() {
+        _images.addAll(validFiles.map((f) => File(f.path!)));
+      });
+      widget.onImagesChanged(_images);
+    }
   }
-}
 
   void _removeImage(int index) {
     setState(() {
