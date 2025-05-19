@@ -37,7 +37,7 @@ class AuthService {
 
   String getUserId() => _userId!;
 
-  // get token 
+  // get token
   String getToken() => _token!;
 
   String getUserRole() => _userRole ?? 'user';

@@ -28,6 +28,7 @@ import 'package:petvillage_app/services/otp_service.dart';
 import 'package:petvillage_app/services/filter_service.dart';
 import 'package:petvillage_app/services/pet_detail_service.dart';
 import 'package:petvillage_app/ui/views/chat_room/chat_room_view.dart';
+import 'package:petvillage_app/ui/views/shop_profile/shop_profile_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -51,6 +52,7 @@ import 'package:petvillage_app/ui/views/chat_room/chat_room_view.dart';
     MaterialRoute(page: BlogDetailView),
     MaterialRoute(page: FavoriteView),
     MaterialRoute(page: ChatRoomView),
+    MaterialRoute(page: ShopProfileView),
 // @stacked-route
   ],
   dependencies: [
