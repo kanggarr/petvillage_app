@@ -96,8 +96,7 @@ class BlogView extends StackedView<BlogViewModel> {
                           onPressed: () {
                             viewModel.navigateToBlogDetail(index);
                           },
-                          imageUrl:
-                              viewModel.blogs[index].images.firstOrNull ?? '',
+                          imageUrl: /*viewModel.blogs[index].images.firstOrNull ?? ''*/ 'assets/images/dog.png',
                           title: viewModel.blogs[index].titleName,
                           subtitle: 'ก่อนรับเลี้ยงสัตว์เลี้ยง',
                           description: viewModel.blogs[index].description,

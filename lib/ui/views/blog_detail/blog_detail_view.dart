@@ -40,9 +40,10 @@ class BlogDetailView extends StackedView<BlogDetailViewModel> {
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(12)),
                 child: Image.asset(
-                  blogModel.images.isNotEmpty
-                      ? blogModel.images[0]!
-                      : 'assets/images/blog_default.png',
+                  'assets/images/dog.png',
+                  // blogModel.images.isNotEmpty
+                  //     ? blogModel.images[0]!
+                  //     : 'assets/images/blog_default.png',
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
