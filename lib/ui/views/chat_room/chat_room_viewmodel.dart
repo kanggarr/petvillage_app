@@ -10,6 +10,7 @@ class ChatRoomViewModel extends BaseViewModel {
 
   final TextEditingController messageController = TextEditingController();
   List<Map<String, dynamic>> messages = [];
+  
 
   void setRoomId(String roomId) {
     _authService.setRoomId(roomId); // <-- เพิ่มบรรทัดนี้
@@ -21,6 +22,7 @@ class ChatRoomViewModel extends BaseViewModel {
   }
 
   Future<void> fetchMessages() async {
+    setBusy(true);
     try {
       final fetchedMessages = await _chatService.fetchMessages();
       messages = fetchedMessages.map((msg) {
@@ -31,9 +33,10 @@ class ChatRoomViewModel extends BaseViewModel {
           'text': msg['content'],
         };
       }).toList();
-
+      setBusy(false);
       notifyListeners();
     } catch (e) {
+      setBusy(false);
       debugPrint('❌ Fetch messages error: $e');
     }
   }

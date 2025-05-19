@@ -32,10 +32,13 @@ class MessageViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void navigateToChat(String roomId) {
+  void navigateToChat(String roomId, String shopName) {
+    // set roomId to authService
+    _authService.setRoomId(roomId);
+    print("✅✅ roomId by navigateToChat : ${_authService.getRoomId()}");
     _navigationService.navigateTo(
       Routes.chatRoomView,
-      arguments: {'roomId': roomId},
+      arguments: {'roomId': roomId, 'shopName': shopName},
     );
   }
 }

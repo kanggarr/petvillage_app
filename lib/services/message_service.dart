@@ -23,9 +23,11 @@ class MessageService {
       print(jsonDecode(response.body));
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        return data
+        final result = data
             .map((json) => MessageModel.fromJson(json, userRole))
             .toList();
+        print('✅✅✅✅✅✅ fetchShopMessages result: ${result.map((msg) => msg.toString()).toList()}');
+        return result;
       } else {
         throw Exception('Failed to load latest messages');
       }
@@ -37,19 +39,27 @@ class MessageService {
   // 👉 สำหรับใช้ในหน้า Message List (inbox)
   Future<List<MessageModel>> fetchUserMessages(String userId) async {
     final userRole = _authService.getUserRole();
+    final token = _authService.getToken();
     try {
       final base = baseUrl.substring(0, baseUrl.length - 1);
       final url = Uri.parse('$base/api/chat/userchats?userId=$userId');
-      final response = await http.get(url);
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
 
       if (response.statusCode == 200) {
-        print(jsonDecode(response.body));
         final List<dynamic> data = jsonDecode(response.body);
-        return data
-            .map((json) => MessageModel.fromJson(json, userRole))
-            .toList();
+        final result =
+            data.map((json) => MessageModel.fromJson(json, userRole)).toList();
+        print(
+            '✅✅✅✅✅✅ fetchUserMessages result: ${result.map((msg) => msg.toString()).toList()}');
+        return result;
       } else {
-        throw Exception('Failed to load latest messages');
+        throw Exception('Failed to load latest messages: ${response.body}');
       }
     } catch (e) {
       rethrow;

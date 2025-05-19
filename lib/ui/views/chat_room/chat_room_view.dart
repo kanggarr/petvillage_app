@@ -12,7 +12,8 @@ class ChatRoomView extends StackedView<ChatRoomViewModel> {
     Widget? child,
   ) {
     final args = ModalRoute.of(context)?.settings.arguments as Map?;
-    final roomId = args?['roomId'] ?? '';
+    final roomId = args != null ? args['roomId'] ?? '' : '';
+
     viewModel.setRoomId(roomId);
 
     return Scaffold(
