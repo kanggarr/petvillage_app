@@ -7,6 +7,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flutter/material.dart' as _i22;
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/models/blog_model.dart' as _i23;
 import 'package:petvillage_app/ui/views/blog/blog_view.dart' as _i4;
 import 'package:petvillage_app/ui/views/blog_detail/blog_detail_view.dart'
     as _i18;
@@ -36,7 +37,7 @@ import 'package:petvillage_app/ui/views/splash_page1/splash_page1_view.dart'
     as _i12;
 import 'package:petvillage_app/ui/views/startup/startup_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i23;
+import 'package:stacked_services/stacked_services.dart' as _i24;
 
 class Routes {
   static const startupView = '/startup-view';
@@ -285,8 +286,10 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i18.BlogDetailView: (data) {
+      final args = data.getArgs<BlogDetailViewArguments>(nullOk: false);
       return _i22.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i18.BlogDetailView(),
+        builder: (context) =>
+            _i18.BlogDetailView(key: args.key, blogModel: args.blogModel),
         settings: data,
       );
     },
@@ -317,7 +320,34 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i23.NavigationService {
+class BlogDetailViewArguments {
+  const BlogDetailViewArguments({
+    this.key,
+    required this.blogModel,
+  });
+
+  final _i22.Key? key;
+
+  final _i23.BlogModel blogModel;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "blogModel": "$blogModel"}';
+  }
+
+  @override
+  bool operator ==(covariant BlogDetailViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.blogModel == blogModel;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ blogModel.hashCode;
+  }
+}
+
+extension NavigatorStateExtension on _i24.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -542,14 +572,17 @@ extension NavigatorStateExtension on _i23.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToBlogDetailView([
+  Future<dynamic> navigateToBlogDetailView({
+    _i22.Key? key,
+    required _i23.BlogModel blogModel,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.blogDetailView,
+        arguments: BlogDetailViewArguments(key: key, blogModel: blogModel),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -822,14 +855,17 @@ extension NavigatorStateExtension on _i23.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithBlogDetailView([
+  Future<dynamic> replaceWithBlogDetailView({
+    _i22.Key? key,
+    required _i23.BlogModel blogModel,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.blogDetailView,
+        arguments: BlogDetailViewArguments(key: key, blogModel: blogModel),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

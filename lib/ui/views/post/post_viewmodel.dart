@@ -6,13 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
 import 'package:petvillage_app/app/app.locator.dart';
+import 'package:petvillage_app/app/app.router.dart';
 import 'package:petvillage_app/constants/thai_location.dart';
+import 'package:petvillage_app/models/blog_model.dart';
 import 'package:petvillage_app/services/auth_service.dart';
 import 'package:petvillage_app/services/pet_detail_service.dart';
 import 'package:petvillage_app/services/post_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class PostViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
+
   // userRole
   final userRole = locator<AuthService>().getUserRole();
 
@@ -211,6 +216,13 @@ class PostViewModel extends BaseViewModel {
       final data = jsonDecode(res.body);
       debugPrint('statusCode => ${res.statusCode}');
       debugPrint('Success => $data');
+      blogTitleController.clear();
+      blogContentController.clear();
+      imagePaths.clear();
+      notifyListeners();
+      final blog = BlogModel.fromJson(data['blog']);
+      navigateToBlogDetail(blog);
+
     } else {
       final streamRes = await postService.postPet(
         petNameController.text,
@@ -266,5 +278,7 @@ class PostViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  void init() async {}
+  void navigateToBlogDetail(BlogModel blogModel) {
+    _navigationService.navigateToBlogDetailView(blogModel: blogModel);
+  }
 }
