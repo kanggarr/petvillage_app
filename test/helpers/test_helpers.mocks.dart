@@ -10,18 +10,16 @@ import 'dart:ui' as _i7;
 import 'package:flutter/material.dart' as _i5;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i4;
-import 'package:petvillage_app/models/animal_type_model.dart' as _i17;
-import 'package:petvillage_app/models/breeds_model.dart' as _i18;
-import 'package:petvillage_app/models/message_model.dart' as _i13;
-import 'package:petvillage_app/services/auth_service.dart' as _i8;
-import 'package:petvillage_app/services/chat_service.dart' as _i11;
-import 'package:petvillage_app/services/filter_service.dart' as _i15;
-import 'package:petvillage_app/services/message_service.dart' as _i12;
-import 'package:petvillage_app/services/otp_service.dart' as _i14;
-import 'package:petvillage_app/services/pet_detail_service.dart' as _i16;
-import 'package:petvillage_app/services/post_service.dart' as _i9;
-import 'package:stacked_services/stacked_services.dart' as _i3;
+import 'package:mockito/src/dummies.dart' as _i3;
+import 'package:petvillage_app/models/message_model.dart' as _i11;
+import 'package:petvillage_app/services/auth_service.dart' as _i7;
+import 'package:petvillage_app/services/chat_service.dart' as _i9;
+import 'package:petvillage_app/services/filter_service.dart' as _i13;
+import 'package:petvillage_app/services/message_service.dart' as _i10;
+import 'package:petvillage_app/services/otp_service.dart' as _i12;
+import 'package:petvillage_app/services/pet_detail_service.dart' as _i14;
+import 'package:petvillage_app/services/post_service.dart' as _i8;
+import 'package:stacked_services/stacked_services.dart' as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

@@ -1,70 +1,79 @@
-class MessageModel {
+class Message {
+  final String id;
   final String roomId;
-  final String shopId;
-  final String shopName;
-  final String time;
-  final String profileImage;
-  final String lastMessage;
+  final String senderId;
+  final String senderType;
+  final String content;
+  final DateTime timestamp;
+  final List<dynamic> readBy;
+  final List<dynamic> attachments;
 
-  MessageModel({
+  Message({
+    required this.id,
     required this.roomId,
-    required this.shopId,
-    required this.shopName,
-    required this.time,
-    required this.profileImage,
-    required this.lastMessage,
+    required this.senderId,
+    required this.senderType,
+    required this.content,
+    required this.timestamp,
+    this.readBy = const [],
+    this.attachments = const [],
   });
 
-  factory MessageModel.fromJson(Map<String, dynamic> json, String userRole) {
-    final room_id = json['_id'];
-    final shop = json['shop'] as Map<String, dynamic>?;
-    final user = json['user'] as Map<String, dynamic>?;
-
-    final timestamp = DateTime.tryParse(json['updatedAt'] ?? '');
-    final formattedTime =
-        timestamp != null ? formatTime(timestamp) : 'ไม่ทราบเวลา';
-
-    if (userRole == 'shop') {
-      // ร้านค้า login → แสดงชื่อ user
-      return MessageModel(
-        roomId: room_id ?? 'room_unknown',
-        profileImage: user?['profileImage'] ?? '',
-        shopId: user?['_id'] ?? 'user_unknown',
-        shopName: user?['username'] ?? 'ไม่ทราบชื่อผู้ใช้',
-        time: formattedTime,
-        lastMessage: user?['lastMessage'] ?? 'ไม่ทราบข้อความ',
-      );
-    } else {
-      // ผู้ใช้ login → แสดงชื่อร้านค้า
-      return MessageModel(
-        roomId: room_id ?? 'room_unknown',
-        profileImage: shop?['profileImage'] ?? '',
-        shopId: shop?['_id'] ?? 'shop_unknown',
-        shopName: shop?['username'] ?? 'ไม่ทราบชื่อร้าน',
-        time: formattedTime,
-        lastMessage: shop?['lastMessage'] ?? 'ไม่ทราบข้อความ',
-      );
-    }
-  }
-
-  @override
-  String toString() {
-    return 'MessageModel(roomId: $roomId, shopId: $shopId, shopName: $shopName, time: $time, profileImage: $profileImage, lastMessage: $lastMessage)';
-  }
-
-  static String formatTime(DateTime timestamp) {
-    final localTimestamp = timestamp.toUtc().add(const Duration(hours: 7));
-    final now = DateTime.now().toUtc().add(const Duration(hours: 7));
-
-    if (now.difference(localTimestamp).inDays == 0) {
-      return 'วันนี้ ${localTimestamp.hour.toString().padLeft(2, '0')}:${localTimestamp.minute.toString().padLeft(2, '0')}';
+  factory Message.fromJson(Map<String, dynamic> json) {
+    // Extract senderId safely from nested sender object or use empty string if null
+    String extractSenderId(dynamic sender) {
+      if (sender == null) return '';
+      if (sender is Map<String, dynamic>) {
+        final id = sender['_id'] ?? sender['id'];
+        if (id is String) return id;
+        // Sometimes the id can be some other type (e.g., ObjectId), convert to string
+        return id.toString();
+      }
+      // fallback if sender is already a string
+      if (sender is String) return sender;
+      return '';
     }
 
-    return '${localTimestamp.day}/${localTimestamp.month}/${localTimestamp.year + 543}';
+    // Parse timestamp safely
+    DateTime parseTimestamp(dynamic ts) {
+      if (ts == null) return DateTime.now();
+      if (ts is String) {
+        try {
+          return DateTime.parse(ts);
+        } catch (_) {
+          return DateTime.now();
+        }
+      }
+      if (ts is DateTime) return ts;
+      return DateTime.now();
+    }
+
+    return Message(
+      id: json['_id']?.toString() ?? '',
+      roomId: json['roomId']?.toString() ?? '',
+      senderId: extractSenderId(json['sender']),
+      senderType: json['senderType']?.toString() ?? '',
+      content: json['content']?.toString() ?? '',
+      timestamp: parseTimestamp(json['timestamp']),
+      readBy: (json['readBy'] as List<dynamic>?)
+              ?.map((e) => e as Map<String, dynamic>)
+              .toList() ??
+          [],
+      attachments: (json['attachments'] as List<dynamic>?)
+              ?.map((e) => e as Map<String, dynamic>)
+              .toList() ??
+          [],
+    );
   }
 
-  /// เช็คว่า image เป็น URL หรือไม่ (เพื่อใช้ NetworkImage)
-  bool get hasNetworkImage =>
-      profileImage.isNotEmpty &&
-      (profileImage.startsWith('http') || profileImage.startsWith('https'));
+  Map<String, dynamic> toJson() => {
+        '_id': id,
+        'roomId': roomId,
+        'sender': senderId,
+        'senderType': senderType,
+        'content': content,
+        'timestamp': timestamp.toIso8601String(),
+        'readBy': readBy.map((r) => r.toJson()).toList(),
+        'attachments': attachments.map((a) => a.toJson()).toList(),
+      };
 }
