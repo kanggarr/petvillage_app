@@ -35,8 +35,7 @@ class MessageViewModel extends BaseViewModel {
   void navigateToChat(String roomId, String shopName) {
     // set roomId to authService
     _authService.setRoomId(roomId);
-    print(
-        ":white_check_mark::white_check_mark: roomId by navigateToChat : ${_authService.getRoomId()}");
+    print("✅✅ roomId by navigateToChat : ${_authService.getRoomId()}");
     _navigationService.navigateTo(
       Routes.chatRoomView,
       arguments: {'roomId': roomId, 'shopName': shopName},
