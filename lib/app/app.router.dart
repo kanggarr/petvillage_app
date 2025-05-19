@@ -7,7 +7,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flutter/material.dart' as _i22;
 import 'package:flutter/material.dart';
-import 'package:petvillage_app/models/blog_model.dart' as _i23;
+import 'package:petvillage_app/models/blog_model.dart' as _i24;
+import 'package:petvillage_app/models/pet_model.dart' as _i23;
 import 'package:petvillage_app/ui/views/blog/blog_view.dart' as _i4;
 import 'package:petvillage_app/ui/views/blog_detail/blog_detail_view.dart'
     as _i18;
@@ -37,7 +38,7 @@ import 'package:petvillage_app/ui/views/splash_page1/splash_page1_view.dart'
     as _i12;
 import 'package:petvillage_app/ui/views/startup/startup_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i24;
+import 'package:stacked_services/stacked_services.dart' as _i25;
 
 class Routes {
   static const startupView = '/startup-view';
@@ -244,8 +245,10 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i11.PetDetailView: (data) {
+      final args = data.getArgs<PetDetailViewArguments>(nullOk: false);
       return _i22.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i11.PetDetailView(),
+        builder: (context) =>
+            _i11.PetDetailView(key: args.key, petModel: args.petModel),
         settings: data,
       );
     },
@@ -320,6 +323,33 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
+class PetDetailViewArguments {
+  const PetDetailViewArguments({
+    this.key,
+    required this.petModel,
+  });
+
+  final _i22.Key? key;
+
+  final _i23.PetModel petModel;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "petModel": "$petModel"}';
+  }
+
+  @override
+  bool operator ==(covariant PetDetailViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.petModel == petModel;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ petModel.hashCode;
+  }
+}
+
 class BlogDetailViewArguments {
   const BlogDetailViewArguments({
     this.key,
@@ -328,7 +358,7 @@ class BlogDetailViewArguments {
 
   final _i22.Key? key;
 
-  final _i23.BlogModel blogModel;
+  final _i24.BlogModel blogModel;
 
   @override
   String toString() {
@@ -347,7 +377,7 @@ class BlogDetailViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i24.NavigationService {
+extension NavigatorStateExtension on _i25.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -474,14 +504,17 @@ extension NavigatorStateExtension on _i24.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToPetDetailView([
+  Future<dynamic> navigateToPetDetailView({
+    _i22.Key? key,
+    required _i23.PetModel petModel,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.petDetailView,
+        arguments: PetDetailViewArguments(key: key, petModel: petModel),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -574,7 +607,7 @@ extension NavigatorStateExtension on _i24.NavigationService {
 
   Future<dynamic> navigateToBlogDetailView({
     _i22.Key? key,
-    required _i23.BlogModel blogModel,
+    required _i24.BlogModel blogModel,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -757,14 +790,17 @@ extension NavigatorStateExtension on _i24.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithPetDetailView([
+  Future<dynamic> replaceWithPetDetailView({
+    _i22.Key? key,
+    required _i23.PetModel petModel,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.petDetailView,
+        arguments: PetDetailViewArguments(key: key, petModel: petModel),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -857,7 +893,7 @@ extension NavigatorStateExtension on _i24.NavigationService {
 
   Future<dynamic> replaceWithBlogDetailView({
     _i22.Key? key,
-    required _i23.BlogModel blogModel,
+    required _i24.BlogModel blogModel,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,

@@ -13,10 +13,6 @@ class _PetImageSliderState extends State<PetImageSlider> {
 
   final List<String> _images = [
     'assets/images/dog.png',
-    'assets/images/dog.png',
-    'assets/images/dog.png',
-    'assets/images/dog.png',
-    'assets/images/dog.png',
   ];
 
   @override
@@ -46,22 +42,22 @@ class _PetImageSliderState extends State<PetImageSlider> {
           ),
         ),
         const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(_images.length, (index) {
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              width: 8,
-              height: 8,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _currentIndex == index
-                    ? const Color(0xFF819979)
-                    : Colors.grey.shade300,
-              ),
-            );
-          }),
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: List.generate(_images.length, (index) {
+        //     return Container(
+        //       margin: const EdgeInsets.symmetric(horizontal: 4),
+        //       width: 8,
+        //       height: 8,
+        //       decoration: BoxDecoration(
+        //         shape: BoxShape.circle,
+        //         color: _currentIndex == index
+        //             ? const Color(0xFF819979)
+        //             : Colors.grey.shade300,
+        //       ),
+        //     );
+        //   }),
+        // ),
       ],
     );
   }
