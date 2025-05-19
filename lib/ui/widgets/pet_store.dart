@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/ui/views/shop_profile/shop_profile_view.dart';
 
 class PetStore extends StatelessWidget {
   @override
@@ -17,7 +18,7 @@ class PetStore extends StatelessWidget {
                 const CircleAvatar(
                   radius: 24,
                   backgroundImage: AssetImage(
-                      'assets/images/profile.png'), // TODO: เชื่อมกับ API
+                      'assets/images/shop_profile.png'), // TODO: เชื่อมกับ API
                 ),
                 const SizedBox(width: 8),
                 const Expanded(
@@ -28,7 +29,13 @@ class PetStore extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ShopProfileView(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4F9451),
                     shape: RoundedRectangleBorder(

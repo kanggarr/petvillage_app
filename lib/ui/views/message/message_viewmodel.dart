@@ -32,10 +32,13 @@ class MessageViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void navigateToChat(String roomId) {
+  void navigateToChat(String roomId, String name) {
     _navigationService.navigateTo(
       Routes.chatRoomView,
-      arguments: {'roomId': roomId},
+      arguments: {
+        'roomId': roomId,
+        'name': name, // 👈 ส่งชื่อมาด้วย
+      },
     );
   }
 }

@@ -29,7 +29,7 @@ class PostView extends StackedView<PostViewModel> {
               ),
               const SizedBox(height: 20),
               if (viewModel.userRole == 'shop')
-              PostToggle(viewModel: viewModel),
+                PostToggle(viewModel: viewModel),
               const SizedBox(height: 20),
               if (viewModel.selectedCategory == 'บล็อก')
                 PostBlogForm(viewModel: viewModel),
