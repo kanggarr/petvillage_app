@@ -24,9 +24,9 @@ class HomeView extends StackedView<HomeViewModel> {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 24,
-                ),
+                // CircleAvatar(
+                //   radius: 24,
+                // ),
                 SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

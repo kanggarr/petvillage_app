@@ -23,7 +23,7 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
       ),
-      body: Builder( // ✅ ต้องใช้ Builder เพื่อให้ context ถูกต้อง
+      body: Builder(
         builder: (scaffoldContext) => SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -61,11 +61,12 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               backgroundColor: const Color(0xFF4F9451),
+                              side: BorderSide.none, // ลบขอบสีดำ
                             ),
                             child: const Text(
                               "ติดต่อคนขาย",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFFFFFFFF),
                               ),
@@ -88,12 +89,17 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              backgroundColor: const Color(0xFFFF8687),
+                              backgroundColor: viewModel.isFavorite
+                                  ? const Color(0xFFB0B0B0)
+                                  : const Color(0xFFFF8687),
+                              side: BorderSide.none, // ลบขอบสีดำ
                             ),
-                            child: const Text(
-                              "เพิ่มรายการโปรด",
-                              style: TextStyle(
-                                fontSize: 16,
+                            child: Text(
+                              viewModel.isFavorite
+                                  ? "ยกเลิกรายการโปรด"
+                                  : "เพิ่มรายการโปรด",
+                              style: const TextStyle(
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFFFFFFFF),
                               ),

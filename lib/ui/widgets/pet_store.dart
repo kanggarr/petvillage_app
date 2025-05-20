@@ -20,13 +20,13 @@ class PetStore extends StatelessWidget {
                 const CircleAvatar(
                   radius: 24,
                   backgroundImage: AssetImage(
-                      'assets/images/profile.png'), // TODO: เชื่อมกับ API
+                      'assets/images/shop_profile.png'), // TODO: เชื่อมกับ API
                 ),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: Text(
                     // TODO: เชื่อมกับ API
-                    'Pets store01',
+                    'pet_shop',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
