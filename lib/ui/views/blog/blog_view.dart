@@ -24,17 +24,12 @@ class BlogView extends StackedView<BlogViewModel> {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 24,
-                  // backgroundImage: AssetImage(
-                  //     'assets/images/avatar.png'), // TODO: รอเอารูปจาก database
-                ),
                 SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hi, Smith', // TODO: รอชื่อจาก database
+                      'Pet Village', // TODO: รอชื่อจาก database
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -96,7 +91,8 @@ class BlogView extends StackedView<BlogViewModel> {
                           onPressed: () {
                             viewModel.navigateToBlogDetail(index);
                           },
-                          imageUrl: /*viewModel.blogs[index].images.firstOrNull ?? ''*/ 'assets/images/dog.png',
+                          imageUrl: /*viewModel.blogs[index].images.firstOrNull ?? ''*/
+                              'assets/images/dog.png',
                           title: viewModel.blogs[index].titleName,
                           subtitle: 'ก่อนรับเลี้ยงสัตว์เลี้ยง',
                           description: viewModel.blogs[index].description,

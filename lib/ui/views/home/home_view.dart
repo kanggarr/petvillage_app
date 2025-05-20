@@ -32,7 +32,7 @@ class HomeView extends StackedView<HomeViewModel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hi, Smith',
+                      'Pet Village',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
