@@ -5,10 +5,12 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:petvillage_app/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:petvillage_app/services/token_service.dart'; // ✅ นำเข้า TokenService
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final _dialogService = locator<DialogService>();
+  final _tokenService = TokenService(); // ✅ เพิ่มบรรทัดนี้
 
   String? _userId;
   String? _userRole;
@@ -16,11 +18,12 @@ class AuthService {
   String? _roomId;
   String? _token;
 
-  void setUserSession(
-      {required String userId,
-      required String username,
-      required String? userRole,
-      required String token}) {
+  void setUserSession({
+    required String userId,
+    required String username,
+    required String? userRole,
+    required String token,
+  }) {
     _userId = userId;
     _userRole = userRole;
     _username = username;
@@ -37,11 +40,8 @@ class AuthService {
   }
 
   String getUserId() => _userId!;
-
-  // get token
-  String getToken() => _token!;
-
   String getUserRole() => _userRole ?? 'user';
+  String getToken() => _token!;
 
   Future<void> registerUser({
     required String username,
@@ -54,7 +54,7 @@ class AuthService {
           ? '${dotenv.env['API_ANDROID_URL']}api/auth/register'
           : '${dotenv.env['API_IOS_URL']}api/auth/register',
     );
-    print('🔗 Login URL: $url');
+    print('🔗 Register URL: $url');
 
     try {
       final response = await http.post(

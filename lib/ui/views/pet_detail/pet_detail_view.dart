@@ -23,33 +23,35 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Pet Village",
-                style: TextStyle(
+      body: Builder(
+        builder: (scaffoldContext) => SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Pet Village",
+                  style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF242424)),
-              ),
-              const SizedBox(height: 12),
-              const PetImageSlider(),
-              const SizedBox(height: 16),
-              PetInfoCard(petModel: petModel),
-              const SizedBox(height: 12),
-              PetDelivery(petModel: petModel),
-              const SizedBox(height: 12),
-              PetStore(onPressed: viewModel.navigateToShopProfile),
-              const SizedBox(height: 16),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
+                    color: Color(0xFF242424),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                const PetImageSlider(),
+                const SizedBox(height: 16),
+                PetInfoCard(petModel: petModel),
+                const SizedBox(height: 12),
+                PetDelivery(petModel: petModel),
+                const SizedBox(height: 12),
+                PetStore(onPressed: viewModel.navigateToShopProfile),
+                const SizedBox(height: 16),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
                         child: SizedBox(
                       height: 48,
                       child: OutlinedButton(
@@ -66,32 +68,50 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFFFFFFFF)),
-                          )),
-                    )),
-                    const SizedBox(width: 16),
-                    Expanded(
-                        child: SizedBox(
-                      height: 48,
-                      child: OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16)),
-                            backgroundColor: const Color(0xFFFF8687),
+                                color: Color(0xFFFFFFFF),
+                              ),
+                            ),
                           ),
-                          child: const Text(
-                            "เพิ่มรายการโปรด",
-                            style: TextStyle(
-                                fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: SizedBox(
+                          height: 48,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              viewModel.toggleFavorite(
+                                petId: petModel.id,
+                                context: scaffoldContext,
+                              );
+                            },
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              backgroundColor: viewModel.isFavorite
+                                  ? const Color(0xFFB0B0B0)
+                                  : const Color(0xFFFF8687),
+                              side: BorderSide.none, // ลบขอบสีดำ
+                            ),
+                            child: Text(
+                              viewModel.isFavorite
+                                  ? "ยกเลิกรายการโปรด"
+                                  : "เพิ่มรายการโปรด",
+                              style: const TextStyle(
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFFFFFFFF)),
-                          )),
-                    )),
-                  ],
+                                color: Color(0xFFFFFFFF),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),

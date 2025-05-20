@@ -26,7 +26,7 @@ class PetStore extends StatelessWidget {
                 const Expanded(
                   child: Text(
                     // TODO: เชื่อมกับ API
-                    'Pets store01',
+                    'pet_shop',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
