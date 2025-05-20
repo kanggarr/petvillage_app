@@ -53,7 +53,9 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
                         child: SizedBox(
                       height: 48,
                       child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            viewModel.navigateToChatRoom();
+                          },
                           style: OutlinedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),

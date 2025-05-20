@@ -9,6 +9,7 @@ import 'package:petvillage_app/app/app.locator.dart';
 import 'package:petvillage_app/app/app.router.dart';
 import 'package:petvillage_app/constants/thai_location.dart';
 import 'package:petvillage_app/models/blog_model.dart';
+import 'package:petvillage_app/models/pet_model.dart';
 import 'package:petvillage_app/services/auth_service.dart';
 import 'package:petvillage_app/services/pet_detail_service.dart';
 import 'package:petvillage_app/services/post_service.dart';
@@ -246,10 +247,30 @@ class PostViewModel extends BaseViewModel {
       );
       final res = await Response.fromStream(streamRes);
 
-      // final data = jsonDecode(res.body);
-      debugPrint('statusCode => ${res.statusCode}');
-      debugPrint('msg => ${res.body}');
-      // debugPrint('Success => $data');
+      final data = jsonDecode(res.body);
+      petNameController.clear();
+      petDescriptionController.clear();
+      petAge.clear();
+      petPrice.clear();
+      imagePaths.clear();
+      addressController.clear();
+      selectedProvince = null;
+      selectedDistrict = null;
+      selectedSubDistrict = null;
+      selectedDelivery = null;
+      isBothSelected = false;
+      isMaleSelected = false;
+      isFemaleSelected = false;
+      selectedAnimalType = null;
+      selectedBreed = null;
+      isAdopt = false;
+      breeds.clear();
+      animalTypes.clear();
+      district.clear();
+      subDistrict.clear();
+      notifyListeners();
+      PetModel petModel = PetModel.fromJson(data['pet']);
+      navigateToPetDetail(petModel);
 
       if (res.statusCode != 201 && res.statusCode != 200) {
         throw Exception('Post failed');
@@ -279,5 +300,9 @@ class PostViewModel extends BaseViewModel {
 
   void navigateToBlogDetail(BlogModel blogModel) {
     _navigationService.navigateToBlogDetailView(blogModel: blogModel);
+  }
+
+  void navigateToPetDetail(PetModel petModel) {
+    _navigationService.navigateToPetDetailView(petModel: petModel);
   }
 }

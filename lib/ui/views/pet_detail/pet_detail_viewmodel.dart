@@ -9,4 +9,8 @@ class PetDetailViewModel extends BaseViewModel {
   void navigateToShopProfile() {
     _navigationService.navigateToShopProfileView();
   }
+
+  void navigateToChatRoom() {
+    _navigationService.navigateToChatRoomView();
+  }
 }
