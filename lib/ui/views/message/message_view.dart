@@ -12,21 +12,41 @@ class MessageView extends StatelessWidget {
       viewModelBuilder: () => MessageViewModel(),
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: const Text('แชท'),
-          centerTitle: true,
-        ),
-        body: model.isBusy
-            ? const Center(child: CircularProgressIndicator())
-            : model.rooms.isEmpty
-                ? const Center(child: Text('ไม่มีห้องแชท'))
-                : ListView.builder(
-                    itemCount: model.rooms.length,
-                    itemBuilder: (context, index) {
-                      final room = model.rooms[index];
-                      return ChatRoomTile(room: room, model: model);
-                    },
+        body: SafeArea(
+          child: Expanded(
+            child: Container(
+              color: const Color(0xFFF5F5F5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'ข้อความ',
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
+                  Expanded(
+                    child: model.isBusy
+                        ? const Center(child: CircularProgressIndicator())
+                        : model.rooms.isEmpty
+                            ? const Center(child: Text('ไม่มีห้องแชท'))
+                            : ListView.builder(
+                                itemCount: model.rooms.length,
+                                itemBuilder: (context, index) {
+                                  final room = model.rooms[index];
+                                  return ChatRoomTile(room: room, model: model);
+                                },
+                              ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

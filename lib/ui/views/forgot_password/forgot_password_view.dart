@@ -15,10 +15,6 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
-        title: const Text('เปลี่ยนรหัสผ่าน',
-            style: TextStyle(color: Colors.black)),
-        iconTheme: const IconThemeData(color: Colors.black),
-        elevation: 0,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
