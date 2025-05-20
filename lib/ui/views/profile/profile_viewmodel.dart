@@ -1,10 +1,9 @@
+import 'package:stacked/stacked.dart';
 import 'package:petvillage_app/app/app.locator.dart';
 import 'package:petvillage_app/app/app.router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 import 'package:petvillage_app/services/profile_service.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class ProfileViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
@@ -12,12 +11,25 @@ class ProfileViewModel extends BaseViewModel {
   final _profileService = locator<ProfileService>();
 
   String _username = '';
-  String get username => _username;
+  String _email = '';
 
-  Future<void> init() async {
+  String get username => _username;
+  String get email => _email;
+
+  Future<void> loadUserProfile() async {
     setBusy(true);
-    _username = await _profileService.fetchUsername() ?? 'ไม่ทราบชื่อ';
+
+    final result = await _profileService.fetchUserProfile();
+    if (result != null) {
+      _username = result['username'] ?? 'ไม่พบชื่อผู้ใช้';
+      _email = result['email'] ?? 'ไม่พบอีเมล';
+    } else {
+      _username = 'ไม่พบชื่อผู้ใช้';
+      _email = 'ไม่พบอีเมล';
+    }
+
     setBusy(false);
+    notifyListeners();
   }
 
   void navigateToEditProfile() {
@@ -43,3 +55,4 @@ class ProfileViewModel extends BaseViewModel {
     }
   }
 }
+

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileService {
-  Future<String?> fetchUsername() async {
+  Future<Map<String, String>?> fetchUserProfile() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -27,7 +27,10 @@ class ProfileService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      return data['username']; // หรือ 'name' ตามที่ backend ส่ง
+      return {
+        'username': data['username'],
+        'email': data['email'],
+      };
     } else {
       print('Failed to load profile: ${response.statusCode}');
       return null;

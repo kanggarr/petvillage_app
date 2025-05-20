@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/constants/thai_location.dart';
 import 'package:stacked/stacked.dart';
 import 'package:petvillage_app/services/edit_profile_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,38 +7,88 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ProfileEditViewModel extends BaseViewModel {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
-  final phoneController = TextEditingController();
   final addressController = TextEditingController();
   final postCodeController = TextEditingController();
 
-  // Controllers สำหรับการเปลี่ยนรหัสผ่าน
   final oldPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  String role = 'user'; // default
+  String? selectedProvince;
+  String? selectedDistrict;
+  String? selectedSubDistrict;
+
+  final List<String> province = provinces;
+
+  List<String> district =
+  List<String>.from(districtsByProvince['กรุงเทพมหานคร'] ?? <String>[]);
+  List<String> subDistrict = [];
+
+
+  // List<String> provinces = ['กรุงเทพมหานคร', 'เชียงใหม่'];
+  // List<String> districts = ['เขตบางนา', 'อำเภอเมือง'];
+  // List<String> subDistricts = ['บางนาใต้', 'สุเทพ'];
+
+  void setProvince(String province) {
+    selectedProvince = province;
+    district.clear();
+    final newDistricts = getDistricts(province);
+    district.addAll(newDistricts);
+    selectedDistrict = null;
+
+    subDistrict.clear();
+    if (district.isNotEmpty) {
+      subDistrict.addAll(getSubDistricts(district.first));
+    }
+    selectedSubDistrict = null;
+    notifyListeners();
+  }
+
+  void setDistrict(String district) {
+    selectedDistrict = district;
+    subDistrict.clear();
+    subDistrict.addAll(getSubDistricts(district)); // ควรเช็คก่อน
+    selectedSubDistrict = null;
+    notifyListeners();
+  }
+
+  void setSubDistrict(String subDistrict) {
+    selectedSubDistrict = subDistrict;
+    notifyListeners();
+  }
 
   Future<void> init() async {
     setBusy(true);
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+    final userRole = prefs.getString('role');
+
+    if (userRole != null) {
+      role = userRole;
+    }
 
     if (token != null) {
       final data = await EditProfileService().fetchUserProfile(token);
       if (data != null) {
         nameController.text = data['username'] ?? '';
         emailController.text = data['email'] ?? '';
-        phoneController.text = data['phone'] ?? '';
-        addressController.text = data['address'] ?? '';
-        postCodeController.text = data['postCode'] ?? '';
+        role = data['role'] ?? 'user';
+        if (role == 'shop') {
+          addressController.text = data['address'] ?? '';
+          postCodeController.text = data['postCode'] ?? '';
+          selectedProvince = data['province'];
+          selectedDistrict = data['district'];
+          selectedSubDistrict = data['subDistrict'];
+        }
       }
     }
 
     setBusy(false);
   }
 
-  // ฟังก์ชันบันทึกชื่อผู้ใช้ (username)
   Future<void> saveProfile() async {
     setBusy(true);
-
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -47,24 +98,32 @@ class ProfileEditViewModel extends BaseViewModel {
       return;
     }
 
-    final success = await EditProfileService().updateUsername(
-      username: nameController.text,
-      token: token,
-    );
+    if (role == 'shop') {
+      final success = await EditProfileService().updateShopProfile(
+        token: token,
+        shopName: nameController.text,
+        address: addressController.text,
+        shopProvince: selectedProvince?? '',
+        shopDistrict: selectedDistrict?? '',
+        shopSubdistrict: selectedSubDistrict?? '',
+        
+      );
 
-    if (success) {
-      print("บันทึกชื่อผู้ใช้เรียบร้อยแล้ว");
+      print(success ? "อัปเดตข้อมูลร้านค้าเรียบร้อย" : "อัปเดตข้อมูลร้านค้าล้มเหลว");
     } else {
-      print("การบันทึกชื่อผู้ใช้ล้มเหลว");
+      final success = await EditProfileService().updateUsername(
+        username: nameController.text,
+        token: token,
+      );
+
+      print(success ? "บันทึกชื่อผู้ใช้เรียบร้อยแล้ว" : "การบันทึกชื่อผู้ใช้ล้มเหลว");
     }
 
     setBusy(false);
   }
 
-  // ฟังก์ชันเปลี่ยนรหัสผ่าน
   Future<void> updatePassword() async {
     setBusy(true);
-
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -78,7 +137,6 @@ class ProfileEditViewModel extends BaseViewModel {
     final newPassword = newPasswordController.text.trim();
     final confirmPassword = confirmPasswordController.text.trim();
 
-    // ✅ Validation
     if (oldPassword.isEmpty || newPassword.isEmpty || confirmPassword.isEmpty) {
       print("กรุณากรอกข้อมูลให้ครบทุกช่อง");
       setBusy(false);
@@ -104,14 +162,12 @@ class ProfileEditViewModel extends BaseViewModel {
       confirmPassword: confirmPassword,
     );
 
+    print(success ? "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว" : "การเปลี่ยนรหัสผ่านล้มเหลว");
+
     if (success) {
-      print("เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
-      // ล้างช่องกรอก
       oldPasswordController.clear();
       newPasswordController.clear();
       confirmPasswordController.clear();
-    } else {
-      print("การเปลี่ยนรหัสผ่านล้มเหลว");
     }
 
     setBusy(false);

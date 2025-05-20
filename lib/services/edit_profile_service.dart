@@ -4,7 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class EditProfileService {
-  // ดึงข้อมูลโปรไฟล์ผู้ใช้
   Future<Map<String, dynamic>?> fetchUserProfile(String token) async {
     final url = Uri.parse(
       Platform.isAndroid
@@ -20,7 +19,6 @@ class EditProfileService {
           'Content-Type': 'application/json',
         },
       );
-      print('Sending token: Bearer $token');
 
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
@@ -34,7 +32,6 @@ class EditProfileService {
     }
   }
 
-  // อัปเดตชื่อผู้ใช้ (username)
   Future<bool> updateUsername({
     required String token,
     required String username,
@@ -55,13 +52,7 @@ class EditProfileService {
         body: jsonEncode({'username': username}),
       );
 
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        print('Failed to update username: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        return false;
-      }
+      return response.statusCode == 200;
     } catch (e) {
       print('Error updating username: $e');
       return false;
@@ -94,15 +85,48 @@ class EditProfileService {
         }),
       );
 
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        print('Failed to update password: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        return false;
-      }
+      return response.statusCode == 200;
     } catch (e) {
       print('Error updating password: $e');
+      return false;
+    }
+  }
+
+  Future<bool> updateShopProfile(
+      {required String token,
+      required String shopName,
+      required String address,
+      required String shopProvince,
+      required String shopDistrict,
+      required String shopSubdistrict}) async {
+    final url = Uri.parse(
+      Platform.isAndroid
+          ? '${dotenv.env['API_ANDROID_URL']}api/users/shops/update'
+          : '${dotenv.env['API_IOS_URL']}api/users/shops/update',
+    );
+
+    try {
+      final response = await http.put(
+        url,
+        headers: {
+          'authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'shop_name': shopName,
+          'shop_address': address,
+          'shop_province': shopProvince,
+          'shop_district': shopDistrict,
+          'shop_subdistrict': shopSubdistrict,
+        }),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      return response.statusCode == 200;
+    } catch (e) {
+      print('Error updating shop profile: $e');
       return false;
     }
   }
