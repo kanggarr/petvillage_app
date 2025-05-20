@@ -81,27 +81,31 @@ class BlogView extends StackedView<BlogViewModel> {
             ),
             const SizedBox(height: 16),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  mainAxisExtent: 230,
-                ),
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  return BlogCard(
-                    onPressed: () {
-                      viewModel.navigateToBlogDetail();
-                    },
-                    imageUrl: 'assets/images/dog.png',
-                    title: '10 เรื่องต้องคิดก่อนรับเลี้ยงสัตว์เลี้ยง',
-                    subtitle: 'ก่อนรับเลี้ยงสัตว์เลี้ยง',
-                    description:
-                        'สัตว์เลี้ยง คือ สัตว์ที่เลี้ยงไว้ที่บ้านเพื่อเป็นเพื่อน ไม่ใช่สัตว์ที่เลี้ยงไว้เพื่อใช้งาน สัตว์เลี้ยงยอดนิยม มักรู้สึกผูกพันกับเจ้าของ...',
-                  );
-                },
-              ),
+              child: viewModel.blogs.isNotEmpty
+                  ? GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        mainAxisExtent: 230,
+                      ),
+                      itemCount: viewModel.blogs.length,
+                      itemBuilder: (context, index) {
+                        return BlogCard(
+                          onPressed: () {
+                            viewModel.navigateToBlogDetail(index);
+                          },
+                          imageUrl: /*viewModel.blogs[index].images.firstOrNull ?? ''*/ 'assets/images/dog.png',
+                          title: viewModel.blogs[index].titleName,
+                          subtitle: 'ก่อนรับเลี้ยงสัตว์เลี้ยง',
+                          description: viewModel.blogs[index].description,
+                        );
+                      },
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    ),
             ),
           ],
         ),
@@ -114,4 +118,11 @@ class BlogView extends StackedView<BlogViewModel> {
     BuildContext context,
   ) =>
       BlogViewModel();
+
+  @override
+  void onViewModelReady(
+    BlogViewModel viewModel,
+  ) {
+    viewModel.getBlogs();
+  }
 }

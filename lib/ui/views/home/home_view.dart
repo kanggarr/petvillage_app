@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:petvillage_app/ui/common/assets.dart';
 import 'package:petvillage_app/ui/widgets/pet_card.dart';
@@ -17,11 +15,6 @@ class HomeView extends StackedView<HomeViewModel> {
     HomeViewModel viewModel,
     Widget? child,
   ) {
-    final baseUrl = (Platform.isAndroid
-            ? dotenv.env['API_ANDROID_URL']
-            : dotenv.env['API_IOS_URL'])
-        ?.replaceAll(RegExp(r'/$'), '');
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
@@ -128,8 +121,8 @@ class HomeView extends StackedView<HomeViewModel> {
 
                         print('Pet image: ${pet.image}');
                         return PetCard(
-                          onPressed: () => viewModel.navigateToPetDetail(),
-                          imageUrl: pet.image,
+                          onPressed: () => viewModel.navigateToPetDetail(index),
+                          imageUrl: 'assets/images/dog.png',
                           name: pet.name,
                           age: '${pet.age} ปี',
                           breedDescription: pet.description,

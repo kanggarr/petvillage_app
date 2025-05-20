@@ -6,13 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
 import 'package:petvillage_app/app/app.locator.dart';
+import 'package:petvillage_app/app/app.router.dart';
 import 'package:petvillage_app/constants/thai_location.dart';
+import 'package:petvillage_app/models/blog_model.dart';
+import 'package:petvillage_app/models/pet_model.dart';
 import 'package:petvillage_app/services/auth_service.dart';
 import 'package:petvillage_app/services/pet_detail_service.dart';
 import 'package:petvillage_app/services/post_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class PostViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
+
   // userRole
   final userRole = locator<AuthService>().getUserRole();
 
@@ -80,8 +86,8 @@ class PostViewModel extends BaseViewModel {
 
   final List<String> province = provinces;
 
-  List<String> district = List<String>.from(
-      districtsByProvince['กรุงเทพมหานคร'] ?? <String>[]);
+  List<String> district =
+      List<String>.from(districtsByProvince['กรุงเทพมหานคร'] ?? <String>[]);
   List<String> subDistrict = [];
 
   final List<String> deliveryMethods = ['นัดรับ', 'จัดส่งทั่วประเทศ'];
@@ -110,34 +116,34 @@ class PostViewModel extends BaseViewModel {
     selectedBreed = breed;
     notifyListeners();
   }
-  
+
   void setAdopt(bool value) {
     isAdopt = value;
     notifyListeners();
   }
 
   void setProvince(String province) {
-  selectedProvince = province;
-  district.clear();
-  final newDistricts = getDistricts(province);
-  district.addAll(newDistricts);
-  selectedDistrict = null;
-  
-  subDistrict.clear();
-  if (district.isNotEmpty) {
-    subDistrict.addAll(getSubDistricts(district.first));
+    selectedProvince = province;
+    district.clear();
+    final newDistricts = getDistricts(province);
+    district.addAll(newDistricts);
+    selectedDistrict = null;
+
+    subDistrict.clear();
+    if (district.isNotEmpty) {
+      subDistrict.addAll(getSubDistricts(district.first));
+    }
+    selectedSubDistrict = null;
+    notifyListeners();
   }
-  selectedSubDistrict = null;
-  notifyListeners();
-}
 
   void setDistrict(String district) {
-  selectedDistrict = district;
-  subDistrict.clear();
-  subDistrict.addAll(getSubDistricts(district)); // ควรเช็คก่อน
-  selectedSubDistrict = null;
-  notifyListeners();
-}
+    selectedDistrict = district;
+    subDistrict.clear();
+    subDistrict.addAll(getSubDistricts(district)); // ควรเช็คก่อน
+    selectedSubDistrict = null;
+    notifyListeners();
+  }
 
   void setSubDistrict(String subDistrict) {
     selectedSubDistrict = subDistrict;
@@ -211,13 +217,23 @@ class PostViewModel extends BaseViewModel {
       final data = jsonDecode(res.body);
       debugPrint('statusCode => ${res.statusCode}');
       debugPrint('Success => $data');
-
+      blogTitleController.clear();
+      blogContentController.clear();
+      imagePaths.clear();
+      notifyListeners();
+      final blog = BlogModel.fromJson(data['blog']);
+      navigateToBlogDetail(blog);
     } else {
       final streamRes = await postService.postPet(
         petNameController.text,
         selectedAnimalType!,
         selectedBreed!,
-        (isBothSelected ? 'ทั้งคู่' : isMaleSelected ? 'เพศผู้' : 'เพศเมีย').toString(),
+        (isBothSelected
+                ? 'ทั้งคู่'
+                : isMaleSelected
+                    ? 'เพศผู้'
+                    : 'เพศเมีย')
+            .toString(),
         petAge.text,
         petDescriptionController.text,
         petPrice.text,
@@ -231,10 +247,30 @@ class PostViewModel extends BaseViewModel {
       );
       final res = await Response.fromStream(streamRes);
 
-      // final data = jsonDecode(res.body);
-      debugPrint('statusCode => ${res.statusCode}');
-      debugPrint('msg => ${res.body}');
-      // debugPrint('Success => $data');
+      final data = jsonDecode(res.body);
+      petNameController.clear();
+      petDescriptionController.clear();
+      petAge.clear();
+      petPrice.clear();
+      imagePaths.clear();
+      addressController.clear();
+      selectedProvince = null;
+      selectedDistrict = null;
+      selectedSubDistrict = null;
+      selectedDelivery = null;
+      isBothSelected = false;
+      isMaleSelected = false;
+      isFemaleSelected = false;
+      selectedAnimalType = null;
+      selectedBreed = null;
+      isAdopt = false;
+      breeds.clear();
+      animalTypes.clear();
+      district.clear();
+      subDistrict.clear();
+      notifyListeners();
+      PetModel petModel = PetModel.fromJson(data['pet']);
+      navigateToPetDetail(petModel);
 
       if (res.statusCode != 201 && res.statusCode != 200) {
         throw Exception('Post failed');
@@ -262,7 +298,11 @@ class PostViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  void init() async {
-    
+  void navigateToBlogDetail(BlogModel blogModel) {
+    _navigationService.navigateToBlogDetailView(blogModel: blogModel);
+  }
+
+  void navigateToPetDetail(PetModel petModel) {
+    _navigationService.navigateToPetDetailView(petModel: petModel);
   }
 }

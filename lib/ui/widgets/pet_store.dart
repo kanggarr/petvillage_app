@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PetStore extends StatelessWidget {
+  final void Function()? onPressed;
+  const PetStore({Key? key, this.onPressed}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,7 +20,7 @@ class PetStore extends StatelessWidget {
                 const CircleAvatar(
                   radius: 24,
                   backgroundImage: AssetImage(
-                      'assets/images/profile.png'), // TODO: เชื่อมกับ API
+                      'assets/images/shop_profile.png'), // TODO: เชื่อมกับ API
                 ),
                 const SizedBox(width: 8),
                 const Expanded(
@@ -28,7 +31,7 @@ class PetStore extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onPressed,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4F9451),
                     shape: RoundedRectangleBorder(
@@ -57,24 +60,24 @@ class PetStore extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // TODO: เชื่อมกับ API
-                _InfoText(label: 'โพสต์ลงขาย', value: '15 โพสต์'),
-                _InfoText(label: 'อัตราการตอบกลับ', value: '85 %'),
-              ],
-            ),
-            const SizedBox(height: 8),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // TODO: เชื่อมกับ API
-                _InfoText(label: 'รายการโปรด', value: '131 หัวใจ'),
-                _InfoText(label: 'ปิดการขาย', value: '6 ครั้ง'),
-              ],
-            ),
+            // const SizedBox(height: 12),
+            // const Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     // TODO: เชื่อมกับ API
+            //     _InfoText(label: 'โพสต์ลงขาย', value: '15 โพสต์'),
+            //     _InfoText(label: 'อัตราการตอบกลับ', value: '85 %'),
+            //   ],
+            // ),
+            // const SizedBox(height: 8),
+            // const Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     // TODO: เชื่อมกับ API
+            //     _InfoText(label: 'รายการโปรด', value: '131 หัวใจ'),
+            //     _InfoText(label: 'ปิดการขาย', value: '6 ครั้ง'),
+            //   ],
+            // ),
           ],
         ),
       ),

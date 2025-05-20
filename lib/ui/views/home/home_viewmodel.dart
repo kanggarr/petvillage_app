@@ -64,7 +64,7 @@ class HomeViewModel extends BaseViewModel {
     return true;
   }
 
-  void navigateToPetDetail() {
-    _navigationService.navigateToPetDetailView();
+  void navigateToPetDetail(int index) {
+    _navigationService.navigateToPetDetailView(petModel: filteredPets[index]);
   }
 }

@@ -42,7 +42,8 @@ class PetDetailService {
         final List<dynamic> data = jsonDecode(response.body);
         return data.map((json) => AnimalTypeModel.fromJson(json)).toList();
       } else {
-        throw Exception('ไม่สามารถดึงข้อมูลประเภทสัตว์ได้ (${response.statusCode})');
+        throw Exception(
+            'ไม่สามารถดึงข้อมูลประเภทสัตว์ได้ (${response.statusCode})');
       }
     } catch (e) {
       throw Exception('เกิดข้อผิดพลาดในการเชื่อมต่อ: $e');
@@ -61,10 +62,11 @@ class PetDetailService {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> data = jsonDecode(response.body);
-        print("data breeds ${ data }");
+        print("data breeds ${data}");
         return data.map((json) => Breed.fromJson(json)).toList();
       } else {
-        throw Exception('ไม่สามารถดึงข้อมูลพันธุ์สัตว์ได้ (${response.statusCode})');
+        throw Exception(
+            'ไม่สามารถดึงข้อมูลพันธุ์สัตว์ได้ (${response.statusCode})');
       }
     } catch (e) {
       throw Exception('เกิดข้อผิดพลาดในการเชื่อมต่อ: $e');

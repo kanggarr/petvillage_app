@@ -22,12 +22,13 @@ import 'package:petvillage_app/ui/views/blog_detail/blog_detail_view.dart';
 import 'package:petvillage_app/services/auth_service.dart';
 import 'package:petvillage_app/ui/views/favorite/favorite_view.dart';
 import 'package:petvillage_app/services/post_service.dart';
-import 'package:petvillage_app/services/chat_service.dart';
-import 'package:petvillage_app/services/message_service.dart';
+import 'package:petvillage_app/services/chat_messages_service.dart';
+import 'package:petvillage_app/services/chat_room_service.dart';
 import 'package:petvillage_app/services/otp_service.dart';
 import 'package:petvillage_app/services/filter_service.dart';
 import 'package:petvillage_app/services/pet_detail_service.dart';
 import 'package:petvillage_app/ui/views/chat_room/chat_room_view.dart';
+import 'package:petvillage_app/ui/views/shop_profile/shop_profile_view.dart';
 import 'package:petvillage_app/services/profile_service.dart';
 // @stacked-import
 
@@ -52,6 +53,7 @@ import 'package:petvillage_app/services/profile_service.dart';
     MaterialRoute(page: BlogDetailView),
     MaterialRoute(page: FavoriteView),
     MaterialRoute(page: ChatRoomView),
+    MaterialRoute(page: ShopProfileView),
 // @stacked-route
   ],
   dependencies: [
@@ -60,8 +62,8 @@ import 'package:petvillage_app/services/profile_service.dart';
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: AuthService),
     LazySingleton(classType: PostService),
-    LazySingleton(classType: ChatService),
-    LazySingleton(classType: MessageService),
+    LazySingleton(classType: ChatMessagesService),
+    LazySingleton(classType: ChatRoomService),
     LazySingleton(classType: OtpService),
     LazySingleton(classType: FilterService),
     LazySingleton(classType: PetDetailService),

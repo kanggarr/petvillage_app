@@ -62,8 +62,7 @@ class PostService {
       String district,
       String subDistrict,
       String shipping,
-      List<File> images
-      ) async {
+      List<File> images) async {
     String endpoint = 'pet/pets';
 
     final uri = Uri.parse(

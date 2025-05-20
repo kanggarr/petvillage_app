@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petvillage_app/models/pet_model.dart';
 import 'package:petvillage_app/ui/widgets/pet_delivery.dart';
 import 'package:petvillage_app/ui/widgets/pet_image_slider.dart';
 import 'package:petvillage_app/ui/widgets/pet_info_card.dart';
@@ -7,7 +8,9 @@ import 'package:stacked/stacked.dart';
 import 'pet_detail_viewmodel.dart';
 
 class PetDetailView extends StackedView<PetDetailViewModel> {
-  const PetDetailView({Key? key}) : super(key: key);
+  final PetModel petModel;
+
+  const PetDetailView({Key? key, required this.petModel}) : super(key: key);
 
   @override
   Widget builder(
@@ -36,11 +39,11 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
               const SizedBox(height: 12),
               const PetImageSlider(),
               const SizedBox(height: 16),
-              const PetInfoCard(),
+              PetInfoCard(petModel: petModel),
               const SizedBox(height: 12),
-              PetDelivery(),
+              PetDelivery(petModel: petModel),
               const SizedBox(height: 12),
-              PetStore(),
+              PetStore(onPressed: viewModel.navigateToShopProfile),
               const SizedBox(height: 16),
               Center(
                 child: Row(
@@ -50,7 +53,9 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
                         child: SizedBox(
                       height: 48,
                       child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            viewModel.navigateToChatRoom();
+                          },
                           style: OutlinedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),

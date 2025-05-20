@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:petvillage_app/models/message_model.dart';
 import 'chat_room_viewmodel.dart';
 
 class ChatRoomView extends StackedView<ChatRoomViewModel> {
@@ -12,8 +13,10 @@ class ChatRoomView extends StackedView<ChatRoomViewModel> {
     Widget? child,
   ) {
     final args = ModalRoute.of(context)?.settings.arguments as Map?;
-    final roomId = args?['roomId'] ?? '';
-    viewModel.setRoomId(roomId);
+    final roomId = args != null ? args['roomId'] as String : '';
+
+    // reverse once
+    final displayed = viewModel.messages.reversed.toList();
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -45,10 +48,10 @@ class ChatRoomView extends StackedView<ChatRoomViewModel> {
               child: ListView.builder(
                 reverse: true,
                 padding: const EdgeInsets.all(8),
-                itemCount: viewModel.messages.length,
+                itemCount: displayed.length,
                 itemBuilder: (context, index) {
-                  final message = viewModel.messages.reversed.toList()[index];
-                  final isUser = message['type'] == 'user';
+                  final Message message = displayed[index];
+                  final isUser = message.senderType == 'User';
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
@@ -86,7 +89,7 @@ class ChatRoomView extends StackedView<ChatRoomViewModel> {
                                 )
                               ],
                             ),
-                            child: Text(message['text']),
+                            child: Text(message.content),
                           ),
                         ),
                         if (isUser) const SizedBox(width: 8),
@@ -128,7 +131,7 @@ class ChatRoomView extends StackedView<ChatRoomViewModel> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

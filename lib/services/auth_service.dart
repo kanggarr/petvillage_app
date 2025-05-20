@@ -14,14 +14,17 @@ class AuthService {
   String? _userRole;
   String? _username;
   String? _roomId;
+  String? _token;
 
   void setUserSession(
       {required String userId,
       required String username,
-      required String? userRole}) {
+      required String? userRole,
+      required String token}) {
     _userId = userId;
     _userRole = userRole;
     _username = username;
+    _token = token;
   }
 
   void setRoomId(String roomId) {
@@ -34,6 +37,9 @@ class AuthService {
   }
 
   String getUserId() => _userId!;
+
+  // get token
+  String getToken() => _token!;
 
   String getUserRole() => _userRole ?? 'user';
 
@@ -113,8 +119,8 @@ class AuthService {
         final userRole = data['user']['role'];
         final token = data['token'];
 
-        if (userId == null || username == null) {
-          throw Exception('Missing userId or username');
+        if (userId == null || username == null || token == null) {
+          throw Exception('Missing userId or username or token');
         }
 
         final prefs = await SharedPreferences.getInstance();
@@ -126,6 +132,7 @@ class AuthService {
           userId: userId,
           userRole: userRole,
           username: username,
+          token: token,
         );
 
         await _dialogService.showDialog(
