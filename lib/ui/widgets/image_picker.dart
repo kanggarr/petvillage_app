@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ImagePickerWidget extends StatefulWidget {
   final Function(List<File>) onImagesChanged;
@@ -17,17 +17,26 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   final List<File> _images = [];
 
   Future<void> _pickImages() async {
-    final picker = ImagePicker();
-    final pickedFiles = await picker.pickMultiImage();
+  final result = await FilePicker.platform.pickFiles(
+    allowMultiple: true,
+    type: FileType.image,   // เปิดแกลเลอรี
+    withData: false,
+  );
 
-    if (pickedFiles.isNotEmpty) {
-      setState(() {
-        _images.addAll(pickedFiles.map((xfile) => File(xfile.path)));
-      });
+  if (result != null && result.files.isNotEmpty) {
+    final allowed = ['.jpg', '.jpeg', '.png'];
 
-      widget.onImagesChanged(_images);
-    }
+    final validFiles = result.files.where((f) {
+      final ext = f.extension != null ? '.${f.extension!.toLowerCase()}' : '';
+      return allowed.contains(ext);
+    }).toList();
+
+    setState(() {
+      _images.addAll(validFiles.map((f) => File(f.path!)));
+    });
+    widget.onImagesChanged(_images);
   }
+}
 
   void _removeImage(int index) {
     setState(() {

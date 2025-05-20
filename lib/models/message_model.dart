@@ -1,65 +1,56 @@
 class MessageModel {
   final String shopId;
   final String shopName;
-  final String lastMessage;
   final String time;
+  final String profileImage;
 
   MessageModel({
     required this.shopId,
     required this.shopName,
-    required this.lastMessage,
     required this.time,
+    required this.profileImage,
   });
 
-  // factory MessageModel.fromJson(Map<String, dynamic> json) {
-  //   print("Incoming json: $json");
-  //   final timestamp = DateTime.parse(json['timestamp']);
-  //   final formattedTime = formatTime(timestamp);
-
-  //   return MessageModel(
-  //     shopId:
-  //         json['sender'].startsWith('shop') ? json['sender'] : 'shop_unknown',
-  //     shopName: getShopName(json['sender']),
-  //     lastMessage: json['content'],
-  //     time: formattedTime,
-  //   );
-  // }
-
-  // static String getShopName(String senderId) {
-  //   // 🔧 ปรับตามความเหมาะสม ถ้าไม่มีระบบเก็บชื่อร้าน
-  //   if (senderId.startsWith('shop')) {
-  //     return 'ร้าน ${senderId.substring(4)}';
-  //   }
-  //   return 'ไม่ทราบชื่อร้าน';
-  // }
-
-  // static String formatTime(DateTime timestamp) {
-  //   final now = DateTime.now();
-  //   if (now.difference(timestamp).inDays == 0) {
-  //     return 'วันนี้ ${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}';
-  //   }
-  //   return '${timestamp.day}/${timestamp.month}/${timestamp.year + 543}'; // วันที่แบบ พ.ศ.
-  // }
-  factory MessageModel.fromJson(Map<String, dynamic> json) {
+  factory MessageModel.fromJson(Map<String, dynamic> json, String userRole) {
     final shop = json['shop'] as Map<String, dynamic>?;
+    final user = json['user'] as Map<String, dynamic>?;
 
     final timestamp = DateTime.tryParse(json['updatedAt'] ?? '');
     final formattedTime =
         timestamp != null ? formatTime(timestamp) : 'ไม่ทราบเวลา';
 
-    return MessageModel(
-      shopId: shop?['_id'] ?? 'shop_unknown',
-      shopName: shop?['username'] ?? 'ไม่ทราบชื่อร้าน',
-      lastMessage: json['roomName'] ?? 'ไม่มีข้อความ',
-      time: formattedTime,
-    );
+    if (userRole == 'shop') {
+      // ร้านค้า login → แสดงชื่อ user
+      return MessageModel(
+        profileImage: user?['profileImage'] ?? '',
+        shopId: user?['_id'] ?? 'user_unknown',
+        shopName: user?['username'] ?? 'ไม่ทราบชื่อผู้ใช้',
+        time: formattedTime,
+      );
+    } else {
+      // ผู้ใช้ login → แสดงชื่อร้านค้า
+      return MessageModel(
+        profileImage: shop?['profileImage'] ?? '',
+        shopId: shop?['_id'] ?? 'shop_unknown',
+        shopName: shop?['username'] ?? 'ไม่ทราบชื่อร้าน',
+        time: formattedTime,
+      );
+    }
   }
 
   static String formatTime(DateTime timestamp) {
-    final now = DateTime.now();
-    if (now.difference(timestamp).inDays == 0) {
-      return 'วันนี้ ${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}';
+    final localTimestamp = timestamp.toUtc().add(const Duration(hours: 7));
+    final now = DateTime.now().toUtc().add(const Duration(hours: 7));
+
+    if (now.difference(localTimestamp).inDays == 0) {
+      return 'วันนี้ ${localTimestamp.hour.toString().padLeft(2, '0')}:${localTimestamp.minute.toString().padLeft(2, '0')}';
     }
-    return '${timestamp.day}/${timestamp.month}/${timestamp.year + 543}'; // วันที่แบบ พ.ศ.
+
+    return '${localTimestamp.day}/${localTimestamp.month}/${localTimestamp.year + 543}';
   }
+
+  /// เช็คว่า image เป็น URL หรือไม่ (เพื่อใช้ NetworkImage)
+  bool get hasNetworkImage =>
+      profileImage.isNotEmpty &&
+      (profileImage.startsWith('http') || profileImage.startsWith('https'));
 }

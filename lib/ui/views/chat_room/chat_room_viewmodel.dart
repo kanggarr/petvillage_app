@@ -11,6 +11,10 @@ class ChatRoomViewModel extends BaseViewModel {
   final TextEditingController messageController = TextEditingController();
   List<Map<String, dynamic>> messages = [];
 
+  void setRoomId(String roomId) {
+    _authService.setRoomId(roomId); // <-- เพิ่มบรรทัดนี้
+  }
+
   void init() async {
     await fetchMessages();
     _chatService.connectSocket(onMessageReceived);
@@ -19,8 +23,6 @@ class ChatRoomViewModel extends BaseViewModel {
   Future<void> fetchMessages() async {
     try {
       final fetchedMessages = await _chatService.fetchMessages();
-
-      // Mapping ให้เข้ากับรูปแบบที่ view ต้องการ (user/store)
       messages = fetchedMessages.map((msg) {
         final senderId = msg['sender'];
         final isUser = senderId == _authService.getUserId();
@@ -57,10 +59,10 @@ class ChatRoomViewModel extends BaseViewModel {
     }
   }
 
-  // @override
-  // void dispose() {
-  //   _chatService.disconnectSocket();
-  //   messageController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _chatService.disconnectSocket();
+    messageController.dispose();
+    super.dispose();
+  }
 }
