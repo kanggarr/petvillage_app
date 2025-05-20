@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:petvillage_app/ui/common/assets.dart';
 import 'package:petvillage_app/ui/widgets/about_us.dart';
 import 'package:petvillage_app/ui/widgets/contact_us.dart';
-import 'package:petvillage_app/ui/widgets/profile_header.dart';
 import 'package:petvillage_app/ui/widgets/profile_menu.dart';
 import 'package:petvillage_app/ui/widgets/user_manual.dart';
 import 'package:stacked/stacked.dart';
@@ -10,6 +9,11 @@ import 'profile_viewmodel.dart';
 
 class ProfileView extends StackedView<ProfileViewModel> {
   const ProfileView({Key? key}) : super(key: key);
+
+  @override
+  void onViewModelReady(ProfileViewModel viewModel) {
+    viewModel.loadUserProfile();
+  }
 
   @override
   Widget builder(
@@ -25,10 +29,41 @@ class ProfileView extends StackedView<ProfileViewModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('โปรไฟล์',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600)),
+              const Text(
+                'โปรไฟล์',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 20),
-              const ProfileHeader(),
+
+              // แสดงข้อมูลผู้ใช้
+              viewModel.isBusy
+                  ? const Center(child: CircularProgressIndicator())
+                  : Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                              AssetImage('assets/avatar.png'),
+                        ),
+                        const SizedBox(width: 16),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              viewModel.username,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              viewModel.email,
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
               const SizedBox(height: 20),
               ProfileMenuItem(
                 icon: Assets.assetsIconsEditProfileIcon,
@@ -39,9 +74,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
               ProfileMenuItem(
                 icon: Assets.assetsIconsFavoriteIcon,
                 title: "สัตว์เลี้ยงที่ชอบ",
-                onPressed: () {
-                  viewModel.navigateToFavorite();
-                },
+                onPressed: viewModel.navigateToFavorite,
               ),
               const SizedBox(height: 20),
               ProfileMenuItem(
@@ -80,9 +113,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
               ProfileMenuItem(
                 icon: Assets.assetsIconsLogOutIcon,
                 title: "ออกจากระบบ",
-                onPressed: () {
-                  viewModel.logout();
-                },
+                onPressed: viewModel.logout,
               ),
             ],
           ),
@@ -92,5 +123,6 @@ class ProfileView extends StackedView<ProfileViewModel> {
   }
 
   @override
-  ProfileViewModel viewModelBuilder(BuildContext context) => ProfileViewModel();
+  ProfileViewModel viewModelBuilder(BuildContext context) =>
+      ProfileViewModel();
 }
