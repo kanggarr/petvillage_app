@@ -48,6 +48,10 @@ class PetDetailViewModel extends BaseViewModel {
     _navigationService.navigateToShopProfileView();
   }
 
+  void navigateToChatRoom() {
+    _navigationService.navigateToChatRoomView();
+  }
+
   Future<void> toggleFavorite({
     required String petId,
     required BuildContext context,

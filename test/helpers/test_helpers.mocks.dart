@@ -21,6 +21,7 @@ import 'package:petvillage_app/services/filter_service.dart' as _i15;
 import 'package:petvillage_app/services/otp_service.dart' as _i14;
 import 'package:petvillage_app/services/pet_detail_service.dart' as _i16;
 import 'package:petvillage_app/services/post_service.dart' as _i10;
+import 'package:petvillage_app/services/profile_service.dart' as _i15;
 import 'package:stacked_services/stacked_services.dart' as _i4;
 
 // ignore_for_file: type=lint

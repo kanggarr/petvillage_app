@@ -6,6 +6,7 @@ import 'package:path/path.dart';
 import 'package:petvillage_app/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:petvillage_app/services/token_service.dart'; // ✅ นำเข้า TokenService
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final _dialogService = locator<DialogService>();
@@ -122,10 +123,11 @@ class AuthService {
           throw Exception('Missing userId or username or token');
         }
 
-        // ✅ บันทึก token ลง SharedPreferences
-        await _tokenService.saveToken(token);
-        print('✅ Token ถูกบันทึกเรียบร้อย: $token');
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token);
+        print('✅ Token saved: $token');
 
+        // แก้ตรงนี้ให้เช็คก่อน set session
         setUserSession(
           userId: userId,
           userRole: userRole,

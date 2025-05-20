@@ -3,19 +3,20 @@ import 'package:dropdown_search/dropdown_search.dart';
 
 class ReusableDropdown extends StatelessWidget {
   final String? value;
-  final List<String> items;
+  // final List<String> items;
+  final List<dynamic> items;
   final void Function(String?) onChanged;
   final String hintText;
   final String label;
 
   const ReusableDropdown({
-    super.key,
+     Key? key,
     required this.value,
     required this.items,
     required this.onChanged,
     required this.label,
     required this.hintText,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class ReusableDropdown extends StatelessWidget {
             ],
           ),
           child: DropdownSearch<String>(
-            items: items,
+            items: items.cast<String>(),
             selectedItem: value,
             onChanged: onChanged,
             popupProps: PopupProps.menu(

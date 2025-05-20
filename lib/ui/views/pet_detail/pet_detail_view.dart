@@ -53,20 +53,20 @@ class PetDetailView extends StackedView<PetDetailViewModel> {
                     children: [
                       Expanded(
                         child: SizedBox(
-                          height: 48,
-                          child: OutlinedButton(
-                            onPressed: () {},
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              backgroundColor: const Color(0xFF4F9451),
-                              side: BorderSide.none, // ลบขอบสีดำ
-                            ),
-                            child: const Text(
-                              "ติดต่อคนขาย",
-                              style: TextStyle(
-                                fontSize: 15,
+                      height: 48,
+                      child: OutlinedButton(
+                          onPressed: () {
+                            viewModel.navigateToChatRoom();
+                          },
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            backgroundColor: const Color(0xFF4F9451),
+                          ),
+                          child: const Text(
+                            "ติดต่อคนขาย",
+                            style: TextStyle(
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFFFFFFFF),
                               ),
