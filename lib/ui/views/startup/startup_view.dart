@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
-import 'package:petvillage_app/ui/common/ui_helpers.dart';
 
 import 'startup_viewmodel.dart';
 
@@ -15,29 +14,20 @@ class StartupView extends StackedView<StartupViewModel> {
     Widget? child,
   ) {
     return const Scaffold(
+      backgroundColor: Color(0xFFF5F5F5),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'STACKED',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
+              'Welcome To',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Loading ...', style: TextStyle(fontSize: 16)),
-                horizontalSpaceSmall,
-                SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    color: Colors.black,
-                    strokeWidth: 6,
-                  ),
-                )
-              ],
-            ),
+            Text('Pet Village',
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF4F9451))),
           ],
         ),
       ),

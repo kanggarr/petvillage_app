@@ -1,7 +1,9 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:petvillage_app/app/app.locator.dart';
+import 'package:petvillage_app/ui/widgets/dropdown.dart';
+import 'package:petvillage_app/ui/widgets/gender.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'home_filter_viewmodel.dart';
 
@@ -16,295 +18,157 @@ class HomeFilterView extends StackedView<HomeFilterViewModel> {
   ) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        title: const Text('ตัวกรอง'),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_outlined,
-            ),
-            onPressed: () {
-              viewModel.navigatetoHome();
-            },
-          ),
-        ],
+        backgroundColor: const Color(0xFFF5F5F5),
       ),
+      backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Expanded(
-                  child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'ประเภทสัตว์เลี้ยง',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    const SizedBox(height: 4),
-                    DropdownButtonHideUnderline(
-                        child: DropdownButton2<String>(
-                      isExpanded: true,
-                      hint: const Row(
-                        children: [
-                          Text(
-                            'เลือกประเภทสัตว์เลี้ยง',
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF808080)),
-                          ),
-                        ],
-                      ),
-                      items: [],
-                      buttonStyleData: ButtonStyleData(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border:
-                                  Border.all(color: const Color(0xFF000000)),
-                              color: const Color(0xFFF1F1F1))),
-                      iconStyleData: const IconStyleData(
-                          icon: Icon(
-                            Icons.arrow_drop_down_outlined,
-                          ),
-                          iconSize: 40),
-                    )),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'พันธุ์สัตว์',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    const SizedBox(height: 4),
-                    DropdownButtonHideUnderline(
-                        child: DropdownButton2<String>(
-                      isExpanded: true,
-                      hint: const Row(
-                        children: [
-                          Text(
-                            'เลือกพันธุ์สัตว์เลี้ยง',
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF808080)),
-                          ),
-                        ],
-                      ),
-                      items: [],
-                      buttonStyleData: ButtonStyleData(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border:
-                                  Border.all(color: const Color(0xFF000000)),
-                              color: const Color(0xFFF1F1F1))),
-                      iconStyleData: const IconStyleData(
-                          icon: Icon(
-                            Icons.arrow_drop_down_outlined,
-                          ),
-                          iconSize: 40),
-                    )),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const Text('เพศ'),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: const Color(0xFFF1F1F1),
-                              border: Border.all(color: Color(0xFF000000)),
-                            ),
-                            child: const Text('ทั้งคู่',
-                                style: TextStyle(
-                                    fontSize: 15, color: Color(0xFF808080))),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: const Color(0xFFF1F1F1),
-                              border: Border.all(color: Color(0xFF000000)),
-                            ),
-                            child: const Text('เพศผู้',
-                                style: TextStyle(
-                                    fontSize: 15, color: Color(0xFF808080))),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: const Color(0xFFF1F1F1),
-                              border: Border.all(color: Color(0xFF000000)),
-                            ),
-                            child: const Text(
-                              'เพศเมีย',
-                              style: TextStyle(
-                                  fontSize: 15, color: Color(0xFF808080)),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'อายุ',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    const SizedBox(height: 4),
-                    DropdownButtonHideUnderline(
-                        child: DropdownButton2<String>(
-                      isExpanded: true,
-                      hint: const Row(
-                        children: [
-                          Text(
-                            'เลือกอายุสัตว์',
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF808080)),
-                          ),
-                        ],
-                      ),
-                      items: [],
-                      buttonStyleData: ButtonStyleData(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border:
-                                  Border.all(color: const Color(0xFF000000)),
-                              color: const Color(0xFFF1F1F1))),
-                      iconStyleData: const IconStyleData(
-                          icon: Icon(
-                            Icons.arrow_drop_down_outlined,
-                          ),
-                          iconSize: 40),
-                    )),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'ที่ตั้ง',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    const SizedBox(height: 4),
-                    DropdownButtonHideUnderline(
-                        child: DropdownButton2<String>(
-                      isExpanded: true,
-                      hint: const Row(
-                        children: [
-                          Text(
-                            'เลือกที่ตั้ง',
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF808080)),
-                          ),
-                        ],
-                      ),
-                      items: [],
-                      buttonStyleData: ButtonStyleData(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border:
-                                  Border.all(color: const Color(0xFF000000)),
-                              color: const Color(0xFFF1F1F1))),
-                      iconStyleData: const IconStyleData(
-                          icon: Icon(
-                            Icons.arrow_drop_down_outlined,
-                          ),
-                          iconSize: 40),
-                    )),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'การจัดส่ง',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    const SizedBox(height: 4),
-                    DropdownButtonHideUnderline(
-                        child: DropdownButton2<String>(
-                      isExpanded: true,
-                      hint: const Row(
-                        children: [
-                          Text(
-                            'เลือกวิธีการจัดส่ง',
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xFF808080)),
-                          ),
-                        ],
-                      ),
-                      items: [],
-                      buttonStyleData: ButtonStyleData(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border:
-                                  Border.all(color: const Color(0xFF000000)),
-                              color: const Color(0xFFF1F1F1))),
-                      iconStyleData: const IconStyleData(
-                          icon: Icon(
-                            Icons.arrow_drop_down_outlined,
-                          ),
-                          iconSize: 40),
-                    )),
-                    const SizedBox(height: 30),
-                  ],
-                ),
-              )),
-              const SizedBox(height: 30),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: InkWell(
-                      onTap: () {},
+          child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'ตัวกรอง',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ReusableDropdown(
+              value: viewModel.selectedAnimalType,
+              items: viewModel.animalTypes,
+              onChanged: (value) {
+                if (value != null) viewModel.onSelectAnimalType(value);
+              },
+              label: 'ประเภทสัตว์เลี้ยง',
+              hintText: 'เลือกประเภทสัตว์',
+            ),
+            const SizedBox(height: 20),
+            ReusableDropdown(
+              value: viewModel.selectedBreed,
+              items: viewModel.breeds,
+              onChanged: (value) {
+                if (value != null) viewModel.onSelectBreed(value);
+              },
+              label: 'พันธุ์สัตว์',
+              hintText: 'เลือกพันธุ์สัตว์',
+            ),
+            const SizedBox(height: 20),
+            const Text('เพศ',
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Color(0xFF808080),
+                    fontWeight: FontWeight.w500)),
+            const SizedBox(height: 4),
+            GenderSelector(
+                isBothSelected: viewModel.isBothSelected,
+                isMaleSelected: viewModel.isMaleSelected,
+                isFemaleSelected: viewModel.isFemaleSelected,
+                setBothSelected: viewModel.setBothSelected,
+                setMaleSelected: viewModel.setMaleSelected,
+                setFemaleSelected: viewModel.setFemaleSelected),
+            const SizedBox(height: 20),
+            ReusableDropdown(
+              value: viewModel.selectedAge,
+              items: viewModel.ages,
+              onChanged: (value) {
+                if (value != null) viewModel.setAge(value);
+              },
+              label: 'อายุ',
+              hintText: 'เลือกอายุ',
+            ),
+            const SizedBox(height: 20),
+            ReusableDropdown(
+              value: viewModel.selectedProvince,
+              items: viewModel.province,
+              onChanged: (value) {
+                if (value != null) viewModel.setProvince(value);
+              },
+              label: 'ที่อยู่',
+              hintText: 'เลือกที่อยู่',
+            ),
+            const SizedBox(height: 20),
+            ReusableDropdown(
+              value: viewModel.selectedDelivery,
+              items: viewModel.deliveryMethods,
+              onChanged: (value) {
+                if (value != null) viewModel.setDelivery(value);
+              },
+              label: 'การจัดส่ง',
+              hintText: 'เลือกวิธีการจัดส่ง',
+            ),
+            const SizedBox(height: 20),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: viewModel.hasFilter()
+                          ? () {
+                              viewModel.resetFilters();
+                            }
+                          : null,
                       child: Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: const Color(0xFFD9D9D9)),
-                        child: const Text(
+                          borderRadius: BorderRadius.circular(16),
+                          color: viewModel.hasFilter()
+                              ? const Color(0xFFF18F26)
+                              : const Color(0xFFD9D9D9),
+                        ),
+                        child: Text(
                           'ล้างตัวกรอง',
                           style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Color(
-                                0xFF808080,
-                              )),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: viewModel.hasFilter()
+                                ? Colors.white
+                                : const Color(0xFF808080),
+                          ),
                         ),
                       ),
-                    )),
-                    const SizedBox(width: 20),
-                    Expanded(
-                        child: InkWell(
-                      onTap: () {},
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: InkWell(
+                      onTap: viewModel.hasFilter()
+                          ? () async {
+                              final pets = await viewModel.filterPets();
+                              print('ผลลัพธ์จาก filterPets: $pets');
+                              locator<NavigationService>().back(result: pets);
+                            }
+                          : null,
                       child: Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: const Color(0xFFD9D9D9)),
-                        child: const Text(
+                          borderRadius: BorderRadius.circular(16),
+                          color: viewModel.hasFilter()
+                              ? const Color(0xFF4F9451)
+                              : const Color(0xFFD9D9D9),
+                        ),
+                        child: Text(
                           'ค้นหา',
                           style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF808080)),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: viewModel.hasFilter()
+                                ? Colors.white
+                                : const Color(0xFF808080),
+                          ),
                         ),
                       ),
-                    ))
-                  ],
-                ),
-              )
-            ],
-          ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
-      ),
+      )),
     );
   }
 

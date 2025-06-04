@@ -2,6 +2,14 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:petvillage_app/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:petvillage_app/services/auth_service.dart';
+import 'package:petvillage_app/services/post_service.dart';
+import 'package:petvillage_app/services/chat_messages_service.dart';
+import 'package:petvillage_app/services/chat_room_service.dart';
+import 'package:petvillage_app/services/otp_service.dart';
+import 'package:petvillage_app/services/filter_service.dart';
+import 'package:petvillage_app/services/pet_detail_service.dart';
+import 'package:petvillage_app/services/profile_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -10,13 +18,29 @@ import 'test_helpers.mocks.dart';
   MockSpec<NavigationService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<BottomSheetService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
-  // @stacked-mock-spec
+  MockSpec<AuthService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<PostService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<ChatRoomService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<ChatMessagesService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<OtpService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<FilterService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<PetDetailService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<ProfileService>(onMissingStub: OnMissingStub.returnDefault),
+// @stacked-mock-spec
 ])
 void registerServices() {
   getAndRegisterNavigationService();
   getAndRegisterBottomSheetService();
   getAndRegisterDialogService();
-  // @stacked-mock-register
+  getAndRegisterAuthService();
+  getAndRegisterPostService();
+  getAndRegisterChatService();
+  getAndRegisterMessageService();
+  getAndRegisterOtpService();
+  getAndRegisterFilterService();
+  getAndRegisterPetDetailService();
+  getAndRegisterProfileService();
+// @stacked-mock-register
 }
 
 MockNavigationService getAndRegisterNavigationService() {
@@ -69,6 +93,61 @@ MockDialogService getAndRegisterDialogService() {
   return service;
 }
 
+MockAuthService getAndRegisterAuthService() {
+  _removeRegistrationIfExists<AuthService>();
+  final service = MockAuthService();
+  locator.registerSingleton<AuthService>(service);
+  return service;
+}
+
+MockPostService getAndRegisterPostService() {
+  _removeRegistrationIfExists<PostService>();
+  final service = MockPostService();
+  locator.registerSingleton<PostService>(service);
+  return service;
+}
+
+MockChatService getAndRegisterChatService() {
+  _removeRegistrationIfExists<ChatService>();
+  final service = MockChatService();
+  locator.registerSingleton<ChatService>(service);
+  return service;
+}
+
+MockMessageService getAndRegisterMessageService() {
+  _removeRegistrationIfExists<MessageService>();
+  final service = MockMessageService();
+  locator.registerSingleton<MessageService>(service);
+  return service;
+}
+
+MockOtpService getAndRegisterOtpService() {
+  _removeRegistrationIfExists<OtpService>();
+  final service = MockOtpService();
+  locator.registerSingleton<OtpService>(service);
+  return service;
+}
+
+MockFilterService getAndRegisterFilterService() {
+  _removeRegistrationIfExists<FilterService>();
+  final service = MockFilterService();
+  locator.registerSingleton<FilterService>(service);
+  return service;
+}
+
+MockPetDetailService getAndRegisterPetDetailService() {
+  _removeRegistrationIfExists<PetDetailService>();
+  final service = MockPetDetailService();
+  locator.registerSingleton<PetDetailService>(service);
+  return service;
+}
+
+MockProfileService getAndRegisterProfileService() {
+  _removeRegistrationIfExists<ProfileService>();
+  final service = MockProfileService();
+  locator.registerSingleton<ProfileService>(service);
+  return service;
+}
 // @stacked-mock-create
 
 void _removeRegistrationIfExists<T extends Object>() {

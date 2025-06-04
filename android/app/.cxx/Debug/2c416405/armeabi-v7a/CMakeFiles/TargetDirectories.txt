@@ -1,0 +1,2 @@
+C:/Users/User/Documents/GitHub/petvillage_app/android/app/.cxx/Debug/2c416405/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/User/Documents/GitHub/petvillage_app/android/app/.cxx/Debug/2c416405/armeabi-v7a/CMakeFiles/rebuild_cache.dir
